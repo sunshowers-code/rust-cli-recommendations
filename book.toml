@@ -1,0 +1,6 @@
+[book]
+authors = ["Rain"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Rain's Rust CLI recommendations"
