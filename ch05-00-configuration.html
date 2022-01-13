@@ -161,7 +161,12 @@
 <li><em>They SHOULD put it in a <code>.config</code> directory under the repository root.</em> Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
 <li><em>They SHOULD allow both local and checked-in configuration files.</em> For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> MUST override those in <code>.config/myapp.toml</code>.</li>
 </ul>
-<p><strong>If applications support user-specific configuration, they SHOULD follow the platform-native directory conventions.</strong> The <a href="https://crates.io/crates/directories">directories</a> library is the most actively maintained repository of directories for Rust. The only exception is that command-line applications MAY use <code>$HOME/.config</code> on Mac and Windows, since the platform-native directories are harder to access on the command line.</p>
+<p><strong>If applications support user-specific configuration:</strong></p>
+<ul>
+<li><em>On non-macOS Unix platforms, they SHOULD follow the native <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</em></li>
+<li><em>On macOS and Windows, they SHOULD either use <code>$HOME/.config</code> or the native platform directory.</em></li>
+</ul>
+<p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and others) for every platform. On Windows and Mac, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</p>
 <p><strong>Applications MAY read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
 <ul>
 <li><em>Environment variables MUST be prefixed with a unique identifier based on the app.</em> For example, an app called <code>myapp</code> may support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
