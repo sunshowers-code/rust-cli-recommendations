@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="ch01-00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html"><strong aria-hidden="true">1.1.</strong> Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html"><strong aria-hidden="true">2.</strong> Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html"><strong aria-hidden="true">2.1.</strong> Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html"><strong aria-hidden="true">3.</strong> Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html"><strong aria-hidden="true">4.</strong> Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html"><strong aria-hidden="true">5.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html"><strong aria-hidden="true">6.</strong> Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html"><strong aria-hidden="true">6.1.</strong> Managing colors in Rust</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html"><strong aria-hidden="true">1.1.</strong> Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html"><strong aria-hidden="true">2.</strong> Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html"><strong aria-hidden="true">2.1.</strong> Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html"><strong aria-hidden="true">3.</strong> Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html"><strong aria-hidden="true">4.</strong> Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html"><strong aria-hidden="true">5.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html"><strong aria-hidden="true">6.</strong> Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html"><strong aria-hidden="true">6.1.</strong> Managing colors in Rust</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -143,12 +143,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+                        <h1 id="rains-rust-cli-recommendations"><a class="header" href="#rains-rust-cli-recommendations">Rain's Rust CLI recommendations</a></h1>
 <p>This book covers <a href="https://github.com/sunshowers">Rain's</a> opinions about how to organize and manage Rust CLI applications.</p>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;,  &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
+<h2 id="locations"><a class="header" href="#locations">Locations</a></h2>
+<p>This book is hosted online at <a href="https://rust-cli-recommendations.sunshowers.io">https://rust-cli-recommendations.sunshowers.io</a>. The sources are hosted <a href="https://github.com/sunshowers-code/rust-cli-recommendations">on GitHub</a>. The book is available offline by installing <code>git</code> and running the following command while online.</p>
+<pre><code class="language-sh">git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
+</code></pre>
+<p>then pointing your web browser to <code>rust-cli-recommendations/index.html</code>.</p>
 <p>Issues containing recommendations and PRs are welcome! However, I get to make the final call: if your opinions diverge from mine, you're welcome to fork this project.</p>
+<h2 id="license"><a class="header" href="#license">License</a></h2>
+<p>This work, other than inline code snippets, are licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This means that you are welcome to share or adapt this material as long as you give appropriate credit.</p>
+<p>Code snippets included in this book are licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. The author(s) have waived all of their rights to the work worldwide under copyright law, to the extent allowed by law.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="why-listen-to-me"><a class="header" href="#why-listen-to-me">Why listen to me?</a></h1>
 <p>I'm a reasonably proficient Rust developer, and have been using Rust professionally full-time since early 2017. I've also released the open source Rust CLI tools <a href="https://crates.io/crates/cargo-hakari">cargo-hakari</a> and <a href="https://crates.io/crates/cargo-search2">cargo-search2</a>, with more in development.</p>
 <p>The list of recommendations is based on what I personally value most; however, most of these involve tradeoffs along a <a href="https://en.wikipedia.org/wiki/Pareto_efficiency">Pareto front</a>. Wherever possible, I provide a list of benefits and costs, and alternatives, to help you make an informed decision.</p>
@@ -171,10 +179,7 @@ interpreted as described in <a href="https://datatracker.ietf.org/doc/html/rfc21
 <h2 id="automatically-deriving-fields"><a class="header" href="#automatically-deriving-fields">Automatically deriving fields</a></h2>
 <p>Projects MAY turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
 <p>For example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use clap::Parser;
+<pre><code class="language-rust noplaypen">use clap::Parser;
 
 /// A very simple utility to search for a string across multiple files.
 #[derive(Debug, Parser)]
@@ -190,8 +195,7 @@ pub struct GrepApp {
     /// Input files
     files: Vec&lt;String&gt;,
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The doc comments are processed as help text by clap.</p>
 <p><strong>Why?</strong></p>
 <ul>
@@ -212,10 +216,7 @@ pub struct GrepApp {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="handling-arguments-and-subcommands"><a class="header" href="#handling-arguments-and-subcommands">Handling arguments and subcommands</a></h1>
 <p>For a program that has subcommands, the following code structure is RECOMMENDED.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use clap::{ArgEnum, Parser};
+<pre><code class="language-rust noplaypen">use clap::{ArgEnum, Parser};
 
 /// Help message for the app.
 #[derive(Debug, Parser)]
@@ -264,8 +265,7 @@ enum Color {
     Auto,
     Never,
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Notes:</p>
 <ul>
 <li><strong>Only the top-level <code>App</code> is public.</strong></li>
@@ -357,16 +357,19 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 </ol>
 <p>2 and 3 are covered by the <a href="https://docs.rs/supports-color/latest/supports_color/">supports-color</a> Rust library. The exact set of environment variables is too complicated to describe here. See <a href="https://docs.rs/supports-color/latest/src/supports_color/lib.rs.html">the source code of supports-color</a> for a full list.</p>
 <p><strong>It MUST be possible to disable colors.</strong> Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.</p>
+<h2 id="color-palettes"><a class="header" href="#color-palettes">Color palettes</a></h2>
 <p>Terminals may support one of three color palettes:</p>
 <ul>
-<li>Truecolor: 16 million colors (24-bit color; 8 bits for each of red, green and blue). This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.</li>
+<li>Truecolor (16 million colors): 24-bit color; 8 bits for each of red, green and blue. This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.</li>
 <li>256 colors: 18-bit color; 6 bits for each of red, green and blue. <a href="http://www.pixelbeat.org/docs/terminal_colours/#256">This page by Pádraig Brady</a> has more information about them.</li>
 <li>16 colors: black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
 </ul>
-<p><strong>The default color schemes in applications SHOULD restrict themselves to red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
+<p><strong>The default color schemes in applications MUST be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
 <ul>
-<li>While the wider palettes are useful for terminal theming controlled by the user, applications SHOULD NOT use it. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
-<li>Most terminals allow you to configure <em>just</em> these colors to whatever one pleases. In most themes, these 12 colors are set to contrast with the background. For example, themes with dark backgrounds set &quot;green&quot; to be lighter, while themes with light backgrounds would set &quot;green&quot; to be darker.</li>
+<li>While the wider palettes are useful for terminal theming controlled by the user, applications SHOULD NOT use them. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
+<li>Most terminals allow you to configure these colors to whatever one pleases. In most themes, these 12 colors are set to contrast with the background.
+<tt><span style="color: #acacab; background-color:#050505">Themes with dark backgrounds <span style="color: #a9cdeb">set &quot;blue&quot; to be lighter</span></span></tt>,
+while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with light backgrounds <span style="color: #3465a4">set &quot;blue&quot; to be darker</span></span></tt>. (These examples are from real themes.)</li>
 <li>The &quot;black&quot; and &quot;white&quot; colors generally <em>do not</em> contrast with the background.</li>
 </ul>
 <p><strong>Applications MAY allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, a wider range of colors can be supported. In these cases, users can match their color schemes with their terminal themes.</p>

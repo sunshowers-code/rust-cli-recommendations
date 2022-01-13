@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="ch01-00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html"><strong aria-hidden="true">1.1.</strong> Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html" class="active"><strong aria-hidden="true">2.</strong> Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html"><strong aria-hidden="true">2.1.</strong> Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html"><strong aria-hidden="true">3.</strong> Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html"><strong aria-hidden="true">4.</strong> Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html"><strong aria-hidden="true">5.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html"><strong aria-hidden="true">6.</strong> Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html"><strong aria-hidden="true">6.1.</strong> Managing colors in Rust</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html"><strong aria-hidden="true">1.1.</strong> Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html" class="active"><strong aria-hidden="true">2.</strong> Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html"><strong aria-hidden="true">2.1.</strong> Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html"><strong aria-hidden="true">3.</strong> Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html"><strong aria-hidden="true">4.</strong> Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html"><strong aria-hidden="true">5.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html"><strong aria-hidden="true">6.</strong> Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html"><strong aria-hidden="true">6.1.</strong> Managing colors in Rust</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -161,10 +161,7 @@
 <h2 id="automatically-deriving-fields"><a class="header" href="#automatically-deriving-fields">Automatically deriving fields</a></h2>
 <p>Projects MAY turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
 <p>For example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use clap::Parser;
+<pre><code class="language-rust noplaypen">use clap::Parser;
 
 /// A very simple utility to search for a string across multiple files.
 #[derive(Debug, Parser)]
@@ -180,8 +177,7 @@ pub struct GrepApp {
     /// Input files
     files: Vec&lt;String&gt;,
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The doc comments are processed as help text by clap.</p>
 <p><strong>Why?</strong></p>
 <ul>
