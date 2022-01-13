@@ -24,9 +24,9 @@ Not all applications support all of these: which scopes make sense is a matter o
 
 **If applications support user-specific configuration, they SHOULD follow the platform-native directory conventions.** The [directories](https://crates.io/crates/directories) library is the most actively maintained repository of directories for Rust. The only exception is that command-line applications MAY use `$HOME/.config` on Mac and Windows, since the platform-native directories are harder to access on the command line.
 
-**Applications MAY read configuration options over the command line and the environment.** It is often reasonable to let users override configuration via command-line options and environment variables. If applications support reading configuration options over the environment:
-* **Variables MUST be prefixed with a unique identifier based on the app.** For example, an app called `myapp` may support a "limit" configuration through a `MYAPP_LIMIT` variable.
-* **All environment variables SHOULD also be supported as command-line options.** For example, `myapp --limit`. Command-line options are more discoverable than environment variables. If you actually *want* your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.
+**Applications MAY read configuration options over the command line and the environment.** It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:
+* **Environment variables MUST be prefixed with a unique identifier based on the app.** For example, an app called `myapp` may support a "limit" configuration through a `MYAPP_LIMIT` variable.
+* **Environment variables SHOULD also be supported as command-line options.** For example, `myapp --limit`. Command-line options are more discoverable than environment variables. If you actually *want* your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.
 * **Command-line arguments MUST override environment variables.** An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.
 
 ## Hierarchical configuration
@@ -73,5 +73,5 @@ Exactly what the boundaries of merged entries should be is application-specific:
 
 There are two main Rust libraries for managing hierarchical configuration:
 
-* [**config**](https://crates.io/crates/config). I've used this and it seems to work well.
-* [**figment**](https://crates.io/crates/figment). This seems quite nice as well, though I haven't used it.
+* [config](https://crates.io/crates/config). I've used this and it seems to work well.
+* [figment](https://crates.io/crates/figment). This seems quite nice as well, though I haven't used it.
