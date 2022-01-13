@@ -150,23 +150,23 @@
 <h2 id="configuration-scopes"><a class="header" href="#configuration-scopes">Configuration scopes</a></h2>
 <p>Depending on the application, the following scopes for a configuration are often seen in practice:</p>
 <ol>
-<li><em>Directory-scoped configuration.</em> Applies to a directory and its subdirectories. Controlled by a file somewhere in this directory or a parent. For example, <a href="https://git-scm.com/docs/gitignore"><code>.gitignore</code></a> is directory-scoped.</li>
-<li><em>Repository-scoped configuration.</em> Applies to a repository: controlled by a file somewhere in a code repository. For example, <a href="https://github.com/rust-lang/rust-clippy#configuration"><code>clippy.toml</code></a> is repository-scoped.</li>
-<li><em>User-scoped configuration.</em> A file somewhere in the user's home directory.</li>
-<li><em>System-wide configuration.</em> A file somewhere in a central location on the computer.</li>
+<li><em>Directory-scoped.</em> Applies to a directory and its subdirectories. Controlled by a file somewhere in this directory or a parent. For example, <a href="https://git-scm.com/docs/gitignore"><code>.gitignore</code></a> is directory-scoped.</li>
+<li><em>Repository-scoped.</em> Applies to a repository: controlled by a file somewhere in a code repository. For example, <a href="https://github.com/rust-lang/rust-clippy#configuration"><code>clippy.toml</code></a> is repository-scoped.</li>
+<li><em>User-scoped.</em> A file somewhere in the user's home directory.</li>
+<li><em>System-wide.</em> A file somewhere in a central location on the computer.</li>
 </ol>
 <p>Not all applications support all of these: which scopes make sense is a matter of judgment and thinking about use cases. Some server-side applications support fetching configuration from a remote server; they are out of scope here.</p>
 <p><strong>If applications support repository-specific configuration:</strong></p>
 <ul>
-<li><strong>They SHOULD put it in a <code>.config</code> directory under the repository root.</strong> Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
-<li><strong>They should allow both local and checked-in configuration files.</strong> For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> MUST override those in <code>.config/myapp.toml</code>.</li>
+<li><em>They SHOULD put it in a <code>.config</code> directory under the repository root.</em> Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
+<li><em>They SHOULD allow both local and checked-in configuration files.</em> For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> MUST override those in <code>.config/myapp.toml</code>.</li>
 </ul>
 <p><strong>If applications support user-specific configuration, they SHOULD follow the platform-native directory conventions.</strong> The <a href="https://crates.io/crates/directories">directories</a> library is the most actively maintained repository of directories for Rust. The only exception is that command-line applications MAY use <code>$HOME/.config</code> on Mac and Windows, since the platform-native directories are harder to access on the command line.</p>
 <p><strong>Applications MAY read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
 <ul>
-<li><strong>Environment variables MUST be prefixed with a unique identifier based on the app.</strong> For example, an app called <code>myapp</code> may support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
-<li><strong>Environment variables SHOULD also be supported as command-line options.</strong> For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
-<li><strong>Command-line arguments MUST override environment variables.</strong> An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.</li>
+<li><em>Environment variables MUST be prefixed with a unique identifier based on the app.</em> For example, an app called <code>myapp</code> may support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
+<li><em>Environment variables SHOULD also be supported as command-line options.</em> For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
+<li><em>Command-line arguments MUST override environment variables.</em> An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.</li>
 </ul>
 <h2 id="hierarchical-configuration"><a class="header" href="#hierarchical-configuration">Hierarchical configuration</a></h2>
 <p><strong>Applications SHOULD follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
