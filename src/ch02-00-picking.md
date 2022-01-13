@@ -21,7 +21,7 @@ Projects MAY turn on the `derive` feature in clap and use a declarative model to
 
 For example:
 
-```rust
+```rust,noplaypen
 use clap::Parser;
 
 /// A very simple utility to search for a string across multiple files.

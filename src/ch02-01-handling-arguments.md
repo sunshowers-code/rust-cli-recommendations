@@ -2,7 +2,7 @@
 
 For a program that has subcommands, the following code structure is RECOMMENDED.
 
-```rust
+```rust,noplaypen
 use clap::{ArgEnum, Parser};
 
 /// Help message for the app.
