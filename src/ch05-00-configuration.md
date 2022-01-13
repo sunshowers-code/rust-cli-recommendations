@@ -19,10 +19,14 @@ Depending on the application, the following scopes for a configuration are often
 Not all applications support all of these: which scopes make sense is a matter of judgment and thinking about use cases. Some server-side applications support fetching configuration from a remote server; they are out of scope here.
 
 **If applications support repository-specific configuration:**
-* *They SHOULD put it in a `.config` directory under the repository root.* Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.\
+* *They SHOULD put it in a `.config` directory under the repository root.* Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.
 * *They SHOULD allow both local and checked-in configuration files.* For example, an application `myapp` should support configuration in both `.config/myapp.toml` and `.config/myapp.local.toml`. Entries in `./config/myapp.local.toml` MUST override those in `.config/myapp.toml`.
 
-**If applications support user-specific configuration, they SHOULD follow the platform-native directory conventions.** The [directories](https://crates.io/crates/directories) library is the most actively maintained repository of directories for Rust. The only exception is that command-line applications MAY use `$HOME/.config` on Mac and Windows, since the platform-native directories are harder to access on the command line.
+**If applications support user-specific configuration:**
+* *On non-macOS Unix platforms, they SHOULD follow the native [XDG specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html).*
+* *On macOS and Windows, they SHOULD either use `$HOME/.config` or the native platform directory.*
+
+[dirs](https://crates.io/crates/dirs) is the most actively maintained Rust library for getting the native config directory (and others) for every platform. On Windows and Mac, the platform-native directories are somewhat harder to access on the command line, so `$HOME/.config` is a suitable alternative.
 
 **Applications MAY read configuration options over the command line and the environment.** It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:
 * *Environment variables MUST be prefixed with a unique identifier based on the app.* For example, an app called `myapp` may support a "limit" configuration through a `MYAPP_LIMIT` variable.
