@@ -9,3 +9,7 @@
 - [Configuration](./ch05-00-configuration.md)
 - [Adding colors to applications](./ch06-00-colors.md)
   - [Managing colors in Rust](./ch06-01-managing-colors-in-rust.md)
+
+---
+
+- [Contributors](./contributors.md)
