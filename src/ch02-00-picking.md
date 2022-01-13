@@ -8,7 +8,7 @@ There are a number of different command-line parsers for Rust programs. However,
 * clap comes with a number of extra features, such as suggestions based on [Jaro–Winkler distance](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) and full configurability of [commands](https://docs.rs/clap/latest/clap/enum.AppSettings.html) and [arguments](https://docs.rs/clap/latest/clap/enum.ArgSettings.html)
 * There are a number of standard conventions for Unix CLIs: see [this comment](https://github.com/google/argh/issues/3#issuecomment-581144181) by [Stephen Sokolow](https://github.com/ssokolow). Another actively maintained project, [argh](https://github.com/google/argh), does not target Unix platforms and so does not support all of these conventions.
 
-**Downsides**
+**Why not?**
 
 * clap pulls in several dependencies and takes quite a while to build.
 * clap increases binary size significantly.
@@ -40,13 +40,13 @@ pub struct GrepApp {
 }
 ```
 
-The doc commemnts
+The doc comments are processed as help text by clap.
 
 **Why?**
 * Derive-style arguments are significantly easier to read, write, and modify.
 * Derive-style components can be written once, and reused across multiple commands.
 
-**Downsides**
+**Why not?**
 * The derive macro is an optional feature that pulls in extra dependencies and increase build times.
 * The derive macro can be a bit magical. Looking at [the source code of clap_derive](https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs) may be useful sometimes.
 
