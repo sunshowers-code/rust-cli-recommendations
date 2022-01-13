@@ -8,7 +8,7 @@ A binary crate SHOULD NOT follow those rules. Instead, the public API SHOULD con
 
 **Why?** It is easier to avoid making breaking changes to command-line interfaces. Mature projects like [GNU coreutils](https://www.gnu.org/software/coreutils/) avoid breaking changes to their CLIs for decades.
 
-## Tips for avoiding breaking changes
+## Tips to avoid breaking changes
 
 * Make experimental commands available via an environment variable or some other gating mechanism to gather feedback, with a warning that the behavior of these can change at any time.
 * Mark old commands or arguments deprecated, and possibly hide them from help text. Continue to preserve their behavior.
