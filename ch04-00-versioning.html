@@ -150,7 +150,7 @@
 <li>For example, <a href="https://docs.rs/cargo-hakari/latest/cargo_hakari/#stability-guarantees">cargo-hakari's stability policy</a> is to keep the contents of a generated checked-in file the same, unless a config option is turned on or there's a bugfix.</li>
 </ul>
 <p><strong>Why?</strong> It is easier to avoid making breaking changes to command-line interfaces. Mature projects like <a href="https://www.gnu.org/software/coreutils/">GNU coreutils</a> avoid breaking changes to their CLIs for decades.</p>
-<h2 id="tips-for-avoiding-breaking-changes"><a class="header" href="#tips-for-avoiding-breaking-changes">Tips for avoiding breaking changes</a></h2>
+<h2 id="tips-to-avoid-breaking-changes"><a class="header" href="#tips-to-avoid-breaking-changes">Tips to avoid breaking changes</a></h2>
 <ul>
 <li>Make experimental commands available via an environment variable or some other gating mechanism to gather feedback, with a warning that the behavior of these can change at any time.</li>
 <li>Mark old commands or arguments deprecated, and possibly hide them from help text. Continue to preserve their behavior.</li>

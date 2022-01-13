@@ -159,7 +159,7 @@
 <ul>
 <li>Truecolor (16 million colors): 24-bit color; 8 bits for each of red, green and blue. This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.</li>
 <li>256 colors: 18-bit color; 6 bits for each of red, green and blue. <a href="http://www.pixelbeat.org/docs/terminal_colours/#256">This page by Pádraig Brady</a> has more information about them.</li>
-<li>16 colors: black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
+<li>16 colors: 4-bit color; black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
 </ul>
 <p><strong>The default color schemes in applications MUST be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
 <ul>
@@ -170,6 +170,12 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <li>The &quot;black&quot; and &quot;white&quot; colors generally <em>do not</em> contrast with the background.</li>
 </ul>
 <p><strong>Applications MAY allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, a wider range of colors can be supported. In these cases, users can match their color schemes with their terminal themes.</p>
+<p><strong>Applications MAY use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>, so relying on them may not work out.</p>
+<p><strong>Applications MUST NOT use blinking text.</strong> Blinking text can be distracting or difficult to read for some people. The similar <code>&lt;blink&gt;</code> tag was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
+<h2 id="ansi-color-codes-and-windows-color-apis"><a class="header" href="#ansi-color-codes-and-windows-color-apis">ANSI color codes and Windows color APIs</a></h2>
+<p>Most Unix terminals support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI color codes</a>. For example, turning the foreground color to &quot;green&quot; involves writing the characters <code>\x1b</code> (ESC), <code>[</code>, <code>32</code> (for green), and <code>m</code> to the terminal.</p>
+<p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
+<p><strong>Cross-platform applications SHOULD NOT target the Windows Console APIs.</strong> Instead, they should rely on the ANSI color code support built into modern Windows terminals. Note that Windows requires ANSI color code support to be initialized: the <a href="https://github.com/sunshowers/enable-ansi-support">enable-ansi-support</a> crate does that for you if you're using Rust. Call it early in <code>main</code>.</p>
 
                     </main>
 
