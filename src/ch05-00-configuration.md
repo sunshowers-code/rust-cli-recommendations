@@ -11,23 +11,23 @@ Other configuration formats like [YAML](https://yaml.org/) may be used if the co
 ## Configuration scopes
 
 Depending on the application, the following scopes for a configuration are often seen in practice:
-1. *Directory-scoped configuration.* Applies to a directory and its subdirectories. Controlled by a file somewhere in this directory or a parent. For example, [`.gitignore`](https://git-scm.com/docs/gitignore) is directory-scoped.
-2. *Repository-scoped configuration.* Applies to a repository: controlled by a file somewhere in a code repository. For example, [`clippy.toml`](https://github.com/rust-lang/rust-clippy#configuration) is repository-scoped.
-3. *User-scoped configuration.* A file somewhere in the user's home directory.
-4. *System-wide configuration.* A file somewhere in a central location on the computer.
+1. *Directory-scoped.* Applies to a directory and its subdirectories. Controlled by a file somewhere in this directory or a parent. For example, [`.gitignore`](https://git-scm.com/docs/gitignore) is directory-scoped.
+2. *Repository-scoped.* Applies to a repository: controlled by a file somewhere in a code repository. For example, [`clippy.toml`](https://github.com/rust-lang/rust-clippy#configuration) is repository-scoped.
+3. *User-scoped.* A file somewhere in the user's home directory.
+4. *System-wide.* A file somewhere in a central location on the computer.
 
 Not all applications support all of these: which scopes make sense is a matter of judgment and thinking about use cases. Some server-side applications support fetching configuration from a remote server; they are out of scope here.
 
 **If applications support repository-specific configuration:**
-* **They SHOULD put it in a `.config` directory under the repository root.** Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.\
-* **They should allow both local and checked-in configuration files.** For example, an application `myapp` should support configuration in both `.config/myapp.toml` and `.config/myapp.local.toml`. Entries in `./config/myapp.local.toml` MUST override those in `.config/myapp.toml`.
+* *They SHOULD put it in a `.config` directory under the repository root.* Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.\
+* *They SHOULD allow both local and checked-in configuration files.* For example, an application `myapp` should support configuration in both `.config/myapp.toml` and `.config/myapp.local.toml`. Entries in `./config/myapp.local.toml` MUST override those in `.config/myapp.toml`.
 
 **If applications support user-specific configuration, they SHOULD follow the platform-native directory conventions.** The [directories](https://crates.io/crates/directories) library is the most actively maintained repository of directories for Rust. The only exception is that command-line applications MAY use `$HOME/.config` on Mac and Windows, since the platform-native directories are harder to access on the command line.
 
 **Applications MAY read configuration options over the command line and the environment.** It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:
-* **Environment variables MUST be prefixed with a unique identifier based on the app.** For example, an app called `myapp` may support a "limit" configuration through a `MYAPP_LIMIT` variable.
-* **Environment variables SHOULD also be supported as command-line options.** For example, `myapp --limit`. Command-line options are more discoverable than environment variables. If you actually *want* your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.
-* **Command-line arguments MUST override environment variables.** An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.
+* *Environment variables MUST be prefixed with a unique identifier based on the app.* For example, an app called `myapp` may support a "limit" configuration through a `MYAPP_LIMIT` variable.
+* *Environment variables SHOULD also be supported as command-line options.* For example, `myapp --limit`. Command-line options are more discoverable than environment variables. If you actually *want* your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.
+* *Command-line arguments MUST override environment variables.* An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.
 
 ## Hierarchical configuration
 
