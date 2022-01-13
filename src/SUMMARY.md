@@ -13,3 +13,4 @@
 ---
 
 [Contributors](./contributors.md)
+[Changelog](./changelog.md)

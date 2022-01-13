@@ -1,6 +1,6 @@
 # Picking a command-line argument parser
 
-When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to write your 
+When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to parse command-line inputs.
 There are a number of different command-line parsers for Rust programs. However, projects SHOULD use [**clap**](https://crates.io/crates/clap).
 
 **Why?**
