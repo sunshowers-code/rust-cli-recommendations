@@ -48,7 +48,9 @@ limit = 42
 [encoding]
 input = "utf16"
 output = "utf32"
+```
 
+```toml
 # <repository>/.config/myapp.toml -- repository-scoped config
 limit = 84
 
