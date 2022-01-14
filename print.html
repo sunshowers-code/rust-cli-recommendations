@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -322,7 +322,7 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <p><strong>Why?</strong></p>
 <ul>
 <li>For other consumers of the library, clap is an unnecessary dependency.</li>
-<li>The binary's versioning is separated out from the library's versioning; see <a href="ch04-00-versioning.html">Versioning</a> for more.</li>
+<li>The binary's versioning is separated out from the library's versioning; see <a href="versioning.html">Versioning</a> for more.</li>
 <li>Compile times become quicker.</li>
 </ul>
 <p><strong>Why not?</strong></p>
@@ -351,7 +351,7 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li>If list items are filenames or can have newlines in them, programs <em>must</em> provide list output as null-delimited (<code>\0</code>-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. <code>xargs --null</code>).</li>
 </ul>
 </li>
-<li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See the <a href="./ch06-00-colors.html">Colors</a> for more about colors.</li>
+<li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See <a href="./colors.html">Colors</a> for more.</li>
 <li>Within a version series, output <em>must</em> be kept stable and append-only, and any breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="versioning"><a class="header" href="#versioning">Versioning</a></h1>

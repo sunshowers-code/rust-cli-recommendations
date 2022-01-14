@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Handling arguments and subcommands - Rain&#x27;s Rust CLI recommendations</title>
+        <title>Managing colors in Rust - Rain&#x27;s Rust CLI recommendations</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-picking.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-handling-arguments.html" class="active">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="ch04-00-versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="ch05-00-configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="ch06-00-colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html" class="active">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -119,7 +119,7 @@
                         <a href="https://github.com/sunshowers-code/rust-cli-recommendations" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/sunshowers-code/rust-cli-recommendations/edit/main/src/ch02-01-handling-arguments.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/sunshowers-code/rust-cli-recommendations/edit/main/src/managing-colors-in-rust.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -148,103 +148,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="handling-arguments-and-subcommands"><a class="header" href="#handling-arguments-and-subcommands">Handling arguments and subcommands</a></h1>
-<p>For a program that has subcommands, the following code structure is RECOMMENDED.</p>
-<pre><code class="language-rust noplaypen">use camino::Utf8PathBuf;
-use clap::{ArgEnum, Parser};
-
-/// Help message for the app.
-#[derive(Debug, Parser)]
-pub struct App {
-    #[clap(flatten)]
-    global_opts: GlobalOpts,
-
-    #[clap(subcommand)]
-    command: Command,
-}
-
-#[derive(Debug, Parser)]
-enum Command {
-    /// Help message for read.
-    Read {
-        /// An example option
-        #[clap(long, short)]
-        opt: bool,
-
-        /// The path to read from
-        path: Utf8PathBuf,
-    },
-    /// Help message for write.
-    Write {
-        #[clap(flatten)]
-        write_args: WriteArgs,
-    },
-    // ...other commands (can also #[clap(flatten)] other enums here)
-}
-
-#[derive(Debug, Parser)]
-struct WriteArgs {
-    /// The path to write to
-    path: Utf8PathBuf,
-    // a list of other write args
-}
-
-#[derive(Debug, Parser)]
-struct GlobalOpts {
-    /// Color
-    #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]
-    color: Color,
-
-    /// Verbosity level (can be specified multiple times)
-    #[clap(long, short, global = true, multiple_occurrences = true)]
-    verbose: u64,
-
-    //... other global options
-}
-
-#[derive(Clone, Debug, ArgEnum)]
-enum Color {
-    Always,
-    Auto,
-    Never,
-}
-</code></pre>
-<p>Notes:</p>
-<ul>
-<li><strong>Only the top-level <code>App</code> is public.</strong></li>
-<li><strong><code>App</code> is a struct, one level above the command enum.</strong>
-<ul>
-<li>While it is possible to make <code>App</code> an enum with all the subcommands, in my experience this design has always come back to bite me. This has always been because I've wanted to introduce global options later.</li>
-</ul>
-</li>
-<li><strong>Liberal use of <code>#[clap(flatten)]</code>.</strong>
-<ul>
-<li>This option flattens inline options from a struct into the parent struct or enum variant, or from an enum into a parent enum.</li>
-<li>This helps break up long series of options into smaller, reusable components that can be more easily processed in different sections of the project's code. For example, <code>Color</code> can be further nested into an <code>OutputOpts</code> struct, defined in a separate <code>output.rs</code> file.</li>
-<li>It also helps code pass a complex set of arguments around as a single parameter, rather than having to add a parameter everywhere.</li>
-</ul>
-</li>
-<li><strong>Global options are marked with <code>#[clap(global = true)]</code>.</strong>
-<ul>
-<li>This means that global options like <code>--color</code> can be used anywhere in the command line.</li>
-</ul>
-</li>
-<li><strong>Use of <code>ArgEnum</code>.</strong>
-<ul>
-<li><code>ArgEnum</code> simplifies the definition of arguments that take one of a limited number of values.</li>
-</ul>
-</li>
-</ul>
+                        <h1 id="managing-colors-in-rust"><a class="header" href="#managing-colors-in-rust">Managing colors in Rust</a></h1>
+<p>TODO</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch02-00-picking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="colors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="ch03-00-binaries-vs-libraries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="contributors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -254,11 +169,11 @@ enum Color {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch02-00-picking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="colors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="ch03-00-binaries-vs-libraries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="contributors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
