@@ -1,7 +1,7 @@
 # Picking a command-line argument parser
 
 When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to parse command-line inputs.
-There are a number of different command-line parsers for Rust programs. However, projects SHOULD use [**clap**](https://crates.io/crates/clap).
+There are a number of different command-line parsers for Rust programs. However, projects *should* use [**clap**](https://crates.io/crates/clap).
 
 **Why?**
 * clap is actively maintained: as of January 2022, clap just came out with a [v3 release]().
@@ -18,7 +18,7 @@ There are a number of different command-line parsers for Rust programs. However,
 
 ## Automatically deriving fields
 
-Projects MAY turn on the `derive` feature in clap and use a declarative model to define command-line arguments. (The `derive` feature is new to v3---users of clap v2 can use [structopt](https://crates.io/crates/structopt), which `clap_derive` is based on.)
+Projects *may* turn on the `derive` feature in clap and use a declarative model to define command-line arguments. (The `derive` feature is new to v3---users of clap v2 can use [structopt](https://crates.io/crates/structopt), which `clap_derive` is based on.)
 
 For example:
 
@@ -56,4 +56,4 @@ The doc comments are processed as help text by clap.
 * [argh](https://github.com/google/argh): Google's argument parser. Actively maintained, but targets the Fuchsia OS rather than Unix platforms, so missing several crucial features.
 * [pico-args](https://github.com/RazrFalcon/pico-args): Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.
 * [gumdrop](https://crates.io/crates/gumdrop): a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap [does](https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types)).
-* Writing your own by hand: you SHOULD NOT do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.
+* Writing your own by hand: you *should not* do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.
