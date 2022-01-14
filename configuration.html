@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html" class="active">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html" class="active">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,7 +167,7 @@
 <li>Applications <em>should</em> put repository-scoped configuration in a <code>.config</code> directory under the repository root. Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
 <li>Applications <em>should</em> allow both local and checked-in configuration files. For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> <em>must</em> override those in <code>.config/myapp.toml</code>.</li>
 </ul>
-<p><strong>If applications support user-specific configuration:</strong></p>
+<p><strong>If applications support user-scoped configuration:</strong></p>
 <ul>
 <li>On Unix platforms other than macOS, applications <em>should</em> follow the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</li>
 <li>On macOS and Windows, applications <em>should</em> either use <code>$HOME/.config</code> or the native platform directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</li>
@@ -179,45 +179,6 @@
 <li>Environment variables <em>should</em> also be supported as command-line options. For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
 <li>Command-line arguments <em>must</em> override environment variables. An environment variable can be set further up in the environment. A command-line argument expresses user intent most directly.</li>
 </ul>
-<h2 id="hierarchical-configuration"><a class="header" href="#hierarchical-configuration">Hierarchical configuration</a></h2>
-<p><strong>Applications <em>should</em> follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
-<ol>
-<li>Command-line arguments</li>
-<li>Environment variables</li>
-<li>Directory or repository-scoped configuration</li>
-<li>User-scoped configuration</li>
-<li>System-wide configuration</li>
-<li>Default configuration shipped with the program.</li>
-</ol>
-<p><strong>Configurations <em>should</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
-<pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
-limit = 42
-
-[encoding]
-input = &quot;utf16&quot;
-output = &quot;utf32&quot;
-</code></pre>
-<pre><code class="language-toml"># &lt;repository&gt;/.config/myapp.toml -- repository-scoped config
-limit = 84
-
-[encoding]
-input = &quot;utf8&quot;
-</code></pre>
-<p>The <em>merged</em> configuration is:</p>
-<pre><code class="language-toml">[myapp]
-limit = 84
-
-[myapp.encoding]
-input = &quot;utf8&quot;
-output = &quot;utf32&quot;
-</code></pre>
-<p>Exactly what the boundaries of merged entries should be is application-specific: it is hard to give general guidance here.</p>
-<h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
-<p>There are two main Rust libraries for managing hierarchical configuration:</p>
-<ul>
-<li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>
-<li><a href="https://crates.io/crates/figment">figment</a>. This seems quite nice as well, though I haven't used it.</li>
-</ul>
 
                     </main>
 
@@ -227,7 +188,7 @@ output = &quot;utf32&quot;
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="colors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="hierarchical-config.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -241,7 +202,7 @@ output = &quot;utf32&quot;
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="colors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="hierarchical-config.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

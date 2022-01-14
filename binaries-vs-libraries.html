@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -159,17 +159,17 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li>The binary's versioning is separated out from the library's versioning; see <a href="versioning.html">Versioning</a> for more.</li>
 <li>Compile times become quicker.</li>
 </ul>
-<p><strong>Why not?</strong></p>
+<p><strong>Why not maintain a library?</strong></p>
 <ul>
 <li>Maintaining a library in addition to a binary is hard work.</li>
 <li>In some cases, maintainers can decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
 <ul>
-<li>Case study: The presence of the <a href="https://libgit2.org/">libgit2</a> and <a href="https://www.eclipse.org/jgit/">JGit</a> libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.</li>
-<li>Forced loose coupling can lead to greater development velocity.</li>
+<li><em>Case study:</em> The presence of the <a href="https://libgit2.org/">libgit2</a> and <a href="https://www.eclipse.org/jgit/">JGit</a> libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.</li>
+<li>Cargo and rustc are not designed to be invoked as libraries. They force loose coupling.</li>
 </ul>
 </li>
 </ul>
-<h2 id="providing-an-ipc-interface"><a class="header" href="#providing-an-ipc-interface">Providing an IPC interface</a></h2>
+<h2 id="machine-readable-output"><a class="header" href="#machine-readable-output">Machine-readable output</a></h2>
 <p>Applications <em>may</em> (and in the case of forced loose coupling, <em>should</em>) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:</p>
 <ul>
 <li>Programs <em>should</em> accept a <code>--message-format</code> flag, and <em>should</em> support at least <code>json</code> machine-readable output.</li>

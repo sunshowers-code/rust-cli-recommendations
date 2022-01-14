@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html" class="active">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html" class="active">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -152,14 +152,16 @@
 <p>Colors can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.</p>
 <h2 id="general-recommendations"><a class="header" href="#general-recommendations">General recommendations</a></h2>
 <p>These rules apply to all command-line programs, not just Rust ones.</p>
-<p><strong>Applications <em>should</em> follow this pattern:</strong></p>
 <ol>
-<li>A global <code>--color</code> option, with the values <code>always</code>, <code>auto</code> (default) and <code>never</code>. If this is specified as <code>always</code> or <code>never</code>, enable or disable colors respectively.</li>
-<li>Otherwise, if one of a number of environment variables is specified, use what it says.</li>
+<li>Applications <em>should</em> have a global <code>--color</code> option, with the values <code>always</code>, <code>auto</code> (default) and <code>never</code>. If this is specified as <code>always</code> or <code>never</code>, applications <em>must</em> enable or disable colors respectively.</li>
+<li>Otherwise, if one of a number of environment variables is specified, applications <em>may</em> do what it says.<sup class="footnote-reference"><a href="#color">1</a></sup></li>
 <li>Otherwise, if the output stream (stdout or stderr) is a terminal (also called a &quot;tty&quot;), and the enable colors. Otherwise, disable them.</li>
 </ol>
 <p>2 and 3 are covered by the <a href="https://docs.rs/supports-color/latest/supports_color/">supports-color</a> Rust library. The exact set of environment variables is too complicated to describe here. See <a href="https://docs.rs/supports-color/latest/src/supports_color/lib.rs.html">the source code of supports-color</a> for a full list.</p>
 <p><strong>It <em>must</em> be possible to disable colors.</strong> Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.</p>
+<div class="footnote-definition" id="color"><sup class="footnote-definition-label">1</sup>
+<p>This recommendation is somewhat controversial. See <a href="https://github.com/rust-lang/rust/pull/27867">this discussion</a> in the Rust repository for more about this. I generally believe that using environment variables is OK in any output that's not designed to be machine readable.</p>
+</div>
 <h2 id="color-palettes"><a class="header" href="#color-palettes">Color palettes</a></h2>
 <p>Terminals may support one of three color palettes:</p>
 <ul>
@@ -187,7 +189,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="configuration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="hierarchical-config.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -201,7 +203,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="configuration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="hierarchical-config.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,7 +149,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="rains-rust-cli-recommendations"><a class="header" href="#rains-rust-cli-recommendations">Rain's Rust CLI recommendations</a></h1>
-<p>This living document covers <a href="https://github.com/sunshowers">Rain's</a> opinions about how to organize and manage Rust CLI applications.</p>
+<p>This living document covers <a href="https://github.com/sunshowers">Rain's</a> <a href="https://rust-cli-recommendations.sunshowers.io">recommendations</a>
+for how to organize and manage Rust CLI applications.</p>
+<p>In this document, I cover a set of tips and best practices for writing Rust applications, informed
+<a href="https://rust-cli-recommendations.sunshowers.io/why-listen.html">by experience</a>. I hope you find them useful.</p>
 <h2 id="key-words"><a class="header" href="#key-words">Key words</a></h2>
 <p>The key words <em>must</em>, <em>must not</em>, <em>required</em>, <em>should</em>, <em>should not</em>,
 <em>recommended</em>, <em>may</em>, and <em>optional</em>, derive their meanings from
@@ -166,10 +169,10 @@ and not a standard.</p>
 <p>This document is available offline by installing <code>git</code> and running the following command while online.</p>
 <pre><code class="language-sh">git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
 </code></pre>
-<p>then pointing your web browser to <code>rust-cli-recommendations/index.html</code>.</p>
-<p>Issues containing recommendations and PRs are welcome! However, I get to make the final call: if your opinions diverge from mine, you're welcome to fork this project.</p>
+<p>then pointing your web browser at <code>rust-cli-recommendations/index.html</code>.</p>
+<p>Suggestions for changes and pull requests are welcome! However, please be OK with me not accepting your suggestions. If your opinions diverge from mine, please feel free to fork this project under the license terms listed below.</p>
 <h2 id="license"><a class="header" href="#license">License</a></h2>
-<p>This document, other than inline code snippets, is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This means that you are welcome to share or adapt this material as long as you give appropriate credit.</p>
+<p>This document, other than inline code snippets, is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This means that you are welcome to share, adapt or modify this material as long as you give appropriate credit.</p>
 <p>Code snippets included in this document are licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. The author(s) have waived all of their rights to the work worldwide under copyright law, to the extent allowed by law.</p>
 
                     </main>
