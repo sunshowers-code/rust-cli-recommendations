@@ -149,10 +149,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
-<p>Simple applications may be able to accept all their options over the command line, but more complex ones may eventually need to add support for configuration files.</p>
+<p>Simple applications are able to accept all their options over the command line, but more complex ones eventually need to add support for configuration files.</p>
 <h2 id="configuration-formats"><a class="header" href="#configuration-formats">Configuration formats</a></h2>
-<p><strong>Configuration SHOULD be in the <a href="https://toml.io/en/">TOML format</a>.</strong> The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.</p>
-<p>Other configuration formats like <a href="https://yaml.org/">YAML</a> may be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
+<p><strong>Configuration <em>should</em> be in the <a href="https://toml.io/en/">TOML format</a>.</strong> The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.</p>
+<p>Other configuration formats like <a href="https://yaml.org/">YAML</a> <em>may</em> be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
 <h2 id="configuration-scopes"><a class="header" href="#configuration-scopes">Configuration scopes</a></h2>
 <p>Depending on the application, the following scopes for a configuration are often seen in practice:</p>
 <ol>
@@ -162,25 +162,25 @@
 <li><em>System-wide.</em> A file somewhere in a central location on the computer.</li>
 </ol>
 <p>Not all applications support all of these: which scopes make sense is a matter of judgment and thinking about use cases. Some server-side applications support fetching configuration from a remote server; they are out of scope here.</p>
-<p><strong>If applications support repository-specific configuration:</strong></p>
+<p><strong>If applications support repository-scoped configuration:</strong></p>
 <ul>
-<li><em>They SHOULD put it in a <code>.config</code> directory under the repository root.</em> Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
-<li><em>They SHOULD allow both local and checked-in configuration files.</em> For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> MUST override those in <code>.config/myapp.toml</code>.</li>
+<li>Applications <em>should</em> put repository-scoped configuration in a <code>.config</code> directory under the repository root. Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
+<li>Applications <em>should</em> allow both local and checked-in configuration files. For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> <em>must</em> override those in <code>.config/myapp.toml</code>.</li>
 </ul>
 <p><strong>If applications support user-specific configuration:</strong></p>
 <ul>
-<li><em>On non-macOS Unix platforms, they SHOULD follow the native <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</em></li>
-<li><em>On macOS and Windows, they SHOULD either use <code>$HOME/.config</code> or the native platform directory.</em></li>
+<li>On Unix platforms other than macOS, applications <em>should</em> follow the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</li>
+<li>On macOS and Windows, applications <em>should</em> either use <code>$HOME/.config</code> or the native platform directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</li>
 </ul>
-<p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and others) for every platform. On Windows and Mac, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</p>
-<p><strong>Applications MAY read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
+<p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and other directories) for every platform.</p>
+<p><strong>Applications <em>may</em> read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
 <ul>
-<li><em>Environment variables MUST be prefixed with a unique identifier based on the app.</em> For example, an app called <code>myapp</code> may support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
-<li><em>Environment variables SHOULD also be supported as command-line options.</em> For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
-<li><em>Command-line arguments MUST override environment variables.</em> An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.</li>
+<li>Environment variables <em>must</em> be prefixed with a unique identifier based on the app. For example, an app called <code>myapp</code> can support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
+<li>Environment variables <em>should</em> also be supported as command-line options. For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
+<li>Command-line arguments <em>must</em> override environment variables. An environment variable can be set further up in the environment. A command-line argument expresses user intent most directly.</li>
 </ul>
 <h2 id="hierarchical-configuration"><a class="header" href="#hierarchical-configuration">Hierarchical configuration</a></h2>
-<p><strong>Applications SHOULD follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
+<p><strong>Applications <em>should</em> follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
 <ol>
 <li>Command-line arguments</li>
 <li>Environment variables</li>
@@ -189,7 +189,7 @@
 <li>System-wide configuration</li>
 <li>Default configuration shipped with the program.</li>
 </ol>
-<p><strong>Configurations SHOULD be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
+<p><strong>Configurations <em>should</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
 <pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
 limit = 42
 
@@ -212,7 +212,7 @@ input = &quot;utf8&quot;
 output = &quot;utf32&quot;
 </code></pre>
 <p>Exactly what the boundaries of merged entries should be is application-specific: it is hard to give general guidance here.</p>
-<h2 id="rust-libraries"><a class="header" href="#rust-libraries">Rust libraries</a></h2>
+<h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
 <li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>

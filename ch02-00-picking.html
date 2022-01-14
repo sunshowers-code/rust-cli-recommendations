@@ -150,7 +150,7 @@
                     <main>
                         <h1 id="picking-a-command-line-argument-parser"><a class="header" href="#picking-a-command-line-argument-parser">Picking a command-line argument parser</a></h1>
 <p>When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to parse command-line inputs.
-There are a number of different command-line parsers for Rust programs. However, projects SHOULD use <a href="https://crates.io/crates/clap"><strong>clap</strong></a>.</p>
+There are a number of different command-line parsers for Rust programs. However, projects <em>should</em> use <a href="https://crates.io/crates/clap"><strong>clap</strong></a>.</p>
 <p><strong>Why?</strong></p>
 <ul>
 <li>clap is actively maintained: as of January 2022, clap just came out with a <a href="">v3 release</a>.</li>
@@ -166,7 +166,7 @@ There are a number of different command-line parsers for Rust programs. However,
 <li>The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's <a href="https://github.com/clap-rs/clap/issues/3267">some discussions about it</a>. For now, a workaround is to use clap v2.</li>
 </ul>
 <h2 id="automatically-deriving-fields"><a class="header" href="#automatically-deriving-fields">Automatically deriving fields</a></h2>
-<p>Projects MAY turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
+<p>Projects <em>may</em> turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
 <p>For example:</p>
 <pre><code class="language-rust noplaypen">use clap::Parser;
 
@@ -201,7 +201,7 @@ pub struct GrepApp {
 <li><a href="https://github.com/google/argh">argh</a>: Google's argument parser. Actively maintained, but targets the Fuchsia OS rather than Unix platforms, so missing several crucial features.</li>
 <li><a href="https://github.com/RazrFalcon/pico-args">pico-args</a>: Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.</li>
 <li><a href="https://crates.io/crates/gumdrop">gumdrop</a>: a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap <a href="https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types">does</a>).</li>
-<li>Writing your own by hand: you SHOULD NOT do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.</li>
+<li>Writing your own by hand: you <em>should not</em> do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.</li>
 </ul>
 
                     </main>

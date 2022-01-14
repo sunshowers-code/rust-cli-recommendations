@@ -147,10 +147,18 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="rains-rust-cli-recommendations"><a class="header" href="#rains-rust-cli-recommendations">Rain's Rust CLI recommendations</a></h1>
-<p>This book covers <a href="https://github.com/sunshowers">Rain's</a> opinions about how to organize and manage Rust CLI applications.</p>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;,  &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
-interpreted as described in <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
+<p>This living document covers <a href="https://github.com/sunshowers">Rain's</a> opinions about how to organize and manage Rust CLI applications.</p>
+<h2 id="key-words"><a class="header" href="#key-words">Key words</a></h2>
+<p>The key words <em>must</em>, <em>must not</em>, <em>required</em>, <em>should</em>, <em>should not</em>,
+<em>recommended</em>, <em>may</em>, and <em>optional</em>, derive their meanings from
+<a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>, but have
+somewhat different connotations because this is a list of recommendations
+and not a standard.</p>
+<ul>
+<li><em>must</em>, <em>must not</em> and <em>required</em> mean that an application that doesn't follow this recommendation is <em>incorrect</em> and has a bug that needs to be fixed.</li>
+<li><em>should</em>, <em>should not</em> and <em>recommended</em> mean that most applications should follow this recommendation, but there are valid reasons not to.</li>
+<li><em>may</em> and <em>optional</em> mean that programs are free to follow this recommendation or ignore it; there are valid reasons in either direction.</li>
+</ul>
 <h2 id="locations"><a class="header" href="#locations">Locations</a></h2>
 <p>This book is hosted online at <a href="https://rust-cli-recommendations.sunshowers.io">https://rust-cli-recommendations.sunshowers.io</a>. The sources are hosted <a href="https://github.com/sunshowers-code/rust-cli-recommendations">on GitHub</a>. The book is available offline by installing <code>git</code> and running the following command while online.</p>
 <pre><code class="language-sh">git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
@@ -165,7 +173,7 @@ interpreted as described in <a href="https://datatracker.ietf.org/doc/html/rfc21
 <p>The list of recommendations is based on what I personally value most; however, most of these involve tradeoffs along a <a href="https://en.wikipedia.org/wiki/Pareto_efficiency">Pareto front</a>. Wherever possible, I provide a list of benefits and costs, and alternatives, to help you make an informed decision.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="picking-a-command-line-argument-parser"><a class="header" href="#picking-a-command-line-argument-parser">Picking a command-line argument parser</a></h1>
 <p>When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to parse command-line inputs.
-There are a number of different command-line parsers for Rust programs. However, projects SHOULD use <a href="https://crates.io/crates/clap"><strong>clap</strong></a>.</p>
+There are a number of different command-line parsers for Rust programs. However, projects <em>should</em> use <a href="https://crates.io/crates/clap"><strong>clap</strong></a>.</p>
 <p><strong>Why?</strong></p>
 <ul>
 <li>clap is actively maintained: as of January 2022, clap just came out with a <a href="">v3 release</a>.</li>
@@ -181,7 +189,7 @@ There are a number of different command-line parsers for Rust programs. However,
 <li>The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's <a href="https://github.com/clap-rs/clap/issues/3267">some discussions about it</a>. For now, a workaround is to use clap v2.</li>
 </ul>
 <h2 id="automatically-deriving-fields"><a class="header" href="#automatically-deriving-fields">Automatically deriving fields</a></h2>
-<p>Projects MAY turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
+<p>Projects <em>may</em> turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
 <p>For example:</p>
 <pre><code class="language-rust noplaypen">use clap::Parser;
 
@@ -216,7 +224,7 @@ pub struct GrepApp {
 <li><a href="https://github.com/google/argh">argh</a>: Google's argument parser. Actively maintained, but targets the Fuchsia OS rather than Unix platforms, so missing several crucial features.</li>
 <li><a href="https://github.com/RazrFalcon/pico-args">pico-args</a>: Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.</li>
 <li><a href="https://crates.io/crates/gumdrop">gumdrop</a>: a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap <a href="https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types">does</a>).</li>
-<li>Writing your own by hand: you SHOULD NOT do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.</li>
+<li>Writing your own by hand: you <em>should not</em> do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="handling-arguments-and-subcommands"><a class="header" href="#handling-arguments-and-subcommands">Handling arguments and subcommands</a></h1>
 <p>For a program that has subcommands, the following code structure is RECOMMENDED.</p>
@@ -306,20 +314,20 @@ enum Color {
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="binaries-vs-libraries"><a class="header" href="#binaries-vs-libraries">Binaries vs libraries</a></h1>
-<p>You MAY expose your binary's functionality as a library.</p>
+<p>You <em>may</em> expose your binary's functionality as a library.</p>
 <p><strong>Why?</strong>
-Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case they may wish to expose their functionality as a library so that others may build upon it.</p>
-<p>In any case, binary <em>crates</em> SHOULD NOT expose their library functionality within the same crate. The library, if exposed, SHOULD be a different crate, with an appropriate name linking the two. The library SHOULD NOT have any command-line parsing logic.</p>
+Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
+<p>In any case, binary <em>crates</em> <em>should not</em> expose their library functionality within the same crate. The library, if exposed, <em>should</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
 <p><strong>Why?</strong></p>
 <ul>
-<li>For other consumers of the library, clap may be an unnecessary dependency.</li>
+<li>For other consumers of the library, clap is an unnecessary dependency.</li>
 <li>The binary's versioning is separated out from the library's versioning; see <a href="ch04-00-versioning.html">Versioning</a> for more.</li>
 <li>Compile times become quicker.</li>
 </ul>
 <p><strong>Why not?</strong></p>
 <ul>
 <li>Maintaining a library in addition to a binary is hard work.</li>
-<li>In some cases, maintainers may decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
+<li>In some cases, maintainers can decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
 <ul>
 <li>Case study: The presence of the <a href="https://libgit2.org/">libgit2</a> and <a href="https://www.eclipse.org/jgit/">JGit</a> libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.</li>
 <li>Forced loose coupling can lead to greater development velocity.</li>
@@ -327,27 +335,27 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 </li>
 </ul>
 <h2 id="providing-an-ipc-interface"><a class="header" href="#providing-an-ipc-interface">Providing an IPC interface</a></h2>
-<p>Applications MAY (and in the case of forced loose coupling, SHOULD) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:</p>
+<p>Applications <em>may</em> (and in the case of forced loose coupling, <em>should</em>) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:</p>
 <ul>
-<li>Programs SHOULD accept a <code>--message-format</code> flag, and SHOULD support at least <code>json</code> for programmatic consumption.</li>
-<li>Programs MAY also provide their output as other formats like XML, <a href="https://cbor.io/">CBOR</a>, <a href="https://msgpack.org/index.html">MessagePack</a>, or other <strong>self-describing</strong> formats.
+<li>Programs <em>should</em> accept a <code>--message-format</code> flag, and <em>should</em> support at least <code>json</code> machine-readable output.</li>
+<li>Programs <em>may</em> also provide their output as other formats like XML, <a href="https://cbor.io/">CBOR</a>, <a href="https://msgpack.org/index.html">MessagePack</a>, or other <strong>self-describing</strong> formats.
 <ul>
 <li>A self-describing format is one where the keys, or some equivalent, are part of the serialized output.</li>
 <li>Formats like <a href="https://developers.google.com/protocol-buffers">protobuf</a> are suitable as well, if up-to-date IDLs (e.g. <code>.proto</code> files) are published along with releases. One neat trick is to embed them into your binary and add a command to write them out to a given directory.</li>
 </ul>
 </li>
-<li>Programs MUST NOT provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.</li>
-<li>For greater compatibility with existing Unix tools like <code>xargs</code>, programs MAY provide list output as newline-delimited items.
+<li>Programs <em>must not</em> provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.</li>
+<li>For greater compatibility with existing Unix tools like <code>xargs</code>, programs <em>may</em> provide list output as newline-delimited items.
 <ul>
-<li>If list items that may themselves have newlines in them, programs MUST provide list output as null-delimited (<code>\0</code>-delimited) items. In particular, filenames may have newlines embedded in them but not null bytes. Almost all standard Unix commands understand NULL-delimited output (e.g. <code>xargs --null</code>).</li>
+<li>If list items are filenames or can have newlines in them, programs <em>must</em> provide list output as null-delimited (<code>\0</code>-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. <code>xargs --null</code>).</li>
 </ul>
 </li>
-<li>Color MUST be disabled while writing to a pipe, unless <code>--color=always</code> is passed in.</li>
-<li>Output SHOULD be kept stable and append-only, and any changes SHOULD be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
+<li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See the <a href="./ch06-00-colors.html">Colors</a> for more about colors.</li>
+<li>Within a version series, output <em>must</em> be kept stable and append-only, and any breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="versioning"><a class="header" href="#versioning">Versioning</a></h1>
-<p>A library crate, if provided, SHOULD follow <a href="https://doc.rust-lang.org/cargo/reference/semver.html">the usual Rust library versioning rules</a>.</p>
-<p>A binary crate SHOULD NOT follow those rules. Instead, the public API SHOULD consist of the command-line interface, plus anything else related to the interface that the project's maintainers wish to keep stable.</p>
+<p>A library crate, if provided, <em>should</em> follow <a href="https://doc.rust-lang.org/cargo/reference/semver.html">the usual Rust library versioning rules</a>.</p>
+<p>A binary crate <em>should not</em> follow those rules. Instead, the public API <em>should</em> consist of the command-line interface, plus anything else related to the interface that the project's maintainers wish to keep stable.</p>
 <ul>
 <li>This means that there should only be a major version change when there's a breaking change to the CLI.</li>
 <li>For example, <a href="https://docs.rs/cargo-hakari/latest/cargo_hakari/#stability-guarantees">cargo-hakari's stability policy</a> is to keep the contents of a generated checked-in file the same, unless a config option is turned on or there's a bugfix.</li>
@@ -360,10 +368,10 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li>If the program persists data on disk, make it possible to do forward transitions but not backward ones. Add a <em>format version</em> to persisted data and increment it every time the data format changes. If an old version of the program reads a format version it does not understand, error out gracefully.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
-<p>Simple applications may be able to accept all their options over the command line, but more complex ones may eventually need to add support for configuration files.</p>
+<p>Simple applications are able to accept all their options over the command line, but more complex ones eventually need to add support for configuration files.</p>
 <h2 id="configuration-formats"><a class="header" href="#configuration-formats">Configuration formats</a></h2>
-<p><strong>Configuration SHOULD be in the <a href="https://toml.io/en/">TOML format</a>.</strong> The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.</p>
-<p>Other configuration formats like <a href="https://yaml.org/">YAML</a> may be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
+<p><strong>Configuration <em>should</em> be in the <a href="https://toml.io/en/">TOML format</a>.</strong> The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.</p>
+<p>Other configuration formats like <a href="https://yaml.org/">YAML</a> <em>may</em> be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
 <h2 id="configuration-scopes"><a class="header" href="#configuration-scopes">Configuration scopes</a></h2>
 <p>Depending on the application, the following scopes for a configuration are often seen in practice:</p>
 <ol>
@@ -373,25 +381,25 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li><em>System-wide.</em> A file somewhere in a central location on the computer.</li>
 </ol>
 <p>Not all applications support all of these: which scopes make sense is a matter of judgment and thinking about use cases. Some server-side applications support fetching configuration from a remote server; they are out of scope here.</p>
-<p><strong>If applications support repository-specific configuration:</strong></p>
+<p><strong>If applications support repository-scoped configuration:</strong></p>
 <ul>
-<li><em>They SHOULD put it in a <code>.config</code> directory under the repository root.</em> Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
-<li><em>They SHOULD allow both local and checked-in configuration files.</em> For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> MUST override those in <code>.config/myapp.toml</code>.</li>
+<li>Applications <em>should</em> put repository-scoped configuration in a <code>.config</code> directory under the repository root. Typically, applications place their configuration at the top level of the repository. However, too many config files at the top level can pollute directory listings.</li>
+<li>Applications <em>should</em> allow both local and checked-in configuration files. For example, an application <code>myapp</code> should support configuration in both <code>.config/myapp.toml</code> and <code>.config/myapp.local.toml</code>. Entries in <code>./config/myapp.local.toml</code> <em>must</em> override those in <code>.config/myapp.toml</code>.</li>
 </ul>
 <p><strong>If applications support user-specific configuration:</strong></p>
 <ul>
-<li><em>On non-macOS Unix platforms, they SHOULD follow the native <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</em></li>
-<li><em>On macOS and Windows, they SHOULD either use <code>$HOME/.config</code> or the native platform directory.</em></li>
+<li>On Unix platforms other than macOS, applications <em>should</em> follow the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</li>
+<li>On macOS and Windows, applications <em>should</em> either use <code>$HOME/.config</code> or the native platform directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</li>
 </ul>
-<p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and others) for every platform. On Windows and Mac, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</p>
-<p><strong>Applications MAY read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
+<p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and other directories) for every platform.</p>
+<p><strong>Applications <em>may</em> read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
 <ul>
-<li><em>Environment variables MUST be prefixed with a unique identifier based on the app.</em> For example, an app called <code>myapp</code> may support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
-<li><em>Environment variables SHOULD also be supported as command-line options.</em> For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
-<li><em>Command-line arguments MUST override environment variables.</em> An environment variable may be set further up in the environment. A command-line argument expresses user intent most directly.</li>
+<li>Environment variables <em>must</em> be prefixed with a unique identifier based on the app. For example, an app called <code>myapp</code> can support a &quot;limit&quot; configuration through a <code>MYAPP_LIMIT</code> variable.</li>
+<li>Environment variables <em>should</em> also be supported as command-line options. For example, <code>myapp --limit</code>. Command-line options are more discoverable than environment variables. If you actually <em>want</em> your options to be less discoverable, for example if exposing them would increase support load, you can add hidden command-line options.</li>
+<li>Command-line arguments <em>must</em> override environment variables. An environment variable can be set further up in the environment. A command-line argument expresses user intent most directly.</li>
 </ul>
 <h2 id="hierarchical-configuration"><a class="header" href="#hierarchical-configuration">Hierarchical configuration</a></h2>
-<p><strong>Applications SHOULD follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
+<p><strong>Applications <em>should</em> follow a hierarchical configuration structure.</strong> Use the following order, from highest priority to lowest.</p>
 <ol>
 <li>Command-line arguments</li>
 <li>Environment variables</li>
@@ -400,7 +408,7 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li>System-wide configuration</li>
 <li>Default configuration shipped with the program.</li>
 </ol>
-<p><strong>Configurations SHOULD be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
+<p><strong>Configurations <em>should</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
 <pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
 limit = 42
 
@@ -423,7 +431,7 @@ input = &quot;utf8&quot;
 output = &quot;utf32&quot;
 </code></pre>
 <p>Exactly what the boundaries of merged entries should be is application-specific: it is hard to give general guidance here.</p>
-<h2 id="rust-libraries"><a class="header" href="#rust-libraries">Rust libraries</a></h2>
+<h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
 <li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>
@@ -433,14 +441,14 @@ output = &quot;utf32&quot;
 <p>Colors can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.</p>
 <h2 id="general-recommendations"><a class="header" href="#general-recommendations">General recommendations</a></h2>
 <p>These rules apply to all command-line programs, not just Rust ones.</p>
-<p><strong>Applications SHOULD follow this pattern:</strong></p>
+<p><strong>Applications <em>should</em> follow this pattern:</strong></p>
 <ol>
 <li>A global <code>--color</code> option, with the values <code>always</code>, <code>auto</code> (default) and <code>never</code>. If this is specified as <code>always</code> or <code>never</code>, enable or disable colors respectively.</li>
 <li>Otherwise, if one of a number of environment variables is specified, use what it says.</li>
 <li>Otherwise, if the output stream (stdout or stderr) is a terminal (also called a &quot;tty&quot;), and the enable colors. Otherwise, disable them.</li>
 </ol>
 <p>2 and 3 are covered by the <a href="https://docs.rs/supports-color/latest/supports_color/">supports-color</a> Rust library. The exact set of environment variables is too complicated to describe here. See <a href="https://docs.rs/supports-color/latest/src/supports_color/lib.rs.html">the source code of supports-color</a> for a full list.</p>
-<p><strong>It MUST be possible to disable colors.</strong> Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.</p>
+<p><strong>It <em>must</em> be possible to disable colors.</strong> Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.</p>
 <h2 id="color-palettes"><a class="header" href="#color-palettes">Color palettes</a></h2>
 <p>Terminals may support one of three color palettes:</p>
 <ul>
@@ -448,21 +456,21 @@ output = &quot;utf32&quot;
 <li>256 colors: 18-bit color; 6 bits for each of red, green and blue. <a href="http://www.pixelbeat.org/docs/terminal_colours/#256">This page by Pádraig Brady</a> has more information about them.</li>
 <li>16 colors: 4-bit color; black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
 </ul>
-<p><strong>The default color schemes in applications MUST be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
+<p><strong>The default color schemes in applications <em>must</em> be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
 <ul>
-<li>While the wider palettes are useful for terminal theming controlled by the user, applications SHOULD NOT use them. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
+<li>While the wider palettes are useful for terminal theming controlled by the user, applications <em>should not</em> use them. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
 <li>Most terminals allow you to configure these colors to whatever one pleases. In most themes, these 12 colors are set to contrast with the background.
 <tt><span style="color: #acacab; background-color:#050505">Themes with dark backgrounds <span style="color: #a9cdeb">set &quot;blue&quot; to be lighter</span></span></tt>,
 while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with light backgrounds <span style="color: #3465a4">set &quot;blue&quot; to be darker</span></span></tt>. (These examples are from real themes.)</li>
 <li>The &quot;black&quot; and &quot;white&quot; colors generally <em>do not</em> contrast with the background.</li>
 </ul>
-<p><strong>Applications MAY allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, a wider range of colors can be supported. In these cases, users can match their color schemes with their terminal themes.</p>
-<p><strong>Applications MAY use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>, so relying on them may not work out.</p>
-<p><strong>Applications MUST NOT use blinking text.</strong> Blinking text can be distracting or difficult to read for some people. The similar <code>&lt;blink&gt;</code> tag was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
+<p><strong>Applications <em>may</em> allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, a wider range of colors can be supported. In these cases, users can match their color schemes with their terminal themes.</p>
+<p><strong>Applications <em>may</em> use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>, so relying on them can cause issues.</p>
+<p><strong>Applications <em>must not</em> use blinking text.</strong> Blinking text can be distracting or difficult to read for some people. The similar <code>&lt;blink&gt;</code> tag was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
 <h2 id="ansi-color-codes-and-windows-color-apis"><a class="header" href="#ansi-color-codes-and-windows-color-apis">ANSI color codes and Windows color APIs</a></h2>
 <p>Most Unix terminals support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI color codes</a>. For example, turning the foreground color to &quot;green&quot; involves writing the characters <code>\x1b</code> (ESC), <code>[</code>, <code>32</code> (for green), and <code>m</code> to the terminal.</p>
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
-<p><strong>Cross-platform applications SHOULD NOT target the Windows Console APIs.</strong> Instead, they should rely on the ANSI color code support built into modern Windows terminals. Note that Windows requires ANSI color code support to be initialized: the <a href="https://github.com/sunshowers/enable-ansi-support">enable-ansi-support</a> crate does that for you if you're using Rust. Call it early in <code>main</code>.</p>
+<p><strong>Cross-platform applications <em>should not</em> target the Windows Console APIs.</strong> Instead, they should rely on the ANSI color code support built into modern Windows terminals. Note that Windows requires ANSI color code support to be initialized: the <a href="https://github.com/sunshowers/enable-ansi-support">enable-ansi-support</a> crate does that for you if you're using Rust. Call it early in <code>main</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="managing-colors-in-rust"><a class="header" href="#managing-colors-in-rust">Managing colors in Rust</a></h1>
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="contributors"><a class="header" href="#contributors">Contributors</a></h1>

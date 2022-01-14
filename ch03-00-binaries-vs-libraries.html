@@ -149,20 +149,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="binaries-vs-libraries"><a class="header" href="#binaries-vs-libraries">Binaries vs libraries</a></h1>
-<p>You MAY expose your binary's functionality as a library.</p>
+<p>You <em>may</em> expose your binary's functionality as a library.</p>
 <p><strong>Why?</strong>
-Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case they may wish to expose their functionality as a library so that others may build upon it.</p>
-<p>In any case, binary <em>crates</em> SHOULD NOT expose their library functionality within the same crate. The library, if exposed, SHOULD be a different crate, with an appropriate name linking the two. The library SHOULD NOT have any command-line parsing logic.</p>
+Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
+<p>In any case, binary <em>crates</em> <em>should not</em> expose their library functionality within the same crate. The library, if exposed, <em>should</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
 <p><strong>Why?</strong></p>
 <ul>
-<li>For other consumers of the library, clap may be an unnecessary dependency.</li>
+<li>For other consumers of the library, clap is an unnecessary dependency.</li>
 <li>The binary's versioning is separated out from the library's versioning; see <a href="ch04-00-versioning.html">Versioning</a> for more.</li>
 <li>Compile times become quicker.</li>
 </ul>
 <p><strong>Why not?</strong></p>
 <ul>
 <li>Maintaining a library in addition to a binary is hard work.</li>
-<li>In some cases, maintainers may decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
+<li>In some cases, maintainers can decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
 <ul>
 <li>Case study: The presence of the <a href="https://libgit2.org/">libgit2</a> and <a href="https://www.eclipse.org/jgit/">JGit</a> libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.</li>
 <li>Forced loose coupling can lead to greater development velocity.</li>
@@ -170,23 +170,23 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 </li>
 </ul>
 <h2 id="providing-an-ipc-interface"><a class="header" href="#providing-an-ipc-interface">Providing an IPC interface</a></h2>
-<p>Applications MAY (and in the case of forced loose coupling, SHOULD) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:</p>
+<p>Applications <em>may</em> (and in the case of forced loose coupling, <em>should</em>) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:</p>
 <ul>
-<li>Programs SHOULD accept a <code>--message-format</code> flag, and SHOULD support at least <code>json</code> for programmatic consumption.</li>
-<li>Programs MAY also provide their output as other formats like XML, <a href="https://cbor.io/">CBOR</a>, <a href="https://msgpack.org/index.html">MessagePack</a>, or other <strong>self-describing</strong> formats.
+<li>Programs <em>should</em> accept a <code>--message-format</code> flag, and <em>should</em> support at least <code>json</code> machine-readable output.</li>
+<li>Programs <em>may</em> also provide their output as other formats like XML, <a href="https://cbor.io/">CBOR</a>, <a href="https://msgpack.org/index.html">MessagePack</a>, or other <strong>self-describing</strong> formats.
 <ul>
 <li>A self-describing format is one where the keys, or some equivalent, are part of the serialized output.</li>
 <li>Formats like <a href="https://developers.google.com/protocol-buffers">protobuf</a> are suitable as well, if up-to-date IDLs (e.g. <code>.proto</code> files) are published along with releases. One neat trick is to embed them into your binary and add a command to write them out to a given directory.</li>
 </ul>
 </li>
-<li>Programs MUST NOT provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.</li>
-<li>For greater compatibility with existing Unix tools like <code>xargs</code>, programs MAY provide list output as newline-delimited items.
+<li>Programs <em>must not</em> provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.</li>
+<li>For greater compatibility with existing Unix tools like <code>xargs</code>, programs <em>may</em> provide list output as newline-delimited items.
 <ul>
-<li>If list items that may themselves have newlines in them, programs MUST provide list output as null-delimited (<code>\0</code>-delimited) items. In particular, filenames may have newlines embedded in them but not null bytes. Almost all standard Unix commands understand NULL-delimited output (e.g. <code>xargs --null</code>).</li>
+<li>If list items are filenames or can have newlines in them, programs <em>must</em> provide list output as null-delimited (<code>\0</code>-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. <code>xargs --null</code>).</li>
 </ul>
 </li>
-<li>Color MUST be disabled while writing to a pipe, unless <code>--color=always</code> is passed in.</li>
-<li>Output SHOULD be kept stable and append-only, and any changes SHOULD be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
+<li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See the <a href="./ch06-00-colors.html">Colors</a> for more about colors.</li>
+<li>Within a version series, output <em>must</em> be kept stable and append-only, and any breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
 </ul>
 
                     </main>
