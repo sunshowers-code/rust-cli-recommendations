@@ -10,3 +10,4 @@ description = "Covers recommendations for writing and structuring Rust command-l
 git-repository-url = "https://github.com/sunshowers-code/rust-cli-recommendations"
 edit-url-template = "https://github.com/sunshowers-code/rust-cli-recommendations/edit/main/{path}"
 site-url = "https://rust-cli-recommendations.sunshowers.io"
+no-section-label = true
