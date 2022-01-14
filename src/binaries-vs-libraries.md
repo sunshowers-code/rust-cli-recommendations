@@ -9,7 +9,7 @@ In any case, binary *crates* *should not* expose their library functionality wit
 
 **Why?**
 * For other consumers of the library, clap is an unnecessary dependency.
-* The binary's versioning is separated out from the library's versioning; see [Versioning](ch04-00-versioning.html) for more.
+* The binary's versioning is separated out from the library's versioning; see [Versioning](versioning.html) for more.
 * Compile times become quicker.
 
 **Why not?**
@@ -28,5 +28,5 @@ Applications *may* (and in the case of forced loose coupling, *should*) make the
 * Programs *must not* provide their output as [bincode](https://github.com/bincode-org/bincode) or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.
 * For greater compatibility with existing Unix tools like `xargs`, programs *may* provide list output as newline-delimited items.
   * If list items are filenames or can have newlines in them, programs *must* provide list output as null-delimited (`\0`-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. `xargs --null`).
-* Colors *must* be disabled while writing to a pipe, unless `--color=always` is passed in. See the [Colors](./ch06-00-colors.html) for more about colors.
+* Colors *must* be disabled while writing to a pipe, unless `--color=always` is passed in. See [Colors](./colors.html) for more.
 * Within a version series, output *must* be kept stable and append-only, and any breaking changes *must* be gated to an argument (e.g. `--format-version 2` or `--message-format json-v2`).
