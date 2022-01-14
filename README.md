@@ -1,6 +1,10 @@
 # Rain's Rust CLI recommendations
 
-This living document covers [Rain's](https://github.com/sunshowers) opinions about how to organize and manage Rust CLI applications.
+This living document covers [Rain's](https://github.com/sunshowers) [recommendations](https://rust-cli-recommendations.sunshowers.io)
+for how to organize and manage Rust CLI applications.
+
+In this document, I cover a set of tips and best practices for writing Rust applications, informed
+[by experience](https://rust-cli-recommendations.sunshowers.io/why-listen.html). I hope you find them useful.
 
 ## Key words
 
@@ -23,14 +27,14 @@ This document is available offline by installing `git` and running the following
 git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
 ```
 
-then pointing your web browser to `rust-cli-recommendations/index.html`.
+then pointing your web browser at `rust-cli-recommendations/index.html`.
 
 
-Issues containing recommendations and PRs are welcome! However, I get to make the final call: if your opinions diverge from mine, you're welcome to fork this project.
+Suggestions for changes and pull requests are welcome! However, please be OK with me not accepting your suggestions. If your opinions diverge from mine, please feel free to fork this project under the license terms listed below.
 
 ## License
 
-This document, other than inline code snippets, is licensed under [CC BY 4.0]. This means that you are welcome to share or adapt this material as long as you give appropriate credit.
+This document, other than inline code snippets, is licensed under [CC BY 4.0]. This means that you are welcome to share, adapt or modify this material as long as you give appropriate credit.
 
 Code snippets included in this document are licensed under [CC0 1.0]. The author(s) have waived all of their rights to the work worldwide under copyright law, to the extent allowed by law.
 

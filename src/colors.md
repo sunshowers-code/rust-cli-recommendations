@@ -6,15 +6,15 @@ Colors can make your command-line applications look nice, and also make output e
 
 These rules apply to all command-line programs, not just Rust ones.
 
-**Applications *should* follow this pattern:**
-
-1. A global `--color` option, with the values `always`, `auto` (default) and `never`. If this is specified as `always` or `never`, enable or disable colors respectively.
-2. Otherwise, if one of a number of environment variables is specified, use what it says.
+1. Applications *should* have a global `--color` option, with the values `always`, `auto` (default) and `never`. If this is specified as `always` or `never`, applications *must* enable or disable colors respectively.
+2. Otherwise, if one of a number of environment variables is specified, applications *may* do what it says.[^color]
 3. Otherwise, if the output stream (stdout or stderr) is a terminal (also called a "tty"), and the enable colors. Otherwise, disable them.
 
 2 and 3 are covered by the [supports-color](https://docs.rs/supports-color/latest/supports_color/) Rust library. The exact set of environment variables is too complicated to describe here. See [the source code of supports-color](https://docs.rs/supports-color/latest/src/supports_color/lib.rs.html) for a full list.
 
 **It *must* be possible to disable colors.** Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.
+
+[^color]: This recommendation is somewhat controversial. See [this discussion](https://github.com/rust-lang/rust/pull/27867) in the Rust repository for more about this. I generally believe that using environment variables is OK in any output that's not designed to be machine readable.
 
 ## Color palettes
 

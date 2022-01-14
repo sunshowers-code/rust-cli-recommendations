@@ -12,13 +12,13 @@ In any case, binary *crates* *should not* expose their library functionality wit
 * The binary's versioning is separated out from the library's versioning; see [Versioning](versioning.html) for more.
 * Compile times become quicker.
 
-**Why not?**
+**Why not maintain a library?**
 * Maintaining a library in addition to a binary is hard work.
 * In some cases, maintainers can decide to expose their functionality *only* as a binary to force a looser coupling with downstream consumers.
-  * Case study: The presence of the [libgit2](https://libgit2.org/) and [JGit](https://www.eclipse.org/jgit/) libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.
-  * Forced loose coupling can lead to greater development velocity.
+  * *Case study:* The presence of the [libgit2](https://libgit2.org/) and [JGit](https://www.eclipse.org/jgit/) libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.
+  * Cargo and rustc are not designed to be invoked as libraries. They force loose coupling.
 
-## Providing an IPC interface
+## Machine-readable output
 
 Applications *may* (and in the case of forced loose coupling, *should*) make their CLI available as an interface not just to humans but to other programs. In these cases, follow these rules:
 * Programs *should* accept a `--message-format` flag, and *should* support at least `json` machine-readable output.

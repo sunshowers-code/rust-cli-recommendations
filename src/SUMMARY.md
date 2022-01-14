@@ -7,6 +7,7 @@
 - [Binaries vs libraries](./binaries-vs-libraries.md)
 - [Versioning](./versioning.md)
 - [Configuration](./configuration.md)
+  - [Hierarchical configuration](./hierarchical-config.md)
 - [Adding colors to applications](./colors.md)
   - [Managing colors in Rust](./managing-colors-in-rust.md)
 
