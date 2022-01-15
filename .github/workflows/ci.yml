@@ -58,13 +58,7 @@ jobs:
       - uses: Swatinem/rust-cache@c5ed9ba6b7e1bb8aff90d43acd2f0af4990fa57c
         with:
           working-directory: code
-      - run: cd code
-      - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
+      - name: build
+        run: cd code && cargo build
       - name: Test
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --all-features
+        run: cd code && cargo test
