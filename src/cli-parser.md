@@ -42,8 +42,8 @@ The doc comments are processed as help text by clap. Here's what the help text l
 ## Command and argument case
 
 Following Unix and GNU conventions, all commands and arguments, except for short arguments, *must* be in [kebab case](https://en.wikipedia.org/wiki/Kebab_case). This means that:
-* They *must* be in lowercase.
-* Multiple words *must* be separated by dashes.
+* Commands and arguments *must* be in lowercase.
+* Multiple words *must* be separated by hyphens: `--example-opt`, not `--example_opt` or `--exampleOpt`.
 
 `clap`'s derive feature and `structopt` use kebab case by default. If you have an existing command that doesn't follow these rules, you can maintain compatibility by renaming it to the kebab-cased version and retaining the old case as an alias.
 
