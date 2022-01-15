@@ -1,7 +1,7 @@
 # Summary
 
 - [Introduction](../README.md)
-  - [Why listen to me?](./why-listen.md)
+  - [Why trust me?](./why-trust.md)
 - [Picking a command-line argument parser](./cli-parser.md)
   - [Handling arguments and subcommands](./handling-arguments.md)
 - [Binaries vs libraries](./binaries-vs-libraries.md)
