@@ -25,17 +25,10 @@ jobs:
       - uses: Swatinem/rust-cache@c5ed9ba6b7e1bb8aff90d43acd2f0af4990fa57c
         with:
           working-directory: code
-      - run: cd code
       - name: Lint (rustfmt)
-        uses: actions-rs/cargo@v1
-        with:
-          command: xfmt
-          args: --check
+        run: cd code && cargo xfmt --check
       - name: Lint (clippy)
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all-features --all-targets
+        run: cd code && cargo clippy --all-features --all-targets
 
   build:
     name: Build and test
