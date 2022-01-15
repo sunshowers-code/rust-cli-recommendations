@@ -1,66 +1,9 @@
 # Handling arguments and subcommands
 
-For a program that has subcommands, the following code structure is RECOMMENDED.
+For a program that has subcommands, the following code structure is *recommended*.
 
 ```rust,noplaypen
-use camino::Utf8PathBuf;
-use clap::{ArgEnum, Parser};
-
-/// Help message for the app.
-#[derive(Debug, Parser)]
-pub struct App {
-    #[clap(flatten)]
-    global_opts: GlobalOpts,
-
-    #[clap(subcommand)]
-    command: Command,
-}
-
-#[derive(Debug, Parser)]
-enum Command {
-    /// Help message for read.
-    Read {
-        /// An example option
-        #[clap(long, short)]
-        opt: bool,
-
-        /// The path to read from
-        path: Utf8PathBuf,
-    },
-    /// Help message for write.
-    Write {
-        #[clap(flatten)]
-        write_args: WriteArgs,
-    },
-    // ...other commands (can also #[clap(flatten)] other enums here)
-}
-
-#[derive(Debug, Parser)]
-struct WriteArgs {
-    /// The path to write to
-    path: Utf8PathBuf,
-    // a list of other write args
-}
-
-#[derive(Debug, Parser)]
-struct GlobalOpts {
-    /// Color
-    #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]
-    color: Color,
-
-    /// Verbosity level (can be specified multiple times)
-    #[clap(long, short, global = true, multiple_occurrences = true)]
-    verbose: u64,
-
-    //... other global options
-}
-
-#[derive(Clone, Debug, ArgEnum)]
-enum Color {
-    Always,
-    Auto,
-    Never,
-}
+{{#rustdoc_include ../code/cli-parser/src/bin/handling-arguments.rs:definition}}
 ```
 
 Notes:
@@ -75,3 +18,19 @@ Notes:
   * This means that global options like `--color` can be used anywhere in the command line.
 * **Use of `ArgEnum`.**
   * `ArgEnum` simplifies the definition of arguments that take one of a limited number of values.
+
+---
+
+The top-level help message is:
+
+```rust,noplaypen
+{{#rustdoc_include ../code/cli-parser/src/bin/handling-arguments.rs:top-level-help}}
+```
+
+The help for the read command is:
+
+```rust,noplaypen
+{{#rustdoc_include ../code/cli-parser/src/bin/handling-arguments.rs:read-help}}
+```
+
+Global options like `--verbose` get repeated in individual commands' help text.

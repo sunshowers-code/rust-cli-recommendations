@@ -10,7 +10,6 @@ There are a number of different command-line parsers for Rust programs. However,
 * There are a number of standard conventions for Unix CLIs: see [this comment](https://github.com/google/argh/issues/3#issuecomment-581144181) by [Stephen Sokolow](https://github.com/ssokolow). clap supports all of them. Another actively maintained project, [argh](https://github.com/google/argh), does not target Unix platforms and so does not support all of these conventions.
 
 **Reasons against using clap**
-
 * clap pulls in several dependencies and takes quite a while to build.
 * clap increases binary size significantly.
 * clap is a complex parser with many different options, which can be overwhelming. I've found use for many of these options.
@@ -23,32 +22,21 @@ Projects *may* turn on the `derive` feature in clap and use a declarative model 
 For example:
 
 ```rust,noplaypen
-use clap::Parser;
-
-/// A very simple utility to search for a string across multiple files.
-#[derive(Debug, Parser)]
-pub struct GrepApp {
-    /// Suppress normal output; instead print the name of each input file from which output
-    /// would normally have been printed.  Scanning each input file stops upon first match.
-    #[clap(long, short = "l")]
-    files_with_matches: bool,
-
-    /// Search string
-    search_str: String,
-
-    /// Input files
-    files: Vec<String>,
-}
+{{#rustdoc_include ../code/cli-parser/src/bin/grep-app.rs:definition}}
 ```
 
-The doc comments are processed as help text by clap.
+The doc comments are processed as help text by clap. Here's what the help text looks like:
+
+```rust,noplaypen
+{{#rustdoc_include ../code/cli-parser/src/bin/grep-app.rs:grep-help}}
+```
 
 **Why?**
 * Derive-style arguments are significantly easier to read, write, and modify.
 * Derive-style components can be written once, and reused across multiple commands.
 
 **Why not?**
-* The derive macro is an optional feature that pulls in extra dependencies and increase build times.
+* The derive macro is an optional feature that pulls in extra dependencies and increases build times.
 * The derive macro can be a bit magical. Looking at [the source code of clap_derive](https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs) may be useful sometimes.
 
 ## Alternatives to clap
