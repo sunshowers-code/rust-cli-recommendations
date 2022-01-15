@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Picking a command-line argument parser - Rain&#x27;s Rust CLI recommendations</title>
+        <title>Picking an argument parser - Rain&#x27;s Rust CLI recommendations</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html" class="active">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html" class="active">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,7 +148,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="picking-a-command-line-argument-parser"><a class="header" href="#picking-a-command-line-argument-parser">Picking a command-line argument parser</a></h1>
+                        <h1 id="picking-an-argument-parser"><a class="header" href="#picking-an-argument-parser">Picking an argument parser</a></h1>
 <p>When you're writing a Rust command-line application, one of the first things you'll have to do is to figure out how to parse command-line inputs.
 There are a number of different command-line parsers for Rust programs. However, projects <em>should</em> use <a href="https://crates.io/crates/clap"><strong>clap</strong></a>.</p>
 <p><strong>Why?</strong></p>
@@ -156,36 +156,147 @@ There are a number of different command-line parsers for Rust programs. However,
 <li>clap is actively maintained: as of January 2022, clap just came out with a <a href="">v3 release</a>.</li>
 <li>clap is the most popular command-line parsing library for Rust, which means that there's an existing ecosystem of projects around clap.</li>
 <li>clap comes with a number of extra features, such as suggestions based on <a href="https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Jaro–Winkler distance</a> and full configurability of <a href="https://docs.rs/clap/latest/clap/enum.AppSettings.html">commands</a> and <a href="https://docs.rs/clap/latest/clap/enum.ArgSettings.html">arguments</a></li>
-<li>There are a number of standard conventions for Unix CLIs: see <a href="https://github.com/google/argh/issues/3#issuecomment-581144181">this comment</a> by <a href="https://github.com/ssokolow">Stephen Sokolow</a>. Another actively maintained project, <a href="https://github.com/google/argh">argh</a>, does not target Unix platforms and so does not support all of these conventions.</li>
+<li>There are a number of standard conventions for Unix CLIs: see <a href="https://github.com/google/argh/issues/3#issuecomment-581144181">this comment</a> by <a href="https://github.com/ssokolow">Stephen Sokolow</a>. clap supports all of them. Another actively maintained project, <a href="https://github.com/google/argh">argh</a>, does not target Unix platforms and so does not support all of these conventions.</li>
 </ul>
-<p><strong>Why not?</strong></p>
+<p><strong>Reasons against using clap</strong></p>
 <ul>
 <li>clap pulls in several dependencies and takes quite a while to build.</li>
 <li>clap increases binary size significantly.</li>
 <li>clap is a complex parser with many different options, which can be overwhelming. I've found use for many of these options.</li>
 <li>The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's <a href="https://github.com/clap-rs/clap/issues/3267">some discussions about it</a>. For now, a workaround is to use clap v2.</li>
 </ul>
-<h2 id="automatically-deriving-fields"><a class="header" href="#automatically-deriving-fields">Automatically deriving fields</a></h2>
+<h2 id="automatically-deriving-arguments"><a class="header" href="#automatically-deriving-arguments">Automatically deriving arguments</a></h2>
 <p>Projects <em>may</em> turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
 <p>For example:</p>
-<pre><code class="language-rust noplaypen">use clap::Parser;
+<pre><code class="language-rust noplaypen"><span class="boring">// Run this binary with:
+</span><span class="boring">//    cd code
+</span><span class="boring">//    cargo run --bin grep-app -- &lt;arguments&gt;
+</span><span class="boring">
+</span>use clap::Parser;
+use std::path::PathBuf;
 
 /// A very simple utility to search for a string across multiple files.
 #[derive(Debug, Parser)]
+#[clap(name = &quot;grep-app&quot;, version = &quot;0.1.0&quot;, author = &quot;My Awesome Team&quot;)]
 pub struct GrepApp {
     /// Suppress normal output; instead print the name of each input file from which output
     /// would normally have been printed.  Scanning each input file stops upon first match.
-    #[clap(long, short = &quot;l&quot;)]
+    #[clap(long, short = 'l')]
     files_with_matches: bool,
 
     /// Search string
     search_str: String,
 
     /// Input files
-    files: Vec&lt;String&gt;,
+    files: Vec&lt;PathBuf&gt;,
 }
-</code></pre>
-<p>The doc comments are processed as help text by clap.</p>
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    GrepApp::parse();
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[allow(dead_code)]
+</span><span class="boring">const EXPECTED_HELP: &amp;str = r#&quot;grep-app 0.1.0
+</span><span class="boring">My Awesome Team
+</span><span class="boring">A very simple utility to search for a string across multiple files
+</span><span class="boring">
+</span><span class="boring">USAGE:
+</span><span class="boring">    grep-app [OPTIONS] &lt;SEARCH_STR&gt; [FILES]...
+</span><span class="boring">
+</span><span class="boring">ARGS:
+</span><span class="boring">    &lt;SEARCH_STR&gt;    Search string
+</span><span class="boring">    &lt;FILES&gt;...      Input files
+</span><span class="boring">
+</span><span class="boring">OPTIONS:
+</span><span class="boring">    -h, --help                  Print help information
+</span><span class="boring">    -l, --files-with-matches    Suppress normal output; instead print the name of each input file
+</span><span class="boring">                                from which output would normally have been printed.  Scanning each
+</span><span class="boring">                                input file stops upon first match
+</span><span class="boring">    -V, --version               Print version information
+</span><span class="boring">&quot;#;
+</span><span class="boring">
+</span><span class="boring">#[cfg(test)]
+</span><span class="boring">mod tests {
+</span><span class="boring">    use super::*;
+</span><span class="boring">    use clap::IntoApp;
+</span><span class="boring">    use std::io::Cursor;
+</span><span class="boring">
+</span><span class="boring">    #[test]
+</span><span class="boring">    fn test_help() {
+</span><span class="boring">        let mut app = GrepApp::into_app();
+</span><span class="boring">        let mut cursor: Cursor&lt;Vec&lt;u8&gt;&gt; = Cursor::new(Vec::new());
+</span><span class="boring">        app.write_help(&amp;mut cursor).unwrap();
+</span><span class="boring">        let help = String::from_utf8(cursor.into_inner()).unwrap();
+</span><span class="boring">        println!(&quot;{}&quot;, help);
+</span><span class="boring">        assert_eq!(help, EXPECTED_HELP);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<p>The doc comments are processed as help text by clap. Here's what the help text looks like:</p>
+<pre><code class="language-rust noplaypen"><span class="boring">// Run this binary with:
+</span><span class="boring">//    cd code
+</span><span class="boring">//    cargo run --bin grep-app -- &lt;arguments&gt;
+</span><span class="boring">
+</span><span class="boring">use clap::Parser;
+</span><span class="boring">use std::path::PathBuf;
+</span><span class="boring">
+</span><span class="boring">/// A very simple utility to search for a string across multiple files.
+</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[clap(name = &quot;grep-app&quot;, version = &quot;0.1.0&quot;, author = &quot;My Awesome Team&quot;)]
+</span><span class="boring">pub struct GrepApp {
+</span><span class="boring">    /// Suppress normal output; instead print the name of each input file from which output
+</span><span class="boring">    /// would normally have been printed.  Scanning each input file stops upon first match.
+</span><span class="boring">    #[clap(long, short = 'l')]
+</span><span class="boring">    files_with_matches: bool,
+</span><span class="boring">
+</span><span class="boring">    /// Search string
+</span><span class="boring">    search_str: String,
+</span><span class="boring">
+</span><span class="boring">    /// Input files
+</span><span class="boring">    files: Vec&lt;PathBuf&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    GrepApp::parse();
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[allow(dead_code)]
+</span>const EXPECTED_HELP: &amp;str = r#&quot;grep-app 0.1.0
+My Awesome Team
+A very simple utility to search for a string across multiple files
+
+USAGE:
+    grep-app [OPTIONS] &lt;SEARCH_STR&gt; [FILES]...
+
+ARGS:
+    &lt;SEARCH_STR&gt;    Search string
+    &lt;FILES&gt;...      Input files
+
+OPTIONS:
+    -h, --help                  Print help information
+    -l, --files-with-matches    Suppress normal output; instead print the name of each input file
+                                from which output would normally have been printed.  Scanning each
+                                input file stops upon first match
+    -V, --version               Print version information
+&quot;#;
+<span class="boring">
+</span><span class="boring">#[cfg(test)]
+</span><span class="boring">mod tests {
+</span><span class="boring">    use super::*;
+</span><span class="boring">    use clap::IntoApp;
+</span><span class="boring">    use std::io::Cursor;
+</span><span class="boring">
+</span><span class="boring">    #[test]
+</span><span class="boring">    fn test_help() {
+</span><span class="boring">        let mut app = GrepApp::into_app();
+</span><span class="boring">        let mut cursor: Cursor&lt;Vec&lt;u8&gt;&gt; = Cursor::new(Vec::new());
+</span><span class="boring">        app.write_help(&amp;mut cursor).unwrap();
+</span><span class="boring">        let help = String::from_utf8(cursor.into_inner()).unwrap();
+</span><span class="boring">        println!(&quot;{}&quot;, help);
+</span><span class="boring">        assert_eq!(help, EXPECTED_HELP);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
 <p><strong>Why?</strong></p>
 <ul>
 <li>Derive-style arguments are significantly easier to read, write, and modify.</li>
@@ -193,12 +304,12 @@ pub struct GrepApp {
 </ul>
 <p><strong>Why not?</strong></p>
 <ul>
-<li>The derive macro is an optional feature that pulls in extra dependencies and increase build times.</li>
+<li>The derive macro is an optional feature that pulls in extra dependencies and increases build times.</li>
 <li>The derive macro can be a bit magical. Looking at <a href="https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs">the source code of clap_derive</a> may be useful sometimes.</li>
 </ul>
 <h2 id="alternatives-to-clap"><a class="header" href="#alternatives-to-clap">Alternatives to clap</a></h2>
 <ul>
-<li><a href="https://github.com/google/argh">argh</a>: Google's argument parser. Actively maintained, but targets the Fuchsia OS rather than Unix platforms, so missing several crucial features.</li>
+<li><a href="https://github.com/google/argh">argh</a>: Actively maintained, but <a href="https://github.com/google/argh/issues/3#issuecomment-581144934">targets the Fuchsia OS</a> rather than Unix platforms, so it's missing several crucial features.</li>
 <li><a href="https://github.com/RazrFalcon/pico-args">pico-args</a>: Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.</li>
 <li><a href="https://crates.io/crates/gumdrop">gumdrop</a>: a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap <a href="https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types">does</a>).</li>
 <li>Writing your own by hand: you <em>should not</em> do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.</li>
@@ -208,7 +319,7 @@ pub struct GrepApp {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="why-listen.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="why-trust.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -222,7 +333,7 @@ pub struct GrepApp {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="why-listen.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="why-trust.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

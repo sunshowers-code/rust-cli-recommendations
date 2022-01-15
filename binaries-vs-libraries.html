@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,9 +149,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="binaries-vs-libraries"><a class="header" href="#binaries-vs-libraries">Binaries vs libraries</a></h1>
-<p>You <em>may</em> expose your binary's functionality as a library.</p>
-<p><strong>Why?</strong>
-Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
+<p>You <em>may</em> expose your application's functionality as a library. Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
 <p>In any case, binary <em>crates</em> <em>should not</em> expose their library functionality within the same crate. The library, if exposed, <em>should</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
 <p><strong>Why?</strong></p>
 <ul>
@@ -159,9 +157,9 @@ Some binaries are simple and don't necessarily need to expose their functionalit
 <li>The binary's versioning is separated out from the library's versioning; see <a href="versioning.html">Versioning</a> for more.</li>
 <li>Compile times become quicker.</li>
 </ul>
-<p><strong>Why not maintain a library?</strong></p>
+<p><strong>Reasons against exposing a library</strong></p>
 <ul>
-<li>Maintaining a library in addition to a binary is hard work.</li>
+<li>Maintaining a library in addition to a binary is hard work. It involves documentation and versioning.</li>
 <li>In some cases, maintainers can decide to expose their functionality <em>only</em> as a binary to force a looser coupling with downstream consumers.
 <ul>
 <li><em>Case study:</em> The presence of the <a href="https://libgit2.org/">libgit2</a> and <a href="https://www.eclipse.org/jgit/">JGit</a> libraries for Git has made it significantly harder to improve Git's data structures. These libraries are tightly coupled to their consumers, which in practice means that Git improvements are tied to the release schedules of commercial projects like Xcode and Visual Studio.</li>

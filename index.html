@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-listen.html">Why listen to me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking a command-line argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,21 +149,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="rains-rust-cli-recommendations"><a class="header" href="#rains-rust-cli-recommendations">Rain's Rust CLI recommendations</a></h1>
-<p>This living document covers <a href="https://github.com/sunshowers">Rain's</a> <a href="https://rust-cli-recommendations.sunshowers.io">recommendations</a>
+<p>This living document comprises <a href="https://github.com/sunshowers">my</a> <a href="https://rust-cli-recommendations.sunshowers.io">recommendations</a>
 for how to organize and manage Rust CLI applications.</p>
-<p>In this document, I cover a set of tips and best practices for writing Rust applications, informed
-<a href="https://rust-cli-recommendations.sunshowers.io/why-listen.html">by experience</a>. I hope you find them useful.</p>
-<h2 id="key-words"><a class="header" href="#key-words">Key words</a></h2>
-<p>The key words <em>must</em>, <em>must not</em>, <em>required</em>, <em>should</em>, <em>should not</em>,
-<em>recommended</em>, <em>may</em>, and <em>optional</em>, derive their meanings from
-<a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>, but have
-somewhat different connotations because this is a list of recommendations
-and not a standard.</p>
-<ul>
-<li><em>must</em>, <em>must not</em> and <em>required</em> mean that an application that doesn't follow this recommendation is <em>incorrect</em> and has a bug that needs to be fixed.</li>
-<li><em>should</em>, <em>should not</em> and <em>recommended</em> mean that most applications should follow this recommendation, but there are valid reasons not to.</li>
-<li><em>may</em> and <em>optional</em> mean that programs are free to follow this recommendation or ignore it; there are valid reasons in either direction.</li>
-</ul>
+<p>In this document, I cover some tips and best practices for writing Rust applications, informed
+<a href="https://rust-cli-recommendations.sunshowers.io/why-listen.html">by my experience</a> writing real-world Rust tools. I hope you find them useful.</p>
 <h2 id="locations"><a class="header" href="#locations">Locations</a></h2>
 <p>This document is hosted online at <a href="https://rust-cli-recommendations.sunshowers.io">https://rust-cli-recommendations.sunshowers.io</a>. The source is hosted <a href="https://github.com/sunshowers-code/rust-cli-recommendations">on GitHub</a>.</p>
 <p>This document is available offline by installing <code>git</code> and running the following command while online.</p>
@@ -180,7 +169,7 @@ and not a standard.</p>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next" href="why-listen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="why-trust.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -191,7 +180,7 @@ and not a standard.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next" href="why-listen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="why-trust.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
