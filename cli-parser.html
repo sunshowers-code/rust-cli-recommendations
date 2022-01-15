@@ -310,8 +310,8 @@ OPTIONS:
 <h2 id="command-and-argument-case"><a class="header" href="#command-and-argument-case">Command and argument case</a></h2>
 <p>Following Unix and GNU conventions, all commands and arguments, except for short arguments, <em>must</em> be in <a href="https://en.wikipedia.org/wiki/Kebab_case">kebab case</a>. This means that:</p>
 <ul>
-<li>They <em>must</em> be in lowercase.</li>
-<li>Multiple words <em>must</em> be separated by dashes.</li>
+<li>Commands and arguments <em>must</em> be in lowercase.</li>
+<li>Multiple words <em>must</em> be separated by hyphens: <code>--example-opt</code>, not <code>--example_opt</code> or <code>--exampleOpt</code>.</li>
 </ul>
 <p><code>clap</code>'s derive feature and <code>structopt</code> use kebab case by default. If you have an existing command that doesn't follow these rules, you can maintain compatibility by renaming it to the kebab-cased version and retaining the old case as an alias.</p>
 <h2 id="alternatives-to-clap"><a class="header" href="#alternatives-to-clap">Alternatives to clap</a></h2>
