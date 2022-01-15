@@ -22,8 +22,8 @@ enum Command {
     /// Help message for read.
     Read {
         /// An example option
-        #[clap(long, short)]
-        opt: bool,
+        #[clap(long, short = 'o')]
+        example_opt: bool,
 
         /// The path to read from
         path: Utf8PathBuf,
@@ -104,8 +104,8 @@ ARGS:
     <PATH>    The path to read from
 
 OPTIONS:
-    -h, --help    Print help information
-    -o, --opt     An example option
+    -h, --help           Print help information
+    -o, --example-opt    An example option
 "#;
 // ANCHOR_END: read-help
 

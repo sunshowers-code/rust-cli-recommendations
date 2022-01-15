@@ -4,7 +4,7 @@ This living document comprises [my](https://github.com/sunshowers) [recommendati
 for how to organize and manage Rust CLI applications.
 
 In this document, I cover some tips and best practices for writing Rust applications, informed
-[by my experience](https://rust-cli-recommendations.sunshowers.io/why-listen.html) writing real-world Rust tools. I hope you find them useful.
+[by my experience](https://rust-cli-recommendations.sunshowers.io/why-trust.html) writing real-world Rust tools. I hope you find them useful.
 
 ## Locations
 
