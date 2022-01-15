@@ -150,7 +150,7 @@
 <p>This living document comprises <a href="https://github.com/sunshowers">my</a> <a href="https://rust-cli-recommendations.sunshowers.io">recommendations</a>
 for how to organize and manage Rust CLI applications.</p>
 <p>In this document, I cover some tips and best practices for writing Rust applications, informed
-<a href="https://rust-cli-recommendations.sunshowers.io/why-listen.html">by my experience</a> writing real-world Rust tools. I hope you find them useful.</p>
+<a href="https://rust-cli-recommendations.sunshowers.io/why-trust.html">by my experience</a> writing real-world Rust tools. I hope you find them useful.</p>
 <h2 id="locations"><a class="header" href="#locations">Locations</a></h2>
 <p>This document is hosted online at <a href="https://rust-cli-recommendations.sunshowers.io">https://rust-cli-recommendations.sunshowers.io</a>. The source is hosted <a href="https://github.com/sunshowers-code/rust-cli-recommendations">on GitHub</a>.</p>
 <p>This document is available offline by installing <code>git</code> and running the following command while online.</p>
@@ -171,15 +171,15 @@ There are a number of different command-line parsers for Rust programs. However,
 <ul>
 <li>clap is actively maintained: as of January 2022, clap just came out with a <a href="">v3 release</a>.</li>
 <li>clap is the most popular command-line parsing library for Rust, which means that there's an existing ecosystem of projects around clap.</li>
-<li>clap comes with a number of extra features, such as suggestions based on <a href="https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Jaro–Winkler distance</a> and full configurability of <a href="https://docs.rs/clap/latest/clap/enum.AppSettings.html">commands</a> and <a href="https://docs.rs/clap/latest/clap/enum.ArgSettings.html">arguments</a></li>
+<li>clap comes with a number of extra features, such as suggestions based on <a href="https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Jaro–Winkler distance</a> and full configurability of <a href="https://docs.rs/clap/latest/clap/enum.AppSettings.html">commands</a> and <a href="https://docs.rs/clap/latest/clap/enum.ArgSettings.html">arguments</a>.</li>
 <li>There are a number of standard conventions for Unix CLIs: see <a href="https://github.com/google/argh/issues/3#issuecomment-581144181">this comment</a> by <a href="https://github.com/ssokolow">Stephen Sokolow</a>. clap supports all of them. Another actively maintained project, <a href="https://github.com/google/argh">argh</a>, does not target Unix platforms and so does not support all of these conventions.</li>
 </ul>
 <p><strong>Reasons against using clap</strong></p>
 <ul>
 <li>clap pulls in several dependencies and takes quite a while to build.</li>
 <li>clap increases binary size significantly.</li>
-<li>clap is a complex parser with many different options, which can be overwhelming. I've found use for many of these options.</li>
-<li>The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's <a href="https://github.com/clap-rs/clap/issues/3267">some discussions about it</a>. For now, a workaround is to use clap v2.</li>
+<li>clap is a complex parser with many different options. I've found uses for most of them, but they can be overwhelming.</li>
+<li>The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's <a href="https://github.com/clap-rs/clap/issues/3267">some discussions about it</a>. For now, a workaround is to use version 2 of clap.</li>
 </ul>
 <h2 id="automatically-deriving-arguments"><a class="header" href="#automatically-deriving-arguments">Automatically deriving arguments</a></h2>
 <p>Projects <em>may</em> turn on the <code>derive</code> feature in clap and use a declarative model to define command-line arguments. (The <code>derive</code> feature is new to v3---users of clap v2 can use <a href="https://crates.io/crates/structopt">structopt</a>, which <code>clap_derive</code> is based on.)</p>
@@ -323,6 +323,13 @@ OPTIONS:
 <li>The derive macro is an optional feature that pulls in extra dependencies and increases build times.</li>
 <li>The derive macro can be a bit magical. Looking at <a href="https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs">the source code of clap_derive</a> may be useful sometimes.</li>
 </ul>
+<h2 id="command-and-argument-case"><a class="header" href="#command-and-argument-case">Command and argument case</a></h2>
+<p>Following Unix and GNU conventions, all commands and arguments, except for short arguments, <em>must</em> be in <a href="https://en.wikipedia.org/wiki/Kebab_case">kebab case</a>. This means that:</p>
+<ul>
+<li>They <em>must</em> be in lowercase.</li>
+<li>Multiple words <em>must</em> be separated by dashes.</li>
+</ul>
+<p><code>clap</code>'s derive feature and <code>structopt</code> use kebab case by default. If you have an existing command that doesn't follow these rules, you can maintain compatibility by renaming it to the kebab-cased version and retaining the old case as an alias.</p>
 <h2 id="alternatives-to-clap"><a class="header" href="#alternatives-to-clap">Alternatives to clap</a></h2>
 <ul>
 <li><a href="https://github.com/google/argh">argh</a>: Actively maintained, but <a href="https://github.com/google/argh/issues/3#issuecomment-581144934">targets the Fuchsia OS</a> rather than Unix platforms, so it's missing several crucial features.</li>
@@ -355,8 +362,8 @@ enum Command {
     /// Help message for read.
     Read {
         /// An example option
-        #[clap(long, short)]
-        opt: bool,
+        #[clap(long, short = 'o')]
+        example_opt: bool,
 
         /// The path to read from
         path: Utf8PathBuf,
@@ -433,8 +440,8 @@ enum Color {
 </span><span class="boring">    &lt;PATH&gt;    The path to read from
 </span><span class="boring">
 </span><span class="boring">OPTIONS:
-</span><span class="boring">    -h, --help    Print help information
-</span><span class="boring">    -o, --opt     An example option
+</span><span class="boring">    -h, --help           Print help information
+</span><span class="boring">    -o, --example-opt    An example option
 </span><span class="boring">&quot;#;
 </span><span class="boring">
 </span><span class="boring">#[cfg(test)]
@@ -523,8 +530,8 @@ enum Color {
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
 </span><span class="boring">        /// An example option
-</span><span class="boring">        #[clap(long, short)]
-</span><span class="boring">        opt: bool,
+</span><span class="boring">        #[clap(long, short = 'o')]
+</span><span class="boring">        example_opt: bool,
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
@@ -601,8 +608,8 @@ SUBCOMMANDS:
 </span><span class="boring">    &lt;PATH&gt;    The path to read from
 </span><span class="boring">
 </span><span class="boring">OPTIONS:
-</span><span class="boring">    -h, --help    Print help information
-</span><span class="boring">    -o, --opt     An example option
+</span><span class="boring">    -h, --help           Print help information
+</span><span class="boring">    -o, --example-opt    An example option
 </span><span class="boring">&quot;#;
 </span><span class="boring">
 </span><span class="boring">#[cfg(test)]
@@ -664,8 +671,8 @@ SUBCOMMANDS:
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
 </span><span class="boring">        /// An example option
-</span><span class="boring">        #[clap(long, short)]
-</span><span class="boring">        opt: bool,
+</span><span class="boring">        #[clap(long, short = 'o')]
+</span><span class="boring">        example_opt: bool,
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
@@ -742,8 +749,8 @@ ARGS:
     &lt;PATH&gt;    The path to read from
 
 OPTIONS:
-    -h, --help    Print help information
-    -o, --opt     An example option
+    -h, --help           Print help information
+    -o, --example-opt    An example option
 &quot;#;
 <span class="boring">
 </span><span class="boring">#[cfg(test)]

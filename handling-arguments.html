@@ -173,8 +173,8 @@ enum Command {
     /// Help message for read.
     Read {
         /// An example option
-        #[clap(long, short)]
-        opt: bool,
+        #[clap(long, short = 'o')]
+        example_opt: bool,
 
         /// The path to read from
         path: Utf8PathBuf,
@@ -251,8 +251,8 @@ enum Color {
 </span><span class="boring">    &lt;PATH&gt;    The path to read from
 </span><span class="boring">
 </span><span class="boring">OPTIONS:
-</span><span class="boring">    -h, --help    Print help information
-</span><span class="boring">    -o, --opt     An example option
+</span><span class="boring">    -h, --help           Print help information
+</span><span class="boring">    -o, --example-opt    An example option
 </span><span class="boring">&quot;#;
 </span><span class="boring">
 </span><span class="boring">#[cfg(test)]
@@ -341,8 +341,8 @@ enum Color {
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
 </span><span class="boring">        /// An example option
-</span><span class="boring">        #[clap(long, short)]
-</span><span class="boring">        opt: bool,
+</span><span class="boring">        #[clap(long, short = 'o')]
+</span><span class="boring">        example_opt: bool,
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
@@ -419,8 +419,8 @@ SUBCOMMANDS:
 </span><span class="boring">    &lt;PATH&gt;    The path to read from
 </span><span class="boring">
 </span><span class="boring">OPTIONS:
-</span><span class="boring">    -h, --help    Print help information
-</span><span class="boring">    -o, --opt     An example option
+</span><span class="boring">    -h, --help           Print help information
+</span><span class="boring">    -o, --example-opt    An example option
 </span><span class="boring">&quot;#;
 </span><span class="boring">
 </span><span class="boring">#[cfg(test)]
@@ -482,8 +482,8 @@ SUBCOMMANDS:
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
 </span><span class="boring">        /// An example option
-</span><span class="boring">        #[clap(long, short)]
-</span><span class="boring">        opt: bool,
+</span><span class="boring">        #[clap(long, short = 'o')]
+</span><span class="boring">        example_opt: bool,
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
@@ -560,8 +560,8 @@ ARGS:
     &lt;PATH&gt;    The path to read from
 
 OPTIONS:
-    -h, --help    Print help information
-    -o, --opt     An example option
+    -h, --help           Print help information
+    -o, --example-opt    An example option
 &quot;#;
 <span class="boring">
 </span><span class="boring">#[cfg(test)]
