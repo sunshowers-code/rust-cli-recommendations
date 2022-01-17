@@ -8,7 +8,7 @@
 5. System-wide configuration
 6. Default configuration shipped with the program.
 
-The only exception is that color support *should* follow the rules listed in the [Colors](./colors.md) section.
+There are some exceptions. For example, color support *should* follow the rules listed in the [Colors](./colors.md) section.
 
 **Configurations *should* be merged rather than completely overwritten.** Consider the following configuration files.
 
@@ -40,7 +40,7 @@ input = "utf8"
 output = "utf32"
 ```
 
-Exactly what the boundaries of merged entries should be is application-specific: it is hard to give general guidance here.
+Exactly how deep merges should go is application-specific: it is hard to give general guidance here.
 
 ## Rust libraries for managing configuration
 
