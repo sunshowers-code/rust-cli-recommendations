@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,7 +157,7 @@ for how to organize and manage Rust CLI applications.</p>
 <pre><code class="language-sh">git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
 </code></pre>
 <p>then pointing your web browser at <code>rust-cli-recommendations/index.html</code>.</p>
-<p>Suggestions for changes and pull requests are welcome! However, please be OK with me not accepting your suggestions. If your opinions diverge from mine, please feel free to fork this project under the license terms listed below.</p>
+<p>Pull requests to fix typos or unclear language are welcome! However, if you have a suggestion for a change to the document, please <a href="https://github.com/sunshowers-code/rust-cli-recommendations/issues?q=is%3Aissue+sort%3Aupdated-desc">search through the issues</a> to see if it's been discussed already. If not, please <a href="https://github.com/sunshowers-code/rust-cli-recommendations/issues/new">open an issue</a>.</p>
 <h2 id="license"><a class="header" href="#license">License</a></h2>
 <p>This document, other than inline code snippets, is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This means that you are welcome to share, adapt or modify this material as long as you give appropriate credit.</p>
 <p>Code snippets included in this document are licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. The author(s) have waived all of their rights to the work worldwide under copyright law, to the extent allowed by law.</p>
@@ -791,12 +791,11 @@ OPTIONS:
 <p>Global options like <code>--verbose</code> get repeated in individual commands' help text.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="binaries-vs-libraries"><a class="header" href="#binaries-vs-libraries">Binaries vs libraries</a></h1>
 <p>You <em>may</em> expose your application's functionality as a library. Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
-<p>In any case, binary <em>crates</em> <em>should not</em> expose their library functionality within the same crate. The library, if exposed, <em>should</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
-<p><strong>Why?</strong></p>
+<p>In any case, binary crates <em>must not</em> expose their library functionality within the same crate. The library, if exposed, <em>must</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
+<p><strong>Why separate libraries from binaries?</strong></p>
 <ul>
-<li>For other consumers of the library, clap is an unnecessary dependency.</li>
+<li>For other consumers of the library, clap and other binary-only dependencies are unnecessary.</li>
 <li>The binary's versioning is separated out from the library's versioning; see <a href="versioning.html">Versioning</a> for more.</li>
-<li>Compile times become quicker.</li>
 </ul>
 <p><strong>Reasons against exposing a library</strong></p>
 <ul>
@@ -826,6 +825,83 @@ OPTIONS:
 </li>
 <li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See <a href="./colors.html">Colors</a> for more.</li>
 <li>Within a version series, output <em>must</em> be kept stable and append-only, and any breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="organizing-code-in-binary-crates"><a class="header" href="#organizing-code-in-binary-crates">Organizing code in binary crates</a></h1>
+<p>Within a binary crate, here's the organization that's <em>recommended</em>.</p>
+<p><code>my-app/src/command.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! Contains command parsers and logic.
+
+use clap::Parser;
+
+#[derive(Debug, Parser)]
+pub struct MyApp {
+    // Options, subcommands etc
+}
+
+impl MyApp {
+    pub fn exec(self) -&gt; Result&lt;(), ()&gt; {
+        // execute the command and return a result
+        unimplemented!()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>my-app/src/lib.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! Help text for my-app.
+//!
+//! Can contain information about what the binary does, command-line options,
+//! configuration, etc.
+
+mod command;
+// ... other modules
+
+// This is the only export from the crate. It is marked hidden and
+// is not part of the public API.
+#[doc(hidden)]
+pub use command::MyApp;
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>my-app/src/main.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust">use clap::Parser;
+use my_app::MyApp;
+
+fn main() -&gt; Result&lt;(), ()&gt; {
+    let my_app = MyApp::parse();
+    my_app.exec()
+}
+</code></pre></pre>
+<p>Notes:</p>
+<ul>
+<li><strong>Most of the logic is within <code>command.rs</code>.</strong>
+<ul>
+<li>In general, you <em>should</em> keep lib.rs as minimal as possible, unless your entire library fits in it. That's
+because all methods and fields in <code>lib.rs</code> are visible to the entire library---code in the top-level module
+cannot be marked private to the rest of the module.</li>
+</ul>
+</li>
+<li><strong>There's a <code>lib.rs</code> separate from the <code>main.rs</code>.</strong>
+<ul>
+<li>This is because <code>rustdoc</code> doesn't use standard privacy rules if building documentation from <code>main.rs</code>,
+so private modules are visible in the public documentation.</li>
+</ul>
+</li>
+<li><strong>Only the top-level <code>MyApp</code> is exported.</strong>
+<ul>
+<li>The top-level <code>MyApp</code> is all <code>main.rs</code> should generally need to care about.</li>
+</ul>
+</li>
+<li><strong><code>MyApp</code> is marked <code>#[doc(hidden)]</code>.</strong>
+<ul>
+<li>The details of <code>MyApp</code> are only meant to be seen by <code>main</code>. The library is not part of the public API. Only
+the command-line interface is.</li>
+</ul>
+</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="versioning"><a class="header" href="#versioning">Versioning</a></h1>
 <p>A library crate, if provided, <em>should</em> follow <a href="https://doc.rust-lang.org/cargo/reference/semver.html">the usual Rust library versioning rules</a>.</p>
