@@ -19,7 +19,10 @@ git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch 
 then pointing your web browser at `rust-cli-recommendations/index.html`.
 
 
-Suggestions for changes and pull requests are welcome! However, please be OK with me not accepting your suggestions. If your opinions diverge from mine, please feel free to fork this project under the license terms listed below.
+Pull requests to fix typos or unclear language are welcome! However, if you have a suggestion for a change to the document, please [search through the issues] to see if it's been discussed already. If not, please [open an issue].
+
+[search through the issues]: https://github.com/sunshowers-code/rust-cli-recommendations/issues?q=is%3Aissue+sort%3Aupdated-desc
+[open an issue]: https://github.com/sunshowers-code/rust-cli-recommendations/issues/new
 
 ## License
 

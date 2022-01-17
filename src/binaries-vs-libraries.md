@@ -2,12 +2,11 @@
 
 You *may* expose your application's functionality as a library. Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.
 
-In any case, binary *crates* *should not* expose their library functionality within the same crate. The library, if exposed, *should* be a different crate, with an appropriate name linking the two. The library *should not* have any command-line parsing logic.
+In any case, binary crates *must not* expose their library functionality within the same crate. The library, if exposed, *must* be a different crate, with an appropriate name linking the two. The library *should not* have any command-line parsing logic.
 
-**Why?**
-* For other consumers of the library, clap is an unnecessary dependency.
+**Why separate libraries from binaries?**
+* For other consumers of the library, clap and other binary-only dependencies are unnecessary.
 * The binary's versioning is separated out from the library's versioning; see [Versioning](versioning.html) for more.
-* Compile times become quicker.
 
 **Reasons against exposing a library**
 * Maintaining a library in addition to a binary is hard work. It involves documentation and versioning.

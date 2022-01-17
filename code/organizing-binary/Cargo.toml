@@ -1,0 +1,10 @@
+[package]
+name = "organizing-binary"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "my_app"
+
+[dependencies]
+clap = { version = "3.0.8", features = ["derive"] }

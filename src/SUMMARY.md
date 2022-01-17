@@ -6,6 +6,7 @@
   - [Handling arguments and subcommands](./handling-arguments.md)
 
 - [Binaries vs libraries](./binaries-vs-libraries.md)
+  - [Organizing code in binary crates](./organizing-binary.md)
 - [Versioning](./versioning.md)
 
 - [Configuration](./configuration.md)
