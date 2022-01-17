@@ -842,7 +842,7 @@ pub struct MyApp {
 }
 
 impl MyApp {
-    pub fn exec(self) -&gt; Result&lt;(), ()&gt; {
+    pub fn exec(self) -&gt; color_eyre::Result&lt;()&gt; {
         // execute the command and return a result
         unimplemented!()
     }
@@ -871,7 +871,9 @@ pub use command::MyApp;
 <pre><pre class="playground"><code class="language-rust">use clap::Parser;
 use my_app::MyApp;
 
-fn main() -&gt; Result&lt;(), ()&gt; {
+fn main() -&gt; color_eyre::Result&lt;()&gt; {
+    color_eyre::install()?;
+
     let my_app = MyApp::parse();
     my_app.exec()
 }
