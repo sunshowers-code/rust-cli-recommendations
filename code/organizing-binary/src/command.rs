@@ -8,7 +8,7 @@ pub struct MyApp {
 }
 
 impl MyApp {
-    pub fn exec(self) -> Result<(), ()> {
+    pub fn exec(self) -> color_eyre::Result<()> {
         // execute the command and return a result
         unimplemented!()
     }

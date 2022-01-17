@@ -7,4 +7,5 @@ edition = "2021"
 name = "my_app"
 
 [dependencies]
+color-eyre = { version = "0.6.0", default-features = false }
 clap = { version = "3.0.8", features = ["derive"] }
