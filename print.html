@@ -960,7 +960,7 @@ the command-line interface is.</li>
 <li>System-wide configuration</li>
 <li>Default configuration shipped with the program.</li>
 </ol>
-<p>The only exception is that color support <em>should</em> follow the rules listed in the <a href="./colors.html">Colors</a> section.</p>
+<p>There are some exceptions. For example, color support <em>should</em> follow the rules listed in the <a href="./colors.html">Colors</a> section.</p>
 <p><strong>Configurations <em>should</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
 <pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
 limit = 42
@@ -983,7 +983,7 @@ limit = 84
 input = &quot;utf8&quot;
 output = &quot;utf32&quot;
 </code></pre>
-<p>Exactly what the boundaries of merged entries should be is application-specific: it is hard to give general guidance here.</p>
+<p>Exactly how deep merges should go is application-specific: it is hard to give general guidance here.</p>
 <h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
