@@ -167,11 +167,7 @@
 </ul>
 <p><strong>Programs <em>must not</em> provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats.</strong> These formats are unsuitable for inter-process communication where stability is paramount.</p>
 <p><strong>All machine-readable output <em>must</em> be printed to stdout, <em>not</em> stderr.</strong></p>
-<p><strong>Colors <em>must</em> be disabled if any of the following are true:</strong></p>
-<ul>
-<li>Machine-readable output is requested.</li>
-<li>The output is being piped to another program, unless one of the conditions listed in <a href="./colors.html">Colors</a> holds.</li>
-</ul>
+<p><strong>Colors <em>must</em> be disabled for machine-readable output.</strong></p>
 <p><strong>Within a binary version series, output <em>must</em> be kept stable and append-only.</strong> Breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>). Adding new keys to a JSON map or equivalent is generally considered stable.</p>
 
                     </main>
