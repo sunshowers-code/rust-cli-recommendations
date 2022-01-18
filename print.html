@@ -961,7 +961,7 @@ the command-line interface is.</li>
 <li>Default configuration shipped with the program.</li>
 </ol>
 <p>There are some exceptions. For example, color support <em>should</em> follow the rules listed in the <a href="./colors.html">Colors</a> section.</p>
-<p><strong>Configurations <em>should</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
+<p><strong>Configurations <em>may</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
 <pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
 limit = 42
 
@@ -975,7 +975,7 @@ limit = 84
 [encoding]
 input = &quot;utf8&quot;
 </code></pre>
-<p>The <em>merged</em> configuration is:</p>
+<p>One way to merge configurations is to combine them, as follows:</p>
 <pre><code class="language-toml">[myapp]
 limit = 84
 
@@ -983,13 +983,16 @@ limit = 84
 input = &quot;utf8&quot;
 output = &quot;utf32&quot;
 </code></pre>
-<p>Exactly how deep merges should go is application-specific: it is hard to give general guidance here.</p>
+<p>Exactly how deep merges should go is application-specific.</p>
 <h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
 <li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>
 <li><a href="https://crates.io/crates/figment">figment</a>. This seems quite nice as well, though I haven't used it.</li>
 </ul>
+<blockquote>
+<p>TODO: example using config with serde.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="adding-colors-to-applications"><a class="header" href="#adding-colors-to-applications">Adding colors to applications</a></h1>
 <p>Colors can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.</p>
 <h2 id="general-recommendations"><a class="header" href="#general-recommendations">General recommendations</a></h2>
