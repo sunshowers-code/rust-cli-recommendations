@@ -8,7 +8,7 @@ Applications *may* (and in the case of forced loose coupling, *should*) make the
 
 **For more complex structured data, programs *should* accept a flag to provide output (e.g. `--output-format`, or `--message-format` if many lines of structured data are printed out).**
 * Programs *should* support at least `json` machine-readable output.
-* Programs *may* also provide their output as other formats like XML, [CBOR](https://cbor.io/), [MessagePack](https://msgpack.org/index.html), or other **self-describing** formats.
+* Programs *may* also provide their output as XML, [CBOR](https://cbor.io/), [MessagePack](https://msgpack.org/index.html), or other **self-describing** formats.
   * A self-describing format is one where the keys, or some equivalent, are part of the serialized output.
 * Formats like [protobuf](https://developers.google.com/protocol-buffers) are suitable as well, if up-to-date IDLs (e.g. `.proto` files) are published along with releases. One neat trick is to embed them into your binary and add a command to write them out to a given directory.
 
