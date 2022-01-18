@@ -5,4 +5,4 @@ edition = "2021"
 
 [dependencies]
 camino = "1.0.5"
-clap = { version = "3.0.6", features = ["derive"] }
+clap = { version = "3.0.9", features = ["derive"] }

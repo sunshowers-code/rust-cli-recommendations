@@ -129,17 +129,10 @@ mod tests {
     fn test_read_help() {
         let mut app = App::into_app();
         let mut cursor: Cursor<Vec<u8>> = Cursor::new(Vec::new());
-        let read_cmd = find_subcommand_mut(&mut app, "read").unwrap();
+        let read_cmd = app.find_subcommand_mut("read").unwrap();
         read_cmd.write_help(&mut cursor).unwrap();
         let help = String::from_utf8(cursor.into_inner()).unwrap();
         println!("{}", help);
         assert_eq!(help, EXPECTED_READ_HELP);
-    }
-
-    fn find_subcommand_mut<'app, 'help>(
-        app: &'app mut clap::App<'help>,
-        name: &str,
-    ) -> Option<&'app mut clap::App<'help>> {
-        app.get_subcommands_mut().find(|s| name == s.get_name())
     }
 }
