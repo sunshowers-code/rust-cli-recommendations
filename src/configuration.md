@@ -6,7 +6,9 @@ Simple applications are able to accept all their options over the command line, 
 
 **Configuration *should* be in the [TOML format](https://toml.io/en/).** The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.
 
-Other configuration formats like [YAML](https://yaml.org/) *may* be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.
+[YAML](https://yaml.org/) *may* be used if the configuration is complex enough (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.
+
+Some utilities require more expressive power in their configuration; for example, [wezterm](https://wezfurlong.org/wezterm/) uses [Lua](https://wezfurlong.org/wezterm/config/files.html), while [Bazel](https://bazel.build/) uses a custom configuration language inspired by Python called [Starlark](https://docs.bazel.build/versions/main/skylark/language.html).
 
 ## Configuration scopes
 
