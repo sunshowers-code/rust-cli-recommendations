@@ -16,8 +16,6 @@ Applications *may* (and in the case of forced loose coupling, *should*) make the
 
 **All machine-readable output *must* be printed to stdout, *not* stderr.**
 
-**Colors *must* be disabled if any of the following are true:**
-* Machine-readable output is requested.
-* The output is being piped to another program, unless one of the conditions listed in [Colors](./colors.html) holds.
+**Colors *must* be disabled for machine-readable output.**
 
 **Within a binary version series, output *must* be kept stable and append-only.** Breaking changes *must* be gated to an argument (e.g. `--format-version 2` or `--message-format json-v2`). Adding new keys to a JSON map or equivalent is generally considered stable.
