@@ -13,7 +13,7 @@ There are a number of different command-line parsers for Rust programs. However,
 * clap pulls in several dependencies and takes quite a while to build.
 * clap increases binary size significantly.
 * clap is a complex parser with many different options. I've found uses for most of them, but they can be overwhelming.
-* The latest version of clap as of January 2022 is 3.0.6. This version currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's [some discussions about it](https://github.com/clap-rs/clap/issues/3267). For now, a workaround is to use version 2 of clap.
+* clap version 3 currently has a Minimum Supported Rust Version (MSRV) of Rust 1.54; I personally do not consider this to be a negative but there's [some discussions about it](https://github.com/clap-rs/clap/issues/3267). For now, a workaround is to use version 2 of clap, which supports most of the features that clap version 3 does.
 
 ## Automatically deriving arguments
 
