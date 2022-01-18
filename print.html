@@ -962,7 +962,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p><strong>If applications support user-scoped configuration:</strong></p>
 <ul>
 <li>On Unix platforms other than macOS, applications <em>should</em> follow the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG specification</a>.</li>
-<li>On macOS and Windows, applications <em>should</em> either use <code>$HOME/.config</code> or the native platform directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</li>
+<li>On macOS and Windows, applications <em>should</em> either use <code>$HOME/.config</code> or the platform-native config directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so <code>$HOME/.config</code> is a suitable alternative.</li>
 </ul>
 <p><a href="https://crates.io/crates/dirs">dirs</a> is the most actively maintained Rust library for getting the native config directory (and other directories) for every platform.</p>
 <p><strong>Applications <em>may</em> read configuration options over the command line and the environment.</strong> It is often reasonable to let users override configuration via command-line options and environment variables. If so, then:</p>
