@@ -944,7 +944,8 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p>Simple applications are able to accept all their options over the command line, but more complex ones eventually need to add support for configuration files.</p>
 <h2 id="configuration-formats"><a class="header" href="#configuration-formats">Configuration formats</a></h2>
 <p><strong>Configuration <em>should</em> be in the <a href="https://toml.io/en/">TOML format</a>.</strong> The TOML format, as a descendant of INI, is widely understood and is easy to read and write for both humans and computers.</p>
-<p>Other configuration formats like <a href="https://yaml.org/">YAML</a> <em>may</em> be used if the configuration is extremely complex (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
+<p><a href="https://yaml.org/">YAML</a> <em>may</em> be used if the configuration is complex enough (though in these cases it's often fruitful to devise ways of reducing complexity), or if there are legacy constraints.</p>
+<p>Some utilities require more expressive power in their configuration; for example, <a href="https://wezfurlong.org/wezterm/">wezterm</a> uses <a href="https://wezfurlong.org/wezterm/config/files.html">Lua</a>, while <a href="https://bazel.build/">Bazel</a> uses a custom configuration language inspired by Python called <a href="https://docs.bazel.build/versions/main/skylark/language.html">Starlark</a>.</p>
 <h2 id="configuration-scopes"><a class="header" href="#configuration-scopes">Configuration scopes</a></h2>
 <p>Depending on the application, the following scopes for a configuration are often seen in practice:</p>
 <ol>
