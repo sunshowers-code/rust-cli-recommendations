@@ -18,7 +18,7 @@ limit = 42
 
 [encoding]
 input = "utf16"
-output = "utf32"
+output = "latin1"
 ```
 
 ```toml
@@ -37,7 +37,7 @@ limit = 84
 
 [myapp.encoding]
 input = "utf8"
-output = "utf32"
+output = "latin1"
 ```
 
 Exactly how deep merges should go is application-specific.
