@@ -24,7 +24,7 @@ Not all applications support all of these: which scopes make sense is a matter o
 
 **If applications support user-scoped configuration:**
 * On Unix platforms other than macOS, applications *should* follow the [XDG specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html).
-* On macOS and Windows, applications *should* either use `$HOME/.config` or the native platform directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so `$HOME/.config` is a suitable alternative.
+* On macOS and Windows, applications *should* either use `$HOME/.config` or the platform-native config directory. On macOS and Windows, the platform-native directories are somewhat harder to access on the command line, so `$HOME/.config` is a suitable alternative.
 
 [dirs](https://crates.io/crates/dirs) is the most actively maintained Rust library for getting the native config directory (and other directories) for every platform.
 
