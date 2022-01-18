@@ -10,7 +10,7 @@
 
 There are some exceptions. For example, color support *should* follow the rules listed in the [Colors](./colors.md) section.
 
-**Configurations *should* be merged rather than completely overwritten.** Consider the following configuration files.
+**Configurations *may* be merged rather than completely overwritten.** Consider the following configuration files.
 
 ```toml
 # $HOME/.config/myapp.toml -- user-scoped config
@@ -29,7 +29,7 @@ limit = 84
 input = "utf8"
 ```
 
-The *merged* configuration is:
+One way to merge configurations is to combine them, as follows:
 
 ```toml
 [myapp]
@@ -40,7 +40,7 @@ input = "utf8"
 output = "utf32"
 ```
 
-Exactly how deep merges should go is application-specific: it is hard to give general guidance here.
+Exactly how deep merges should go is application-specific.
 
 ## Rust libraries for managing configuration
 
@@ -48,3 +48,5 @@ There are two main Rust libraries for managing hierarchical configuration:
 
 * [config](https://crates.io/crates/config). I've used this and it seems to work well.
 * [figment](https://crates.io/crates/figment). This seems quite nice as well, though I haven't used it.
+
+> TODO: example using config with serde.
