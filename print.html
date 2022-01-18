@@ -787,28 +787,7 @@ OPTIONS:
 </ul>
 </li>
 </ul>
-<h2 id="machine-readable-output"><a class="header" href="#machine-readable-output">Machine-readable output</a></h2>
-<p>Applications <em>may</em> (and in the case of forced loose coupling, <em>should</em>) make their CLI available as an interface not just to humans but to other programs. If you're making your interface available this way, follow these rules:</p>
-<ul>
-<li>For lists of simple items like strings, programs <em>should</em> provide list output as newline-delimited items.
-<ul>
-<li>This is most useful for compatibility with existing tools like <code>xargs</code>.</li>
-<li>If list items are filenames or can have newlines or other in them, programs <em>must</em> provide a <code>-0</code> flag or similar to list output as null-delimited (<code>\0</code>-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. <code>xargs --null</code>).</li>
-</ul>
-</li>
-<li>For more complex structured data, programs <em>should</em> accept a flag to provide output (e.g. <code>--output-format</code>, or <code>--message-format</code> if multiple messages are printed out), and <em>should</em> support at least <code>json</code> machine-readable output.</li>
-<li>Programs <em>may</em> also provide their output as other formats like XML, <a href="https://cbor.io/">CBOR</a>, <a href="https://msgpack.org/index.html">MessagePack</a>, or other <strong>self-describing</strong> formats.
-<ul>
-<li>A self-describing format is one where the keys, or some equivalent, are part of the serialized output.</li>
-<li>Formats like <a href="https://developers.google.com/protocol-buffers">protobuf</a> are suitable as well, if up-to-date IDLs (e.g. <code>.proto</code> files) are published along with releases. One neat trick is to embed them into your binary and add a command to write them out to a given directory.</li>
-</ul>
-</li>
-<li>All machine-readable output <em>must</em> be printed to stdout, <em>not</em> stderr.</li>
-<li>Programs <em>must not</em> provide their output as <a href="https://github.com/bincode-org/bincode">bincode</a> or other non-self-describing formats. These formats are unsuitable for inter-process communication where stability is paramount.</li>
-<li>Colors <em>must</em> be disabled while writing to a pipe, unless <code>--color=always</code> is passed in. See <a href="./colors.html">Colors</a> for more.</li>
-<li>Within a version series, output <em>must</em> be kept stable and append-only, and any breaking changes <em>must</em> be gated to an argument (e.g. <code>--format-version 2</code> or <code>--message-format json-v2</code>).</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="machine-readable-output-1"><a class="header" href="#machine-readable-output-1">Machine-readable output</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="machine-readable-output"><a class="header" href="#machine-readable-output">Machine-readable output</a></h1>
 <p>Applications <em>may</em> (and in the case of forced loose coupling, <em>should</em>) make their CLI available as an interface not just to humans but to other programs. If you're making your interface available this way, follow these rules:</p>
 <p><strong>For lists of strings, programs <em>should</em> provide list output as newline-delimited items.</strong></p>
 <ul>
