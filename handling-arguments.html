@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html" class="active">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html" class="active">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -275,18 +275,11 @@ enum Color {
 </span><span class="boring">    fn test_read_help() {
 </span><span class="boring">        let mut app = App::into_app();
 </span><span class="boring">        let mut cursor: Cursor&lt;Vec&lt;u8&gt;&gt; = Cursor::new(Vec::new());
-</span><span class="boring">        let read_cmd = find_subcommand_mut(&amp;mut app, &quot;read&quot;).unwrap();
+</span><span class="boring">        let read_cmd = app.find_subcommand_mut(&quot;read&quot;).unwrap();
 </span><span class="boring">        read_cmd.write_help(&amp;mut cursor).unwrap();
 </span><span class="boring">        let help = String::from_utf8(cursor.into_inner()).unwrap();
 </span><span class="boring">        println!(&quot;{}&quot;, help);
 </span><span class="boring">        assert_eq!(help, EXPECTED_READ_HELP);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn find_subcommand_mut&lt;'app, 'help&gt;(
-</span><span class="boring">        app: &amp;'app mut clap::App&lt;'help&gt;,
-</span><span class="boring">        name: &amp;str,
-</span><span class="boring">    ) -&gt; Option&lt;&amp;'app mut clap::App&lt;'help&gt;&gt; {
-</span><span class="boring">        app.get_subcommands_mut().find(|s| name == s.get_name())
 </span><span class="boring">    }
 </span><span class="boring">}
 </span></code></pre>
@@ -443,18 +436,11 @@ SUBCOMMANDS:
 </span><span class="boring">    fn test_read_help() {
 </span><span class="boring">        let mut app = App::into_app();
 </span><span class="boring">        let mut cursor: Cursor&lt;Vec&lt;u8&gt;&gt; = Cursor::new(Vec::new());
-</span><span class="boring">        let read_cmd = find_subcommand_mut(&amp;mut app, &quot;read&quot;).unwrap();
+</span><span class="boring">        let read_cmd = app.find_subcommand_mut(&quot;read&quot;).unwrap();
 </span><span class="boring">        read_cmd.write_help(&amp;mut cursor).unwrap();
 </span><span class="boring">        let help = String::from_utf8(cursor.into_inner()).unwrap();
 </span><span class="boring">        println!(&quot;{}&quot;, help);
 </span><span class="boring">        assert_eq!(help, EXPECTED_READ_HELP);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn find_subcommand_mut&lt;'app, 'help&gt;(
-</span><span class="boring">        app: &amp;'app mut clap::App&lt;'help&gt;,
-</span><span class="boring">        name: &amp;str,
-</span><span class="boring">    ) -&gt; Option&lt;&amp;'app mut clap::App&lt;'help&gt;&gt; {
-</span><span class="boring">        app.get_subcommands_mut().find(|s| name == s.get_name())
 </span><span class="boring">    }
 </span><span class="boring">}
 </span></code></pre>
@@ -584,18 +570,11 @@ OPTIONS:
 </span><span class="boring">    fn test_read_help() {
 </span><span class="boring">        let mut app = App::into_app();
 </span><span class="boring">        let mut cursor: Cursor&lt;Vec&lt;u8&gt;&gt; = Cursor::new(Vec::new());
-</span><span class="boring">        let read_cmd = find_subcommand_mut(&amp;mut app, &quot;read&quot;).unwrap();
+</span><span class="boring">        let read_cmd = app.find_subcommand_mut(&quot;read&quot;).unwrap();
 </span><span class="boring">        read_cmd.write_help(&amp;mut cursor).unwrap();
 </span><span class="boring">        let help = String::from_utf8(cursor.into_inner()).unwrap();
 </span><span class="boring">        println!(&quot;{}&quot;, help);
 </span><span class="boring">        assert_eq!(help, EXPECTED_READ_HELP);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn find_subcommand_mut&lt;'app, 'help&gt;(
-</span><span class="boring">        app: &amp;'app mut clap::App&lt;'help&gt;,
-</span><span class="boring">        name: &amp;str,
-</span><span class="boring">    ) -&gt; Option&lt;&amp;'app mut clap::App&lt;'help&gt;&gt; {
-</span><span class="boring">        app.get_subcommands_mut().find(|s| name == s.get_name())
 </span><span class="boring">    }
 </span><span class="boring">}
 </span></code></pre>

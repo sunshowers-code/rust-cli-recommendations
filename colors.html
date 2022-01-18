@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li></ol></li><li class="chapter-item expanded "><a href="colors.html" class="active">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="write-ops.html">Write operations</a></li><li><ol class="section"><li class="chapter-item expanded "><div>…for application state</div></li><li class="chapter-item expanded "><a href="write-ops-user-data.html">…on user data</a></li></ol></li><li class="chapter-item expanded "><a href="exit-codes.html">Exit codes</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html" class="active">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -154,32 +154,33 @@
 <p>These rules apply to all command-line programs, not just Rust ones.</p>
 <ol>
 <li>Applications <em>should</em> have a global <code>--color</code> option, with the values <code>always</code>, <code>auto</code> (default) and <code>never</code>. If this is specified as <code>always</code> or <code>never</code>, applications <em>must</em> enable or disable colors respectively.</li>
-<li>Otherwise, if one of a number of environment variables is specified, applications <em>may</em> do what it says.<sup class="footnote-reference"><a href="#color">1</a></sup></li>
-<li>Otherwise, if the output stream (stdout or stderr) is a terminal (also called a &quot;tty&quot;), and the enable colors. Otherwise, disable them.</li>
+<li>Otherwise, if one of a number of environment variables is specified, applications <em>should</em> do what it says.<sup class="footnote-reference"><a href="#color">1</a></sup></li>
+<li>Otherwise, if the output stream (stdout or stderr) is a pipe, applications <em>must</em> disable colors. (Each output stream <em>must</em> be evaluated separately. For example, if stdout is a pipe but stderr isn't, applications <em>must</em> disable colors on stdout but <em>may</em> enable them on stderr.)</li>
+<li>Otherwise, applications <em>may</em> enable colors.</li>
 </ol>
 <p>2 and 3 are covered by the <a href="https://docs.rs/supports-color/latest/supports_color/">supports-color</a> Rust library. The exact set of environment variables is too complicated to describe here. See <a href="https://docs.rs/supports-color/latest/src/supports_color/lib.rs.html">the source code of supports-color</a> for a full list.</p>
-<p><strong>It <em>must</em> be possible to disable colors.</strong> Some users's terminals may have broken color support; in some cases, pipe detection may not work as expected.</p>
+<p><strong>It <em>must</em> be possible to disable colors.</strong> Some users's terminals may have broken color support; in other cases, pipe detection may not work as expected.</p>
 <div class="footnote-definition" id="color"><sup class="footnote-definition-label">1</sup>
 <p>This recommendation is somewhat controversial. See <a href="https://github.com/rust-lang/rust/pull/27867">this discussion</a> in the Rust repository for more about this. I generally believe that using environment variables is OK in any output that's not designed to be machine readable.</p>
 </div>
 <h2 id="color-palettes"><a class="header" href="#color-palettes">Color palettes</a></h2>
 <p>Terminals may support one of three color palettes:</p>
 <ul>
-<li>Truecolor (16 million colors): 24-bit color; 8 bits for each of red, green and blue. This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.</li>
-<li>256 colors: 18-bit color; 6 bits for each of red, green and blue. <a href="http://www.pixelbeat.org/docs/terminal_colours/#256">This page by Pádraig Brady</a> has more information about them.</li>
-<li>16 colors: 4-bit color; black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
+<li><em>Truecolor (16 million colors):</em> 24-bit color; 8 bits for each of red, green and blue. This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.</li>
+<li><em>256 colors:</em> 18-bit color; 6 bits for each of red, green and blue. <a href="http://www.pixelbeat.org/docs/terminal_colours/#256">This page by Pádraig Brady</a> has more information about them.</li>
+<li><em>16 colors:</em> 4-bit color; black, red, green, yellow, blue, magenta, cyan, white, and a &quot;bright&quot; version of each.</li>
 </ul>
 <p><strong>The default color schemes in applications <em>must</em> be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.</strong></p>
 <ul>
-<li>While the wider palettes are useful for terminal theming controlled by the user, applications <em>should not</em> use them. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
+<li>While the wider palettes are useful for terminal theming controlled by the user, applications <em>must not</em> use them by default. The reason is that users may be using a variety of terminal themes with different backgrounds. <strong>Truecolors and 16-bit colors will not render properly with all terminal themes.</strong> For example, light-colored text will fade into a light background, or dark-colored text will fade into a dark background.</li>
 <li>Most terminals allow you to configure these colors to whatever one pleases. In most themes, these 12 colors are set to contrast with the background.
 <tt><span style="color: #acacab; background-color:#050505">Themes with dark backgrounds <span style="color: #a9cdeb">set &quot;blue&quot; to be lighter</span></span></tt>,
 while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with light backgrounds <span style="color: #3465a4">set &quot;blue&quot; to be darker</span></span></tt>. (These examples are from real themes.)</li>
 <li>The &quot;black&quot; and &quot;white&quot; colors generally <em>do not</em> contrast with the background.</li>
 </ul>
-<p><strong>Applications <em>may</em> allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, a wider range of colors can be supported. In these cases, users can match their color schemes with their terminal themes.</p>
+<p><strong>Applications <em>may</em> allow users to set their own color schemes.</strong> If users can set their own color schemes, like <a href="https://man7.org/linux/man-pages/man5/dir_colors.5.html">ls</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html">emacs</a> or <a href="https://vimhelp.org/usr_06.txt.html">vim</a> do, wider palettes of colors be supported. In these cases, users can match their color schemes with their terminal themes.</p>
 <p><strong>Applications <em>may</em> use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>, so relying on them can cause issues.</p>
-<p><strong>Applications <em>must not</em> use blinking text.</strong> Blinking text can be distracting or difficult to read for some people. The similar <code>&lt;blink&gt;</code> tag was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
+<p><strong>Applications <em>must not</em> use blinking text.</strong> Blinking text can be distracting or difficult to read for many people. The HTML <code>&lt;blink&gt;</code> tag, which had similar behavior, was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
 <h2 id="ansi-color-codes-and-windows-color-apis"><a class="header" href="#ansi-color-codes-and-windows-color-apis">ANSI color codes and Windows color APIs</a></h2>
 <p>Most Unix terminals support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI color codes</a>. For example, turning the foreground color to &quot;green&quot; involves writing the characters <code>\x1b</code> (ESC), <code>[</code>, <code>32</code> (for green), and <code>m</code> to the terminal.</p>
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
@@ -189,7 +190,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="hierarchical-config.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="versioning.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -203,7 +204,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="hierarchical-config.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="versioning.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
