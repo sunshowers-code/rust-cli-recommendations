@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js rust">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -37,7 +37,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -63,7 +63,7 @@
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
             html.classList.remove('no-js')
-            html.classList.remove('light')
+            html.classList.remove('rust')
             html.classList.add(theme);
             html.classList.add('js');
         </script>
@@ -100,8 +100,8 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -936,7 +936,251 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
 <p><strong>Cross-platform applications <em>should not</em> target the Windows Console APIs.</strong> Instead, they should rely on the ANSI color code support built into modern Windows terminals. Note that Windows requires ANSI color code support to be initialized: the <a href="https://github.com/sunshowers/enable-ansi-support">enable-ansi-support</a> crate does that for you if you're using Rust. Call it early in <code>main</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="managing-colors-in-rust"><a class="header" href="#managing-colors-in-rust">Managing colors in Rust</a></h1>
-<p>TODO</p>
+<p>There are many Rust libraries for managing colors: my favorite is <a href="https://crates.io/crates/owo-colors">owo-colors</a> because it is the only library I've found that meets all of these criteria:</p>
+<ul>
+<li>actively maintained</li>
+<li>has a simple, intuitive API</li>
+<li>minimizes dependencies on global state</li>
+<li>involves zero allocations</li>
+</ul>
+<blockquote>
+<p>Note: you <em>should not</em> use <a href="https://docs.rs/termcolor/latest/termcolor/">termcolor</a> because it targets the deprecated Console APIs on Windows—and has a significantly more involved API as a result.</p>
+<p>Instead, use a library that just only supports ANSI color codes, and initialize support for them on Windows with <a href="https://crates.io/crates/enable-ansi-support">enable-ansi-support</a>.</p>
+</blockquote>
+<p>There are two general patterns with which color support can be handled: the &quot;immediate pattern&quot; and the &quot;stylesheet pattern&quot;. <strong>Library code that supports colors <em>should</em> use the stylesheet pattern to manage the colors that are displayed.</strong> Code in a binary crate can use whichever pattern leads to simpler code.</p>
+<h2 id="the-immediate-pattern"><a class="header" href="#the-immediate-pattern">The immediate pattern</a></h2>
+<p>This pattern is usually presented in examples and tutorials. It is conceptually quite simple.</p>
+<p>Here's an example of what it looks like:</p>
+<pre><code class="language-rust noplaypen"><span class="boring">#![allow(dead_code)]
+</span>// The owo-colors &quot;supports-colors&quot; feature must be enabled.
+use clap::{ArgEnum, Parser};
+use owo_colors::{OwoColorize, Stream};
+
+#[derive(Debug, Parser)]
+struct MyApp {
+    #[clap(long, arg_enum, global = true, default_value = &quot;auto&quot;)]
+    color: Color,
+}
+
+#[derive(ArgEnum, Clone, Copy, Debug)]
+enum Color {
+    Always,
+    Auto,
+    Never,
+}
+
+impl Color {
+    fn init(self) {
+        // Set a supports-color override based on the variable passed in.
+        match self {
+            Color::Always =&gt; owo_colors::set_override(true),
+            Color::Auto =&gt; {}
+            Color::Never =&gt; owo_colors::set_override(false),
+        }
+    }
+}
+
+fn main() {
+    let app = MyApp::parse();
+    app.color.init();
+
+    println!(
+        &quot;My number is {}&quot;,
+        42.if_supports_color(Stream::Stdout, |text| text.bright_blue())
+    );
+}
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><strong><code>owo_colors::set_override</code> is used to control color support globally.</strong> The global configuration only has an effect if <code>if_supports_color</code> is called.</li>
+<li><strong><code>println!</code> is paired with <code>Stream::Stdout</code>.</strong> If this were <code>eprintln!</code>, it would need to be paired with <code>Stream::Stderr</code>.</li>
+</ul>
+<p>While this pattern is sometimes convenient in binary code, <strong>it <em>should not</em> be used in libraries.</strong> That is because libraries <em>should not</em> print information directly out to stdout or stderr—instead, they should return values that implement <code>Display</code> or similar. Library code <em>should</em> use the stylesheet pattern instead.</p>
+<h2 id="the-stylesheet-pattern"><a class="header" href="#the-stylesheet-pattern">The stylesheet pattern</a></h2>
+<p>This pattern involves defining a <code>Styles</code> struct containing colors and styles to apply to a text.</p>
+<p>A stylesheet is simply a list of dynamic styles, customized to a particular type to be displayed. Here's an example:</p>
+<pre><code class="language-rust noplaypen"><span class="boring">use std::fmt;
+</span>use owo_colors::{OwoColorize, Style};
+
+// Stylesheet used to colorize MyValueDisplay below.
+#[derive(Debug, Default)]
+struct Styles {
+    number_style: Style,
+    shape_style: Style,
+    // ... other styles
+}
+
+impl Styles {
+    fn colorize(&amp;mut self) {
+        self.number_style = Style::new().bright_blue();
+        self.shape_style = Style::new().bright_green();
+        // ... other styles
+    }
+}
+<span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">pub struct MyValue {
+</span><span class="boring">    number: usize,
+</span><span class="boring">    shape: &amp;'static str,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl MyValue {
+</span><span class="boring">    pub fn new(number: usize, shape: &amp;'static str) -&gt; Self {
+</span><span class="boring">        Self { number, shape }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    /// Returns a type that can display `MyValue`.
+</span><span class="boring">    pub fn display(&amp;self) -&gt; MyValueDisplay&lt;'_&gt; {
+</span><span class="boring">        MyValueDisplay {
+</span><span class="boring">            value: self,
+</span><span class="boring">            styles: Box::new(Styles::default()),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Displayer for [`MyValue`].
+</span><span class="boring">pub struct MyValueDisplay&lt;'a&gt; {
+</span><span class="boring">    value: &amp;'a MyValue,
+</span><span class="boring">    styles: Box&lt;Styles&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; MyValueDisplay&lt;'a&gt; {
+</span><span class="boring">    /// Colorizes the output.
+</span><span class="boring">    pub fn colorize(&amp;mut self) {
+</span><span class="boring">        self.styles.colorize();
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; fmt::Display for MyValueDisplay&lt;'a&gt; {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+</span><span class="boring">        write!(
+</span><span class="boring">            f,
+</span><span class="boring">            &quot;My number is {}, and my shape is a {}&quot;,
+</span><span class="boring">            self.value.number.style(self.styles.number_style),
+</span><span class="boring">            self.value.shape.style(self.styles.shape_style),
+</span><span class="boring">        )
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<p>Here's some library code that uses the above stylesheet:</p>
+<pre><code class="language-rust noplaypen"><span class="boring">use std::fmt;
+</span><span class="boring">use owo_colors::{OwoColorize, Style};
+</span><span class="boring">
+</span><span class="boring">// Stylesheet used to colorize MyValueDisplay below.
+</span><span class="boring">#[derive(Debug, Default)]
+</span><span class="boring">struct Styles {
+</span><span class="boring">    number_style: Style,
+</span><span class="boring">    shape_style: Style,
+</span><span class="boring">    // ... other styles
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Styles {
+</span><span class="boring">    fn colorize(&amp;mut self) {
+</span><span class="boring">        self.number_style = Style::new().bright_blue();
+</span><span class="boring">        self.shape_style = Style::new().bright_green();
+</span><span class="boring">        // ... other styles
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>#[derive(Debug)]
+pub struct MyValue {
+    number: usize,
+    shape: &amp;'static str,
+}
+
+impl MyValue {
+    pub fn new(number: usize, shape: &amp;'static str) -&gt; Self {
+        Self { number, shape }
+    }
+
+    /// Returns a type that can display `MyValue`.
+    pub fn display(&amp;self) -&gt; MyValueDisplay&lt;'_&gt; {
+        MyValueDisplay {
+            value: self,
+            styles: Box::new(Styles::default()),
+        }
+    }
+}
+
+/// Displayer for [`MyValue`].
+pub struct MyValueDisplay&lt;'a&gt; {
+    value: &amp;'a MyValue,
+    styles: Box&lt;Styles&gt;,
+}
+
+impl&lt;'a&gt; MyValueDisplay&lt;'a&gt; {
+    /// Colorizes the output.
+    pub fn colorize(&amp;mut self) {
+        self.styles.colorize();
+    }
+}
+
+impl&lt;'a&gt; fmt::Display for MyValueDisplay&lt;'a&gt; {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(
+            f,
+            &quot;My number is {}, and my shape is a {}&quot;,
+            self.value.number.style(self.styles.number_style),
+            self.value.shape.style(self.styles.shape_style),
+        )
+    }
+}
+</code></pre>
+<p>And finally, here's the binary code that uses the library.</p>
+<pre><code class="language-rust noplaypen"><span class="boring">#![allow(dead_code)]
+</span><span class="boring">use clap::{ArgEnum, Parser};
+</span><span class="boring">use my_app::MyValue;
+</span><span class="boring">use owo_colors::Stream;
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">struct MyApp {
+</span><span class="boring">    #[clap(long, arg_enum, global = true, default_value = &quot;auto&quot;)]
+</span><span class="boring">    color: Color,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(ArgEnum, Clone, Copy, Debug)]
+</span><span class="boring">enum Color {
+</span><span class="boring">    Always,
+</span><span class="boring">    Auto,
+</span><span class="boring">    Never,
+</span><span class="boring">}
+</span><span class="boring">
+</span>// This example uses the supports-color crate:
+// https://crates.io/crates/supports-color
+//
+// MyApp and Color definitions are repeated from the &quot;immediate pattern&quot;
+// example above.
+
+impl Color {
+    fn supports_color_on(self, stream: Stream) -&gt; bool {
+        match self {
+            Color::Always =&gt; true,
+            Color::Auto =&gt; supports_color::on_cached(stream).is_some(),
+            Color::Never =&gt; false,
+        }
+    }
+}
+
+fn main() {
+    let app = MyApp::parse();
+
+    let my_value = MyValue::new(24, &quot;circle&quot;);
+    let mut display = my_value.display();
+    if app.color.supports_color_on(Stream::Stdout) {
+        display.colorize();
+    }
+    println!(&quot;{}&quot;, display);
+}
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><strong>Library code is completely unaware of whether the environment supports colors.</strong> All it cares about is whether the <code>colorize</code> method is called.</li>
+<li><strong>The stylesheet is stored as <code>Box&lt;Styles&gt;</code>.</strong> The boxing isn't strictly required, but each <code>Style</code> is pretty large, and a struct containing e.g. 16 styles is 272 bytes as of owo-colors 3.2.0. That's a pretty large amount of data to store on the stack.</li>
+<li><strong><code>Styles::default()</code> initializes all the styles to having no effect.</strong> The <code>colorize()</code> method then initializes them as required.</li>
+<li><strong>For custom color support, <code>Styles</code> can be made public.</strong> Most library code won't need to give users the ability to customize styles, but this pattern naturally extends to that use case.</li>
+<li><strong>Use of a separate <code>MyAppDisplay</code> type.</strong> The <code>colorize</code> call is isolated to this particular <code>MyAppDisplay</code>, without influencing other display calls.</li>
+<li><strong><code>println!</code> is paired with <code>Stream::Stdout</code>.</strong> If this were <code>eprintln!</code>, it would need to be paired with <code>Stream::Stderr</code>.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
 <p>Simple applications are able to accept all their options over the command line, but more complex ones eventually need to add support for configuration files.</p>
 <h2 id="configuration-formats"><a class="header" href="#configuration-formats">Configuration formats</a></h2>
