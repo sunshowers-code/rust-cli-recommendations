@@ -7,6 +7,7 @@ title = "Rain's Rust CLI recommendations"
 description = "Covers recommendations for writing and structuring Rust command-line programs."
 
 [output.html]
+default-theme = "rust"
 git-repository-url = "https://github.com/sunshowers-code/rust-cli-recommendations"
 edit-url-template = "https://github.com/sunshowers-code/rust-cli-recommendations/edit/main/{path}"
 site-url = "https://rust-cli-recommendations.sunshowers.io"

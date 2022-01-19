@@ -1,0 +1,12 @@
+[package]
+name = "managing-colors"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "my_app"
+
+[dependencies]
+clap = { version = "3.0.10", features = ["derive"] }
+supports-color = "1.3.0"
+owo-colors = { version = "3.2.0", features = ["supports-colors"] }
