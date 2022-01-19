@@ -1,7 +1,6 @@
 # Summary
 
 - [Introduction](../README.md)
-  - [Why trust me?](./why-trust.md)
 - [Picking an argument parser](./cli-parser.md)
   - [Handling arguments and subcommands](./handling-arguments.md)
 ---

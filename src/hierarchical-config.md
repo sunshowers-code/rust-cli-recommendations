@@ -49,4 +49,6 @@ There are two main Rust libraries for managing hierarchical configuration:
 * [config](https://crates.io/crates/config). I've used this and it seems to work well.
 * [figment](https://crates.io/crates/figment). This seems quite nice as well, though I haven't used it.
 
-> TODO: example using config with serde.
+These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for the rest of your code. For how to do this with config, [see this example].
+
+[see this example]: https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs
