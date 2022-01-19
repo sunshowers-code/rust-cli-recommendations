@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="why-trust.html">Why trust me?</a></li></ol></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="contributors.html">Contributors</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -152,8 +152,8 @@
 <p>This living document comprises <a href="https://github.com/sunshowers">my</a> <a href="https://rust-cli-recommendations.sunshowers.io">recommendations</a>
 for how to organize and manage Rust CLI applications.</p>
 <p>In this document, I cover some tips and best practices for writing Rust applications, informed
-<a href="https://rust-cli-recommendations.sunshowers.io/why-trust.html">by my experience</a> writing real-world Rust tools. I hope you find them useful.</p>
-<p>If you haven't read the <a href="https://rust-cli.github.io/book/index.html">Rust CLI Book</a> yet, go read it first! That book provides a lot of useful information about how command-line apps should be written in Rust. This document covers some more advanced material and is more opinionated overall.</p>
+<a href="https://sunshowers.io/work/#open-source-projects">by my experience</a> writing real-world Rust tools. I've focused on command-line tools here, but many of the suggestions can be generalized to graphical and server applications as well. I hope you find them useful for your own applications.</p>
+<p>If you haven't gone through the <a href="https://rust-cli.github.io/book/index.html">Rust CLI Book</a> yet, I'd recommend reading it first. That book provides a lot of useful information about how command-line apps should be written in Rust. This document covers some more advanced material and is more opinionated overall.</p>
 <h2 id="locations"><a class="header" href="#locations">Locations</a></h2>
 <p>This document is hosted online at <a href="https://rust-cli-recommendations.sunshowers.io">https://rust-cli-recommendations.sunshowers.io</a>. The source is hosted <a href="https://github.com/sunshowers-code/rust-cli-recommendations">on GitHub</a>.</p>
 <p>This document is available offline by installing <code>git</code> and running the following command while online.</p>
@@ -170,7 +170,7 @@ for how to organize and manage Rust CLI applications.</p>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next" href="why-trust.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="cli-parser.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -181,7 +181,7 @@ for how to organize and manage Rust CLI applications.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next" href="why-trust.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="cli-parser.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
