@@ -15,7 +15,7 @@ This document is hosted online at [https://rust-cli-recommendations.sunshowers.i
 This document is available offline by installing `git` and running the following command while online.
 
 ```sh
-git clone https://github.com/sunshowers-code/rust-cli-recommendations/ --branch gh-pages
+git clone https://github.com/sunshowers-code/rust-cli-recommendations --branch gh-pages
 ```
 
 then pointing your web browser at `rust-cli-recommendations/index.html`.
