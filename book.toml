@@ -5,7 +5,7 @@ multilingual = false
 src = "src"
 theme = "theme"
 title = "Rain's Rust CLI recommendations"
-description = "Recommendations for writing and structuring Rust command-line programs."
+description = "Tips and best practices for writing and structuring Rust command-line programs."
 
 [output.html]
 default-theme = "rust"
