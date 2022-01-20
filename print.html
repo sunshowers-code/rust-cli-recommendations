@@ -892,9 +892,9 @@ the command-line interface is.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="versioning"><a class="header" href="#versioning">Versioning</a></h1>
 <p>A library crate, if provided, <em>should</em> follow <a href="https://doc.rust-lang.org/cargo/reference/semver.html">the usual Rust library versioning rules</a>.</p>
-<p>A binary crate <em>should not</em> follow those rules. Instead, the public API <em>should</em> consist of the command-line interface, plus anything else related to the interface that the project's maintainers wish to keep stable.</p>
+<p>A binary crate <em>should</em> define its public API as consisting of the command-line interface, plus anything else related to the interface that the project's maintainers wish to keep stable.</p>
 <ul>
-<li>This means that there should only be a major version change when there's a breaking change to the CLI.</li>
+<li>This means that major version changes happen when there are breaking changes to the CLI, not to internal or library code.</li>
 <li>For example, <a href="https://docs.rs/cargo-hakari/latest/cargo_hakari/#stability-guarantees">cargo-hakari's stability policy</a> is to keep the contents of a generated checked-in file the same, unless a config option is turned on or there's a bugfix.</li>
 </ul>
 <p><strong>Why?</strong> It is easier to avoid making breaking changes to command-line interfaces. Mature projects like <a href="https://www.gnu.org/software/coreutils/">GNU coreutils</a> avoid breaking changes to their CLIs for decades.</p>
