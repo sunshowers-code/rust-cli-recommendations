@@ -17,7 +17,7 @@
 ---
 - [Dry runs and the interpreter pattern]()
 - [Atomic writes]()
-- [Exit codes]()
+- [Error handling and exit codes]()
 
 ---
 
