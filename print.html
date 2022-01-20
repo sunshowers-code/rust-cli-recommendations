@@ -942,7 +942,7 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
 <p><strong>Cross-platform applications <em>should not</em> target the Windows Console APIs.</strong> Instead, they should rely on the ANSI color code support built into modern Windows terminals. Note that Windows requires ANSI color code support to be initialized: the <a href="https://github.com/sunshowers/enable-ansi-support">enable-ansi-support</a> crate does that for you if you're using Rust. Call it early in <code>main</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="managing-colors-in-rust"><a class="header" href="#managing-colors-in-rust">Managing colors in Rust</a></h1>
-<p>There are many Rust libraries for managing colors: my favorite is <a href="https://crates.io/crates/owo-colors">owo-colors</a> because it is the only library I've found that meets all of these criteria:</p>
+<p>There are many Rust libraries for managing terminal colors. You <em>should</em> use <a href="https://crates.io/crates/owo-colors">owo-colors</a> because it is the only library I've found that meets all of these criteria:</p>
 <ul>
 <li>actively maintained</li>
 <li>has a simple, intuitive API</li>
