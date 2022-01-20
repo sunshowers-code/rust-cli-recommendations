@@ -6,7 +6,7 @@ for how to organize and manage Rust CLI applications.
 In this document, I cover some tips and best practices for writing Rust applications, informed
 [by my experience](https://sunshowers.io/work/#open-source-projects) writing real-world Rust tools. I've focused on command-line tools here, but many of the suggestions can be generalized to graphical and server applications as well. I hope you find them useful for your own applications.
 
-If you haven't gone through the [Rust CLI Book](https://rust-cli.github.io/book/index.html) yet, I'd recommend reading it first. That book provides a lot of useful information about how command-line apps should be written in Rust. This document covers some more advanced material and is more opinionated overall.
+If you haven't gone through the [Rust CLI Book](https://rust-cli.github.io/book/index.html) yet, I'd recommend reading it first. That book provides a lot of useful information about how to write command-line apps in Rust. This document covers some more advanced material and is more opinionated overall.
 
 ## Locations
 
