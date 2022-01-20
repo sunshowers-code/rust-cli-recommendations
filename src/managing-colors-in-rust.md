@@ -1,6 +1,6 @@
 # Managing colors in Rust
 
-There are many Rust libraries for managing colors: my favorite is [owo-colors](https://crates.io/crates/owo-colors) because it is the only library I've found that meets all of these criteria:
+There are many Rust libraries for managing terminal colors. You *should* use [owo-colors](https://crates.io/crates/owo-colors) because it is the only library I've found that meets all of these criteria:
 * actively maintained
 * has a simple, intuitive API
 * minimizes dependencies on global state
