@@ -23,5 +23,5 @@
 ---
 
 [Key words](./key-words.md)
-[Contributors and acknowledgments](./contributors.md)
+[Acknowledgments](./acknowledgments.md)
 [Changelog](./changelog.md)

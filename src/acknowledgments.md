@@ -1,4 +1,4 @@
-# Contributors and acknowledgments
+# Acknowledgments
 
 Thanks to the following reviewers who read through drafts of this document and provided some incredibly valuable feedback:
 
