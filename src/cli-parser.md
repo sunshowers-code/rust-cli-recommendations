@@ -37,7 +37,10 @@ The doc comments are processed as help text by clap. Here's what the help text l
 
 **Why not?**
 * The derive macro is an optional feature that pulls in extra dependencies and increases build times.
-* The derive macro can be a bit magical. Looking at [the source code of clap_derive](https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs) may be useful sometimes.
+* The derive macro can be a bit magical. Looking at [the source code of clap_derive](https://github.com/clap-rs/clap/blob/master/clap_derive/src/lib.rs), or the generated output with [cargo-expand](https://crates.io/crates/cargo-expand), may be useful.
+* The derive macro is less flexible than the builder API. For example, for an argument used multiple times like `-v -v -v`, the builder API can tell you exactly which position each `-v` was used in. The derive macro can only tell you how many times `-v` was used.
+
+> Tip: With clap 3, it is possible to combine the builder and derive approaches. For example, [`clap::Args::augment_args_for_update`](https://docs.rs/clap/3/clap/trait.Args.html#tymethod.augment_args_for_update) can be used to flatten a derived list of arguments into a builder-based `App`.
 
 ## Command and argument case
 
@@ -49,7 +52,12 @@ Following Unix and GNU conventions, all commands and arguments, except for short
 
 ## Alternatives to clap
 
-* [argh](https://github.com/google/argh): Actively maintained, but [targets the Fuchsia OS](https://github.com/google/argh/issues/3#issuecomment-581144934) rather than Unix platforms, so it's missing several crucial features.
+* [argh](https://github.com/google/argh): Actively maintained, and has an explicit goal of being small and quick to compile. However, it [follows Fuchsia OS conventions](https://github.com/google/argh/issues/3#issuecomment-581144934) rather than Unix ones, so it's missing several crucial features from a Unix perspective.
 * [pico-args](https://github.com/RazrFalcon/pico-args): Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.
 * [gumdrop](https://crates.io/crates/gumdrop): a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap [does](https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types)).
-* Writing your own by hand: you *should not* do this because there are a number of surprising footguns around argument parsing. Instead, use a simple parser like pico-args.
+
+## Writing your own parser by hand
+
+You *should not* write your own parser completely by hand. Instead, most cases are better served by a simple parser like [pico-args](https://github.com/RazrFalcon/pico-args)).
+
+If you must write a parser by hand, consider basing it on the [lexopt](https://docs.rs/lexopt/latest/lexopt/) lexer. Be sure to handle all the [standard conventions for Unix CLIs](https://github.com/google/argh/issues/3#issuecomment-581144181).

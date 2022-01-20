@@ -10,7 +10,7 @@ There are many Rust libraries for managing terminal colors. You *should* use [ow
 >
 > Instead, use a library that just only supports ANSI color codes, and initialize support for them on Windows with [enable-ansi-support](https://crates.io/crates/enable-ansi-support).
 
-There are two general patterns with which color support can be handled: the "immediate pattern" and the "stylesheet pattern". **Library code that supports colors *should* use the stylesheet pattern to manage the colors that are displayed.** Code in a binary crate can use whichever pattern leads to simpler code.
+There are two general ways with which color support can be handled. I'm going to call them the "immediate pattern" and the "stylesheet approach", respectively. **Library code that supports colors *should* use the stylesheet approach.** Code in a binary crate can use whichever pattern leads to simpler code.
 
 ## The immediate pattern
 
@@ -26,9 +26,9 @@ Notes:
 * **`owo_colors::set_override` is used to control color support globally.** The global configuration only has an effect if `if_supports_color` is called.
 * **`println!` is paired with `Stream::Stdout`.** If this were `eprintln!`, it would need to be paired with `Stream::Stderr`.
 
-While this pattern is sometimes convenient in binary code, **it *should not* be used in libraries.** That is because libraries *should not* print information directly out to stdout or stderr—instead, they should return values that implement `Display` or similar. Library code *should* use the stylesheet pattern instead.
+While this pattern is sometimes convenient in binary code, **it *should not* be used in libraries.** That is because libraries *should not* print information directly out to stdout or stderr—instead, they should return values that implement `Display` or similar. Library code *should* use the stylesheet approach instead.
 
-## The stylesheet pattern
+## The stylesheet approach
 
 This pattern involves defining a `Styles` struct containing colors and styles to apply to a text.
 

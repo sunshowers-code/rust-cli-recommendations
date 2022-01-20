@@ -4,7 +4,7 @@
 
 // ANCHOR: definition
 use camino::Utf8PathBuf;
-use clap::{ArgEnum, Parser};
+use clap::{ArgEnum, Args, Parser, Subcommand};
 
 /// Here's my app!
 #[derive(Debug, Parser)]
@@ -17,7 +17,7 @@ pub struct App {
     command: Command,
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Subcommand)]
 enum Command {
     /// Help message for read.
     Read {
@@ -27,23 +27,21 @@ enum Command {
 
         /// The path to read from
         path: Utf8PathBuf,
+        // (can #[clap(flatten)] other argument structs here)
     },
     /// Help message for write.
-    Write {
-        #[clap(flatten)]
-        write_args: WriteArgs,
-    },
-    // ...other commands (can also #[clap(flatten)] other enums here)
+    Write(WriteArgs),
+    // ...other commands (can #[clap(flatten)] other enum variants here)
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 struct WriteArgs {
     /// The path to write to
     path: Utf8PathBuf,
     // a list of other write args
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 struct GlobalOpts {
     /// Color
     #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]

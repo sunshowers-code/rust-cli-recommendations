@@ -17,8 +17,10 @@
   - [Merging command-line arguments and config files]()
 ---
 - [Dry runs and the interpreter pattern]()
-- [Atomic writes]()
+- [Logging]()
 - [Error handling and exit codes]()
+- [Atomic writes]()
+- [Locking and TOCTOU races]()
 
 ---
 

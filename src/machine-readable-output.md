@@ -11,8 +11,9 @@ Applications *may* (and in the case of forced loose coupling, *should*) make the
 * Programs *may* also provide their output as XML, [CBOR](https://cbor.io/), [MessagePack](https://msgpack.org/index.html), or other **self-describing** formats.
   * A self-describing format is one where the keys, or some equivalent, are part of the serialized output.
 * Formats like [protobuf](https://developers.google.com/protocol-buffers) are suitable as well, if up-to-date IDLs (e.g. `.proto` files) are published along with releases. One neat trick is to embed them into your binary and add a command to write them out to a given directory.
+* If many lines of structured data are incrementally printed out, prefer a format like [newline-delimited JSON](http://ndjson.org/). This is the format used by Cargo's `--message-format json` option.
 
-**Programs *must not* provide their output as [bincode](https://github.com/bincode-org/bincode) or other non-self-describing formats.** These formats are unsuitable for inter-process communication where stability is paramount.
+**Programs *must not* provide their output as [bincode](https://github.com/bincode-org/bincode) or other non-self-describing formats.** These formats are unsuitable for interoperability, where stability is paramount.
 
 **All machine-readable output *must* be printed to stdout, *not* stderr.**
 

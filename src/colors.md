@@ -1,6 +1,6 @@
 # Adding colors to applications
 
-Colors can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.
+Colors and styles can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.
 
 ## General recommendations
 
@@ -33,7 +33,11 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 
 **Applications *may* allow users to set their own color schemes.** If users can set their own color schemes, like [ls](https://man7.org/linux/man-pages/man5/dir_colors.5.html), [emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Colors.html) or [vim](https://vimhelp.org/usr_06.txt.html) do, wider palettes of colors be supported. In these cases, users can match their color schemes with their terminal themes.
 
-**Applications *may* use bold text.** Almost all terminals support **bold text**. Some terminals do not support *italic text* or ~~strikethroughs~~, so relying on them can cause issues.
+## Styles
+
+Terminals use the same escape codes to support both colors and styles---bold, italic, etc.
+
+**Applications *may* use bold text.** Almost all terminals support **bold text**. Some terminals do not support *italic text* or ~~strikethroughs~~: you can use them in your applications, but relying on them can cause issues.
 
 **Applications *must not* use blinking text.** Blinking text can be distracting or difficult to read for many people. The HTML `<blink>` tag, which had similar behavior, was [removed from web pages](https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag) around 2013.
 
