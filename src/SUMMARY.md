@@ -14,6 +14,7 @@
 
 - [Configuration](./configuration.md)
   - [Hierarchical configuration](./hierarchical-config.md)
+  - [Merging command-line arguments and config files]()
 ---
 - [Dry runs and the interpreter pattern]()
 - [Atomic writes]()
@@ -22,5 +23,5 @@
 ---
 
 [Key words](./key-words.md)
-[Contributors](./contributors.md)
+[Contributors and acknowledgments](./contributors.md)
 [Changelog](./changelog.md)
