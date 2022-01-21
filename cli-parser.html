@@ -328,10 +328,11 @@ OPTIONS:
 <p><code>clap</code>'s derive feature and <code>structopt</code> use kebab case by default. If you have an existing command that doesn't follow these rules, you can maintain compatibility by renaming it to the kebab-cased version and retaining the old case as an alias.</p>
 <h2 id="alternatives-to-clap"><a class="header" href="#alternatives-to-clap">Alternatives to clap</a></h2>
 <ul>
-<li><a href="https://github.com/google/argh">argh</a>: Actively maintained, and has an explicit goal of being small and quick to compile. However, it <a href="https://github.com/google/argh/issues/3#issuecomment-581144934">follows Fuchsia OS conventions</a> rather than Unix ones, so it's missing several crucial features from a Unix perspective.</li>
+<li><a href="https://github.com/google/argh">argh</a>: Actively maintained, and has an explicit goal of being low-overhead at runtime. However, it <a href="https://github.com/google/argh/issues/3#issuecomment-581144934">follows Fuchsia OS conventions</a> rather than Unix ones, so it's missing several crucial features from a Unix perspective.</li>
 <li><a href="https://github.com/RazrFalcon/pico-args">pico-args</a>: Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.</li>
 <li><a href="https://crates.io/crates/gumdrop">gumdrop</a>: a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap <a href="https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types">does</a>).</li>
 </ul>
+<p>For a comparison of binary size overhead and build times between these parsers and more, see <a href="https://github.com/rust-cli/argparse-benchmarks-rs">these benchmarks</a>.</p>
 <h2 id="writing-your-own-parser-by-hand"><a class="header" href="#writing-your-own-parser-by-hand">Writing your own parser by hand</a></h2>
 <p>You <em>should not</em> write your own parser completely by hand. Instead, most cases are better served by a simple parser like <a href="https://github.com/RazrFalcon/pico-args">pico-args</a>.</p>
 <p>If you must write a parser by hand, consider basing it on the <a href="https://docs.rs/lexopt/latest/lexopt/">lexopt</a> lexer. Be sure to handle all the <a href="https://github.com/google/argh/issues/3#issuecomment-581144181">standard conventions for Unix CLIs</a>.</p>
