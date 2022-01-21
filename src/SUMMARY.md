@@ -19,6 +19,7 @@
 - [Dry runs and the interpreter pattern]()
 - [Logging]()
 - [Error handling and exit codes]()
+- [Signal handling]()
 - [Atomic writes]()
 - [Locking and TOCTOU races]()
 
