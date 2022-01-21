@@ -189,6 +189,9 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p>Terminals use the same escape codes to support both colors and styles---bold, italic, etc.</p>
 <p><strong>Applications <em>may</em> use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>: you can use them in your applications, but relying on them can cause issues.</p>
 <p><strong>Applications <em>must not</em> use blinking text.</strong> Blinking text can be distracting or difficult to read for many people. The HTML <code>&lt;blink&gt;</code> tag, which had similar behavior, was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
+<blockquote>
+<p>TODO: add information about ASCII and Unicode symbols (including emoji) that are safe to use in terminals.</p>
+</blockquote>
 <h2 id="ansi-color-codes-and-windows-color-apis"><a class="header" href="#ansi-color-codes-and-windows-color-apis">ANSI color codes and Windows color APIs</a></h2>
 <p>Most Unix terminals support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI color codes</a>. For example, turning the foreground color to &quot;green&quot; involves writing the characters <code>\x1b</code> (ESC), <code>[</code>, <code>32</code> (for green), and <code>m</code> to the terminal.</p>
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>

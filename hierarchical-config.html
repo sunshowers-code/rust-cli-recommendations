@@ -191,10 +191,10 @@ output = &quot;latin1&quot;
 <h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
-<li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>
-<li><a href="https://crates.io/crates/figment">figment</a>. This seems quite nice as well, though I haven't used it.</li>
+<li><a href="https://crates.io/crates/config">config</a>. I've used this for my own projects.</li>
+<li><a href="https://crates.io/crates/figment">figment</a>. Seems high quality, though I haven't used it.</li>
 </ul>
-<p>These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for the rest of your code. For how to do this with config, <a href="https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs">see this example</a>.</p>
+<p>These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for validating the config's schema. For how to do this with config, <a href="https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs">see this example</a>.</p>
 
                     </main>
 

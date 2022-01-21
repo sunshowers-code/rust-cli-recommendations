@@ -167,12 +167,14 @@ use clap::Parser;
 #[derive(Debug, Parser)]
 pub struct MyApp {
     // Options, subcommands etc
+    #[clap(short, long, default_value_t)]
+    my_arg: usize,
 }
 
 impl MyApp {
     pub fn exec(self) -&gt; color_eyre::Result&lt;()&gt; {
-        // execute the command and return a result
-        unimplemented!()
+        println!(&quot;The value of my-arg is {}&quot;, self.my_arg);
+        Ok(())
     }
 }
 <span class="boring">}
@@ -195,7 +197,7 @@ mod command;
 pub use command::MyApp;
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>my-app/src/main.rs</code>:</p>
+<p><code>my-app/src/bin/my-app.rs</code>:</p>
 <pre><pre class="playground"><code class="language-rust">use clap::Parser;
 use my_app::MyApp;
 
@@ -215,10 +217,9 @@ because all methods and fields in <code>lib.rs</code> are visible to the entire 
 cannot be marked private to the rest of the module.</li>
 </ul>
 </li>
-<li><strong>There's a <code>lib.rs</code> separate from the <code>main.rs</code>.</strong>
+<li><strong>There's a <code>lib.rs</code> separate from the <code>my-app.rs</code> that contains <code>main</code>.</strong>
 <ul>
-<li>This is because <code>rustdoc</code> doesn't use standard privacy rules if building documentation from <code>main.rs</code>,
-so private modules are visible in the public documentation.</li>
+<li>There are several advantages to having a <code>lib.rs</code>. In particular, <code>rustdoc</code> doesn't use standard privacy rules if building documentation from <code>main.rs</code>, so private modules are visible in the public documentation.</li>
 </ul>
 </li>
 <li><strong>Only the top-level <code>MyApp</code> is exported.</strong>
@@ -230,6 +231,11 @@ so private modules are visible in the public documentation.</li>
 <ul>
 <li>The details of <code>MyApp</code> are only meant to be seen by <code>main</code>. The library is not part of the public API. Only
 the command-line interface is.</li>
+</ul>
+</li>
+<li><strong><code>src/bin/my-app.rs</code> instead of <code>src/main.rs</code>.</strong>
+<ul>
+<li>While <code>src/main.rs</code> works just as well, <code>src/bin</code> makes it harder to accidentally import library code with <code>mod</code> statements.</li>
 </ul>
 </li>
 </ul>

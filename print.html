@@ -844,12 +844,14 @@ use clap::Parser;
 #[derive(Debug, Parser)]
 pub struct MyApp {
     // Options, subcommands etc
+    #[clap(short, long, default_value_t)]
+    my_arg: usize,
 }
 
 impl MyApp {
     pub fn exec(self) -&gt; color_eyre::Result&lt;()&gt; {
-        // execute the command and return a result
-        unimplemented!()
+        println!(&quot;The value of my-arg is {}&quot;, self.my_arg);
+        Ok(())
     }
 }
 <span class="boring">}
@@ -872,7 +874,7 @@ mod command;
 pub use command::MyApp;
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>my-app/src/main.rs</code>:</p>
+<p><code>my-app/src/bin/my-app.rs</code>:</p>
 <pre><pre class="playground"><code class="language-rust">use clap::Parser;
 use my_app::MyApp;
 
@@ -892,10 +894,9 @@ because all methods and fields in <code>lib.rs</code> are visible to the entire 
 cannot be marked private to the rest of the module.</li>
 </ul>
 </li>
-<li><strong>There's a <code>lib.rs</code> separate from the <code>main.rs</code>.</strong>
+<li><strong>There's a <code>lib.rs</code> separate from the <code>my-app.rs</code> that contains <code>main</code>.</strong>
 <ul>
-<li>This is because <code>rustdoc</code> doesn't use standard privacy rules if building documentation from <code>main.rs</code>,
-so private modules are visible in the public documentation.</li>
+<li>There are several advantages to having a <code>lib.rs</code>. In particular, <code>rustdoc</code> doesn't use standard privacy rules if building documentation from <code>main.rs</code>, so private modules are visible in the public documentation.</li>
 </ul>
 </li>
 <li><strong>Only the top-level <code>MyApp</code> is exported.</strong>
@@ -907,6 +908,11 @@ so private modules are visible in the public documentation.</li>
 <ul>
 <li>The details of <code>MyApp</code> are only meant to be seen by <code>main</code>. The library is not part of the public API. Only
 the command-line interface is.</li>
+</ul>
+</li>
+<li><strong><code>src/bin/my-app.rs</code> instead of <code>src/main.rs</code>.</strong>
+<ul>
+<li>While <code>src/main.rs</code> works just as well, <code>src/bin</code> makes it harder to accidentally import library code with <code>mod</code> statements.</li>
 </ul>
 </li>
 </ul>
@@ -925,7 +931,7 @@ the command-line interface is.</li>
 <li>If the program persists data on disk, make it possible to do forward transitions but not backward ones. Add a <em>format version</em> to persisted data and increment it every time the data format changes. If an old version of the program reads a format version it does not understand, error out gracefully.</li>
 </ul>
 <blockquote>
-<p>Tip: You can use the <a href="https://github.com/baptiste0928/cargo-install">baptiste0928/cargo-install</a> Cargo action to install a binary from crates.io, caching it if possible. This action lets you specify a version range, which plays well with the above binary versioning policy.</p>
+<p>Tip: If you're using GitHub Actions for CI, use the <a href="https://github.com/baptiste0928/cargo-install">baptiste0928/cargo-install</a> action to install a binary from crates.io, using a cached version if possible. This action lets you specify a version range, which plays well with the binary versioning policy above.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="adding-colors-to-applications"><a class="header" href="#adding-colors-to-applications">Adding colors to applications</a></h1>
 <p>Colors and styles can make your command-line applications look nice, and also make output easier to understand by leveraging human pattern recognition. However, adding them requires a significant amount of care.</p>
@@ -962,6 +968,9 @@ while <tt><span style="color: #0e0101; background-color:#ffffdd">themes with lig
 <p>Terminals use the same escape codes to support both colors and styles---bold, italic, etc.</p>
 <p><strong>Applications <em>may</em> use bold text.</strong> Almost all terminals support <strong>bold text</strong>. Some terminals do not support <em>italic text</em> or <del>strikethroughs</del>: you can use them in your applications, but relying on them can cause issues.</p>
 <p><strong>Applications <em>must not</em> use blinking text.</strong> Blinking text can be distracting or difficult to read for many people. The HTML <code>&lt;blink&gt;</code> tag, which had similar behavior, was <a href="https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag">removed from web pages</a> around 2013.</p>
+<blockquote>
+<p>TODO: add information about ASCII and Unicode symbols (including emoji) that are safe to use in terminals.</p>
+</blockquote>
 <h2 id="ansi-color-codes-and-windows-color-apis"><a class="header" href="#ansi-color-codes-and-windows-color-apis">ANSI color codes and Windows color APIs</a></h2>
 <p>Most Unix terminals support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI color codes</a>. For example, turning the foreground color to &quot;green&quot; involves writing the characters <code>\x1b</code> (ESC), <code>[</code>, <code>32</code> (for green), and <code>m</code> to the terminal.</p>
 <p>Historically, Windows provided a set of <a href="https://docs.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes">Console APIs</a> for the same purpose. These APIs have <a href="https://docs.microsoft.com/en-us/windows/console/classic-vs-vt">since been deprecated</a>, and Windows now supports the same ANSI color codes other platforms do.</p>
@@ -1285,10 +1294,10 @@ output = &quot;latin1&quot;
 <h2 id="rust-libraries-for-managing-configuration"><a class="header" href="#rust-libraries-for-managing-configuration">Rust libraries for managing configuration</a></h2>
 <p>There are two main Rust libraries for managing hierarchical configuration:</p>
 <ul>
-<li><a href="https://crates.io/crates/config">config</a>. I've used this and it seems to work well.</li>
-<li><a href="https://crates.io/crates/figment">figment</a>. This seems quite nice as well, though I haven't used it.</li>
+<li><a href="https://crates.io/crates/config">config</a>. I've used this for my own projects.</li>
+<li><a href="https://crates.io/crates/figment">figment</a>. Seems high quality, though I haven't used it.</li>
 </ul>
-<p>These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for the rest of your code. For how to do this with config, <a href="https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs">see this example</a>.</p>
+<p>These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for validating the config's schema. For how to do this with config, <a href="https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs">see this example</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="key-words"><a class="header" href="#key-words">Key words</a></h1>
 <p>The key words <em>must</em>, <em>must not</em>, <em>required</em>, <em>should</em>, <em>should not</em>,
 <em>recommended</em>, <em>may</em>, and <em>optional</em>, derive their meanings from
@@ -1303,12 +1312,12 @@ and not a standard.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="acknowledgments"><a class="header" href="#acknowledgments">Acknowledgments</a></h1>
 <p>Thanks to the following reviewers who read through drafts of this document and provided invaluable feedback:</p>
 <ul>
-<li>Manish Goregaokar (<a href="https://twitter.com/ManishEarth">Twitter</a>, <a href="https://github.com/Manishearth">GitHub</a>)</li>
 <li>Ana Hobden (<a href="https://twitter.com/a_hoverbear">Twitter</a>, <a href="https://github.com/hoverbear">GitHub</a>)</li>
+<li>Ed Page (<a href="https://github.com/epage">GitHub</a>)</li>
+<li>Inanna Malick (<a href="https://twitter.com/inanna_malick/">Twitter</a>, <a href="https://github.com/inanna-malick">GitHub</a>)</li>
 <li>jam1garner (<a href="https://twitter.com/jam1garner">Twitter</a>, <a href="https://github.com/jam1garner">GitHub</a>)</li>
 <li>Jane Lusby (<a href="https://twitter.com/yaahc_">Twitter</a>, <a href="https://github.com/yaahc">GitHub</a>)</li>
-<li>Inanna Malick (<a href="https://twitter.com/inanna_malick/">Twitter</a>, <a href="https://github.com/inanna-malick">GitHub</a>)</li>
-<li>Ed Page (<a href="https://github.com/epage">GitHub</a>)</li>
+<li>Manish Goregaokar (<a href="https://twitter.com/ManishEarth">Twitter</a>, <a href="https://github.com/Manishearth">GitHub</a>)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="changelog"><a class="header" href="#changelog">Changelog</a></h1>
 
