@@ -52,9 +52,11 @@ Following Unix and GNU conventions, all commands and arguments, except for short
 
 ## Alternatives to clap
 
-* [argh](https://github.com/google/argh): Actively maintained, and has an explicit goal of being small and quick to compile. However, it [follows Fuchsia OS conventions](https://github.com/google/argh/issues/3#issuecomment-581144934) rather than Unix ones, so it's missing several crucial features from a Unix perspective.
+* [argh](https://github.com/google/argh): Actively maintained, and has an explicit goal of being low-overhead at runtime. However, it [follows Fuchsia OS conventions](https://github.com/google/argh/issues/3#issuecomment-581144934) rather than Unix ones, so it's missing several crucial features from a Unix perspective.
 * [pico-args](https://github.com/RazrFalcon/pico-args): Zero dependencies, quick to compile, and negligible impact on binary size. Does not include help generation, derive support, or as many config flags as clap. A great choice for really simple applications.
 * [gumdrop](https://crates.io/crates/gumdrop): a simple argument parser with derive support. Somewhat less popular than clap, and doesn't support deserializing directly to domain types (clap [does](https://github.com/clap-rs/clap/blob/v3.0.6/examples/derive_ref/README.md#arg-types)).
+
+For a comparison of binary size overhead and build times between these parsers and more, see [these benchmarks](https://github.com/rust-cli/argparse-benchmarks-rs).
 
 ## Writing your own parser by hand
 
