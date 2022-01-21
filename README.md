@@ -26,6 +26,8 @@ Pull requests to fix typos or unclear language are welcome! If you have a sugges
 [search through the issues]: https://github.com/sunshowers-code/rust-cli-recommendations/issues?q=is%3Aissue+sort%3Aupdated-desc
 [open an issue]: https://github.com/sunshowers-code/rust-cli-recommendations/issues/new
 
+> Tip: While reading the book, you can hit the edit button <i class="fa fa-edit"></i> in the top right corner to make a quick change to it.
+
 ## License
 
 This document, other than inline code snippets, is licensed under [CC BY 4.0]. This means that you are welcome to share, adapt or modify this material as long as you give appropriate credit.
