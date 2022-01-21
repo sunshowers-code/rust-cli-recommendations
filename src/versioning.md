@@ -14,4 +14,4 @@ A binary crate *should* define its public API as consisting of the command-line 
 * Mark old commands or arguments deprecated, and possibly hide them from help text. Continue to preserve their behavior.
 * If the program persists data on disk, make it possible to do forward transitions but not backward ones. Add a *format version* to persisted data and increment it every time the data format changes. If an old version of the program reads a format version it does not understand, error out gracefully.
 
-> Tip: If you're using GitHub Actions for CI, use the [baptiste0928/cargo-install](https://github.com/baptiste0928/cargo-install) action to install a binary from crates.io, using a cached version if possible. This action lets you specify a version range, which plays well with the binary versioning policy above.
+> Tip: If you're using GitHub Actions for CI, use the [baptiste0928/cargo-install](https://github.com/baptiste0928/cargo-install) action to install a binary from crates.io, using a cached version if possible. This action lets you specify a version range, which works well with the binary versioning policy above.
