@@ -32,5 +32,3 @@ The help for the read command is:
 ```rust,noplaypen
 {{#rustdoc_include ../code/cli-parser/src/bin/handling-arguments.rs:read-help}}
 ```
-
-Global options like `--verbose` get repeated in individual commands' help text.
