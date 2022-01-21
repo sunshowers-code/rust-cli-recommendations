@@ -41,6 +41,8 @@ Terminals use the same escape codes to support both colors and styles---bold, it
 
 **Applications *must not* use blinking text.** Blinking text can be distracting or difficult to read for many people. The HTML `<blink>` tag, which had similar behavior, was [removed from web pages](https://www.fastcompany.com/3015408/saying-goodbye-to-the-html-tag) around 2013.
 
+> TODO: add information about ASCII and Unicode symbols (including emoji) that are safe to use in terminals.
+
 ## ANSI color codes and Windows color APIs
 
 Most Unix terminals support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors). For example, turning the foreground color to "green" involves writing the characters `\x1b` (ESC), `[`, `32` (for green), and `m` to the terminal.

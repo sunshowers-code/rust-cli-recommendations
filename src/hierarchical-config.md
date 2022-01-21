@@ -46,9 +46,9 @@ Exactly how deep merges should go is application-specific.
 
 There are two main Rust libraries for managing hierarchical configuration:
 
-* [config](https://crates.io/crates/config). I've used this and it seems to work well.
-* [figment](https://crates.io/crates/figment). This seems quite nice as well, though I haven't used it.
+* [config](https://crates.io/crates/config). I've used this for my own projects.
+* [figment](https://crates.io/crates/figment). Seems high quality, though I haven't used it.
 
-These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for the rest of your code. For how to do this with config, [see this example].
+These configuration libraries can be used in combination with serde, so that you can manage hierarchies and merges with dynamically typed variables at the edges of your program, then switch over to well-typed serde structures for validating the config's schema. For how to do this with config, [see this example].
 
 [see this example]: https://github.com/mehcode/config-rs/blob/53e43fbcf96b5c2a661d052a6e3d55fc3709f1e1/examples/hierarchical-env/settings.rs
