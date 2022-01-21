@@ -58,6 +58,6 @@ Following Unix and GNU conventions, all commands and arguments, except for short
 
 ## Writing your own parser by hand
 
-You *should not* write your own parser completely by hand. Instead, most cases are better served by a simple parser like [pico-args](https://github.com/RazrFalcon/pico-args)).
+You *should not* write your own parser completely by hand. Instead, most cases are better served by a simple parser like [pico-args](https://github.com/RazrFalcon/pico-args).
 
 If you must write a parser by hand, consider basing it on the [lexopt](https://docs.rs/lexopt/latest/lexopt/) lexer. Be sure to handle all the [standard conventions for Unix CLIs](https://github.com/google/argh/issues/3#issuecomment-581144181).
