@@ -87,7 +87,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="chapter-item expanded "><div>Merging command-line arguments and config files</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Error handling and exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html" class="active">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="chapter-item expanded "><div>Merging command-line arguments and config files</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Logging</div></li><li class="chapter-item expanded "><div>Error handling and exit codes</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Locking and TOCTOU races</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -156,7 +156,6 @@
                     <main>
                         <h1 id="binaries-vs-libraries"><a class="header" href="#binaries-vs-libraries">Binaries vs libraries</a></h1>
 <p>You <em>may</em> expose your application's functionality as a library. Some binaries are simple and don't necessarily need to expose their functionality as a library. Other binaries are more complex, in which case their functionality can be exposed as a library that others can build upon.</p>
-<p>In any case, binary crates <em>must not</em> expose their library functionality within the same crate. The library, if exposed, <em>must</em> be a different crate, with an appropriate name linking the two. The library <em>should not</em> have any command-line parsing logic.</p>
 <p><strong>Why separate libraries from binaries?</strong></p>
 <ul>
 <li>For other consumers of the library, clap and other binary-only dependencies are unnecessary.</li>
@@ -172,6 +171,27 @@
 </ul>
 </li>
 </ul>
+<h2 id="if-youve-decided-to-make-a-library"><a class="header" href="#if-youve-decided-to-make-a-library">If you've decided to make a library</a></h2>
+<blockquote>
+<p>Note: In this section, &quot;package&quot; means all code scoped to a single <code>Cargo.toml</code> file.</p>
+</blockquote>
+<p>If your code is meant to be uploaded to a registry like crates.io:</p>
+<ul>
+<li>Binary packages <em>must not</em> expose their library functionality within the same package.</li>
+<li>The library package <em>must</em> be separated out, with an appropriate name linking the two.</li>
+</ul>
+<p>If your code is internal to the workspace:</p>
+<ul>
+<li>Binary packages <em>should not</em> expose a library within the same package.</li>
+<li>The library package <em>should</em> be separated out, with an appropriate name linking the two.</li>
+</ul>
+<p>Some examples of linked names:</p>
+<ul>
+<li><em>my-lib</em> for the library, and <em>my-lib-cli</em> for the binary, if most people are going to use the library.</li>
+<li><em>my-app-core</em> for the library, and <em>my-app</em> for the binary, if most people are going to use the binary.</li>
+<li><em>my-utility</em> for the library, and <em>cargo-my-utility</em> for the binary, if your program is a Cargo plugin.</li>
+</ul>
+<p>There's an intermediate solution possible here, which is to have a single crate that enables being built as a binary with <code>--features=bin</code>. However, you <em>must not</em> do this for code uploaded to a registry, because you lose out on the benefits of having separate versioning. You <em>may</em> use this pattern for code internal to a workspace.</p>
 
                     </main>
 

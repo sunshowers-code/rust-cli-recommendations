@@ -87,7 +87,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html" class="active">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="chapter-item expanded "><div>Merging command-line arguments and config files</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Error handling and exit codes</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="cli-parser.html">Picking an argument parser</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="handling-arguments.html" class="active">Handling arguments and subcommands</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="binaries-vs-libraries.html">Binaries vs libraries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="machine-readable-output.html">Machine-readable output</a></li><li class="chapter-item expanded "><a href="organizing-binary.html">Organizing code in binary crates</a></li></ol></li><li class="chapter-item expanded "><a href="versioning.html">Versioning</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="colors.html">Adding colors to applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="managing-colors-in-rust.html">Managing colors in Rust</a></li></ol></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hierarchical-config.html">Hierarchical configuration</a></li><li class="chapter-item expanded "><div>Merging command-line arguments and config files</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><div>Dry runs and the interpreter pattern</div></li><li class="chapter-item expanded "><div>Logging</div></li><li class="chapter-item expanded "><div>Error handling and exit codes</div></li><li class="chapter-item expanded "><div>Atomic writes</div></li><li class="chapter-item expanded "><div>Locking and TOCTOU races</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="key-words.html">Key words</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded affix "><a href="changelog.html">Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -161,7 +161,7 @@
 </span><span class="boring">//    cargo run --bin grep-app -- &lt;arguments&gt;
 </span><span class="boring">
 </span>use camino::Utf8PathBuf;
-use clap::{ArgEnum, Parser};
+use clap::{ArgEnum, Args, Parser, Subcommand};
 
 /// Here's my app!
 #[derive(Debug, Parser)]
@@ -174,7 +174,7 @@ pub struct App {
     command: Command,
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Subcommand)]
 enum Command {
     /// Help message for read.
     Read {
@@ -184,23 +184,21 @@ enum Command {
 
         /// The path to read from
         path: Utf8PathBuf,
+        // (can #[clap(flatten)] other argument structs here)
     },
     /// Help message for write.
-    Write {
-        #[clap(flatten)]
-        write_args: WriteArgs,
-    },
-    // ...other commands (can also #[clap(flatten)] other enums here)
+    Write(WriteArgs),
+    // ...other commands (can #[clap(flatten)] other enum variants here)
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 struct WriteArgs {
     /// The path to write to
     path: Utf8PathBuf,
     // a list of other write args
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 struct GlobalOpts {
     /// Color
     #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]
@@ -322,7 +320,7 @@ enum Color {
 </span><span class="boring">//    cargo run --bin grep-app -- &lt;arguments&gt;
 </span><span class="boring">
 </span><span class="boring">use camino::Utf8PathBuf;
-</span><span class="boring">use clap::{ArgEnum, Parser};
+</span><span class="boring">use clap::{ArgEnum, Args, Parser, Subcommand};
 </span><span class="boring">
 </span><span class="boring">/// Here's my app!
 </span><span class="boring">#[derive(Debug, Parser)]
@@ -335,7 +333,7 @@ enum Color {
 </span><span class="boring">    command: Command,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Subcommand)]
 </span><span class="boring">enum Command {
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
@@ -345,23 +343,21 @@ enum Color {
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
+</span><span class="boring">        // (can #[clap(flatten)] other argument structs here)
 </span><span class="boring">    },
 </span><span class="boring">    /// Help message for write.
-</span><span class="boring">    Write {
-</span><span class="boring">        #[clap(flatten)]
-</span><span class="boring">        write_args: WriteArgs,
-</span><span class="boring">    },
-</span><span class="boring">    // ...other commands (can also #[clap(flatten)] other enums here)
+</span><span class="boring">    Write(WriteArgs),
+</span><span class="boring">    // ...other commands (can #[clap(flatten)] other enum variants here)
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Args)]
 </span><span class="boring">struct WriteArgs {
 </span><span class="boring">    /// The path to write to
 </span><span class="boring">    path: Utf8PathBuf,
 </span><span class="boring">    // a list of other write args
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Args)]
 </span><span class="boring">struct GlobalOpts {
 </span><span class="boring">    /// Color
 </span><span class="boring">    #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]
@@ -456,7 +452,7 @@ SUBCOMMANDS:
 </span><span class="boring">//    cargo run --bin grep-app -- &lt;arguments&gt;
 </span><span class="boring">
 </span><span class="boring">use camino::Utf8PathBuf;
-</span><span class="boring">use clap::{ArgEnum, Parser};
+</span><span class="boring">use clap::{ArgEnum, Args, Parser, Subcommand};
 </span><span class="boring">
 </span><span class="boring">/// Here's my app!
 </span><span class="boring">#[derive(Debug, Parser)]
@@ -469,7 +465,7 @@ SUBCOMMANDS:
 </span><span class="boring">    command: Command,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Subcommand)]
 </span><span class="boring">enum Command {
 </span><span class="boring">    /// Help message for read.
 </span><span class="boring">    Read {
@@ -479,23 +475,21 @@ SUBCOMMANDS:
 </span><span class="boring">
 </span><span class="boring">        /// The path to read from
 </span><span class="boring">        path: Utf8PathBuf,
+</span><span class="boring">        // (can #[clap(flatten)] other argument structs here)
 </span><span class="boring">    },
 </span><span class="boring">    /// Help message for write.
-</span><span class="boring">    Write {
-</span><span class="boring">        #[clap(flatten)]
-</span><span class="boring">        write_args: WriteArgs,
-</span><span class="boring">    },
-</span><span class="boring">    // ...other commands (can also #[clap(flatten)] other enums here)
+</span><span class="boring">    Write(WriteArgs),
+</span><span class="boring">    // ...other commands (can #[clap(flatten)] other enum variants here)
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Args)]
 </span><span class="boring">struct WriteArgs {
 </span><span class="boring">    /// The path to write to
 </span><span class="boring">    path: Utf8PathBuf,
 </span><span class="boring">    // a list of other write args
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">#[derive(Debug, Parser)]
+</span><span class="boring">#[derive(Debug, Args)]
 </span><span class="boring">struct GlobalOpts {
 </span><span class="boring">    /// Color
 </span><span class="boring">    #[clap(long, arg_enum, global = true, default_value_t = Color::Auto)]
