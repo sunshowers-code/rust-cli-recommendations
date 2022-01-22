@@ -32,10 +32,9 @@ input = "utf8"
 One way to merge configurations is to combine them, as follows:
 
 ```toml
-[myapp]
 limit = 84
 
-[myapp.encoding]
+[encoding]
 input = "utf8"
 output = "latin1"
 ```
