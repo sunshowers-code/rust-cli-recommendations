@@ -165,8 +165,8 @@
 <li>involves zero allocations</li>
 </ul>
 <blockquote>
-<p>Note: you <em>should not</em> use <a href="https://docs.rs/termcolor/latest/termcolor/">termcolor</a> because it targets the deprecated Console APIs on Windows—and has a significantly more involved API as a result.</p>
-<p>Instead, use a library that just only supports ANSI color codes, and initialize support for them on Windows with <a href="https://crates.io/crates/enable-ansi-support">enable-ansi-support</a>.</p>
+<p>Note: you <em>should not</em> use <a href="https://docs.rs/termcolor/latest/termcolor/">termcolor</a> because it targets the deprecated Console APIs on Windows—and has a significantly more complicated API as a result.</p>
+<p>Instead, you <em>should</em> use a library that just only supports ANSI color codes, and initialize support for them on Windows with <a href="https://crates.io/crates/enable-ansi-support">enable-ansi-support</a>.</p>
 </blockquote>
 <p>There are two general ways with which color support can be handled. I'm going to call them the &quot;immediate pattern&quot; and the &quot;stylesheet approach&quot;, respectively. <strong>Library code that supports colors <em>should</em> use the stylesheet approach.</strong> Code in a binary crate can use whichever pattern leads to simpler code.</p>
 <h2 id="the-immediate-pattern"><a class="header" href="#the-immediate-pattern">The immediate pattern</a></h2>
