@@ -398,7 +398,7 @@ fn main() {
 <li><strong>Library code is completely unaware of whether the environment supports colors.</strong> All it cares about is whether the <code>colorize</code> method is called.
 <ul>
 <li>Note that the global <code>set_override</code> and <code>unset_override</code> methods have no impact on library code in the stylesheet example.</li>
-<li>The global methods are only active if <code>if_supports_color</code> is called, as shown by the example for the immediate pattern above. This is by design: most libraries shouldn't reach out to global state.</li>
+<li>The global methods are only active if <code>if_supports_color</code> is called, as shown by the example for <a href="#the-immediate-pattern">the immediate pattern</a> above. This is by design: most libraries shouldn't reach out to global state.</li>
 </ul>
 </li>
 <li><strong>The stylesheet is stored as <code>Box&lt;Styles&gt;</code>.</strong> The boxing isn't strictly required, but each <code>Style</code> is pretty large, and a struct containing e.g. 16 styles is 272 bytes as of owo-colors 3.2.0. That's a pretty large amount of data to store on the stack.</li>
