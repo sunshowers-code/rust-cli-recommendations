@@ -6,9 +6,9 @@ There are many Rust libraries for managing terminal colors. You *should* use [ow
 * minimizes dependencies on global state
 * involves zero allocations
 
-> Note: you *should not* use [termcolor](https://docs.rs/termcolor/latest/termcolor/) because it targets the deprecated Console APIs on Windows—and has a significantly more involved API as a result.
+> Note: you *should not* use [termcolor](https://docs.rs/termcolor/latest/termcolor/) because it targets the deprecated Console APIs on Windows—and has a significantly more complicated API as a result.
 >
-> Instead, use a library that just only supports ANSI color codes, and initialize support for them on Windows with [enable-ansi-support](https://crates.io/crates/enable-ansi-support).
+> Instead, you *should* use a library that just only supports ANSI color codes, and initialize support for them on Windows with [enable-ansi-support](https://crates.io/crates/enable-ansi-support).
 
 There are two general ways with which color support can be handled. I'm going to call them the "immediate pattern" and the "stylesheet approach", respectively. **Library code that supports colors *should* use the stylesheet approach.** Code in a binary crate can use whichever pattern leads to simpler code.
 
