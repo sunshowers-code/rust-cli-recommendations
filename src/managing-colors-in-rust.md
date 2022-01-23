@@ -53,9 +53,11 @@ And finally, here's the binary code that uses the library.
 Notes:
 * **Library code is completely unaware of whether the environment supports colors.** All it cares about is whether the `colorize` method is called.
   * Note that the global `set_override` and `unset_override` methods have no impact on library code in the stylesheet example.
-  * The global methods are only active if `if_supports_color` is called, as shown by the example for the immediate pattern above. This is by design: most libraries shouldn't reach out to global state.
+  * The global methods are only active if `if_supports_color` is called, as shown by the example for [the immediate pattern] above. This is by design: most libraries shouldn't reach out to global state.
 * **The stylesheet is stored as `Box<Styles>`.** The boxing isn't strictly required, but each `Style` is pretty large, and a struct containing e.g. 16 styles is 272 bytes as of owo-colors 3.2.0. That's a pretty large amount of data to store on the stack.
 * **`Styles::default()` initializes all the styles to having no effect.** The `colorize()` method then initializes them as required.
 * **For custom color support, `Styles` can be made public.** Most library code won't need to give users the ability to customize styles, but this pattern naturally extends to that use case.
 * **Use of a separate `MyAppDisplay` type.** The `colorize` call is isolated to this particular `MyAppDisplay`, without influencing other display calls.
 * **`println!` is paired with `Stream::Stdout`.** If this were `eprintln!`, it would need to be paired with `Stream::Stderr`.
+
+[the immediate pattern]: #the-immediate-pattern
