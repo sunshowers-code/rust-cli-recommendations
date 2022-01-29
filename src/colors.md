@@ -21,7 +21,7 @@ These rules apply to all command-line programs, not just Rust ones.
 
 Terminals may support one of three color palettes:
 * *Truecolor (16 million colors):* 24-bit color; 8 bits for each of red, green and blue. This is the standard that web pages and most monitors support. You may have seen these colors written as e.g. <span style="color:#9b4fd1">#9b4fd1</span>.
-* *256 colors:* 18-bit color; 6 bits for each of red, green and blue. [This page by Pádraig Brady](http://www.pixelbeat.org/docs/terminal_colours/#256) has more information about them.
+* *256 colors:* 8-bit color; the 16 colors above, a 6×6×6 cube for each of red, green and blue, and 24 grayscale tones. [This page by Pádraig Brady](http://www.pixelbeat.org/docs/terminal_colours/#256) has more information about them.
 * *16 colors:* 4-bit color; black, red, green, yellow, blue, magenta, cyan, white, and a "bright" version of each.
 
 **The default color schemes in applications *must* be restricted to 12 colors: red, green, yellow, blue, magenta, cyan, and the bright versions of each of these.**
