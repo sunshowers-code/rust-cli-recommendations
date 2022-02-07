@@ -8,6 +8,8 @@
 5. System-wide configuration
 6. Default configuration shipped with the program.
 
+> Tip: One neat trick is to embed your app's default configuration [as a config file](https://doc.rust-lang.org/std/macro.include_str.html) within your binary. The default configuration can serve as an example to other users.
+
 There are some exceptions. For example, color support *should* follow the rules listed in the [Colors](./colors.md) section.
 
 **Configurations *may* be merged rather than completely overwritten.** Consider the following configuration files.
