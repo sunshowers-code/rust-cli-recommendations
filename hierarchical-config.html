@@ -166,6 +166,9 @@
 <li>System-wide configuration</li>
 <li>Default configuration shipped with the program.</li>
 </ol>
+<blockquote>
+<p>Tip: One neat trick is to embed your app's default configuration <a href="https://doc.rust-lang.org/std/macro.include_str.html">as a config file</a> within your binary. The default configuration can serve as an example to other users.</p>
+</blockquote>
 <p>There are some exceptions. For example, color support <em>should</em> follow the rules listed in the <a href="./colors.html">Colors</a> section.</p>
 <p><strong>Configurations <em>may</em> be merged rather than completely overwritten.</strong> Consider the following configuration files.</p>
 <pre><code class="language-toml"># $HOME/.config/myapp.toml -- user-scoped config
