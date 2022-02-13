@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/acknowledgments</loc>
-        <lastmod>2022-02-13T02:01:35.071Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/acknowledgments</loc>
+        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/binaries-vs-libraries</loc>
-        <lastmod>2022-02-13T02:01:35.059Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/binaries-vs-libraries</loc>
+        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/changelog</loc>
-        <lastmod>2022-02-13T02:01:35.071Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/changelog</loc>
+        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/cli-parser</loc>
-        <lastmod>2022-02-13T02:01:35.055Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/cli-parser</loc>
+        <lastmod>2022-02-13T02:04:47.661Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/colors</loc>
-        <lastmod>2022-02-13T02:01:35.059Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/colors</loc>
+        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/configuration</loc>
-        <lastmod>2022-02-13T02:01:35.063Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/configuration</loc>
+        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/handling-arguments</loc>
-        <lastmod>2022-02-13T02:01:35.055Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/handling-arguments</loc>
+        <lastmod>2022-02-13T02:04:47.661Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/hierarchical-config</loc>
-        <lastmod>2022-02-13T02:01:35.063Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/hierarchical-config</loc>
+        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/</loc>
-        <lastmod>2022-02-13T02:01:35.055Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/</loc>
+        <lastmod>2022-02-13T02:04:47.657Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/key-words</loc>
-        <lastmod>2022-02-13T02:01:35.063Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/key-words</loc>
+        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/machine-readable-output</loc>
-        <lastmod>2022-02-13T02:01:35.059Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/machine-readable-output</loc>
+        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/managing-colors-in-rust</loc>
-        <lastmod>2022-02-13T02:01:35.063Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/managing-colors-in-rust</loc>
+        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/organizing-binary</loc>
-        <lastmod>2022-02-13T02:01:35.059Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/organizing-binary</loc>
+        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
     </url>
     <url>
-        <loc>https://lifetime-variance.sunshowers.io/versioning</loc>
-        <lastmod>2022-02-13T02:01:35.059Z</lastmod>
+        <loc>https://rust-cli-recommendations.sunshowers.io/versioning</loc>
+        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
     </url>
 </urlset>
