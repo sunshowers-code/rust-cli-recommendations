@@ -1,0 +1,14 @@
+https://lifetime-variance.sunshowers.io/acknowledgments
+https://lifetime-variance.sunshowers.io/binaries-vs-libraries
+https://lifetime-variance.sunshowers.io/changelog
+https://lifetime-variance.sunshowers.io/cli-parser
+https://lifetime-variance.sunshowers.io/colors
+https://lifetime-variance.sunshowers.io/configuration
+https://lifetime-variance.sunshowers.io/handling-arguments
+https://lifetime-variance.sunshowers.io/hierarchical-config
+https://lifetime-variance.sunshowers.io/
+https://lifetime-variance.sunshowers.io/key-words
+https://lifetime-variance.sunshowers.io/machine-readable-output
+https://lifetime-variance.sunshowers.io/managing-colors-in-rust
+https://lifetime-variance.sunshowers.io/organizing-binary
+https://lifetime-variance.sunshowers.io/versioning
