@@ -2,58 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/acknowledgments</loc>
-        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.623Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/binaries-vs-libraries</loc>
-        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.615Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/changelog</loc>
-        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.627Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/cli-parser</loc>
-        <lastmod>2022-02-13T02:04:47.661Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.611Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/colors</loc>
-        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.619Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/configuration</loc>
-        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.623Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/handling-arguments</loc>
-        <lastmod>2022-02-13T02:04:47.661Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.615Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/hierarchical-config</loc>
-        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.623Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/</loc>
-        <lastmod>2022-02-13T02:04:47.657Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.611Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/key-words</loc>
-        <lastmod>2022-02-13T02:04:47.673Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.623Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/machine-readable-output</loc>
-        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.615Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/managing-colors-in-rust</loc>
-        <lastmod>2022-02-13T02:04:47.669Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.623Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/organizing-binary</loc>
-        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.619Z</lastmod>
     </url>
     <url>
         <loc>https://rust-cli-recommendations.sunshowers.io/versioning</loc>
-        <lastmod>2022-02-13T02:04:47.665Z</lastmod>
+        <lastmod>2022-02-15T19:44:02.619Z</lastmod>
     </url>
 </urlset>
