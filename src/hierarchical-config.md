@@ -1,6 +1,7 @@
 # Hierarchical configuration
 
 **Applications *should* follow a hierarchical configuration structure.** Use the following order, from highest priority to lowest.
+
 1. Command-line arguments
 2. Environment variables
 3. Directory or repository-scoped configuration

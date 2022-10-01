@@ -15,11 +15,13 @@ Within a binary crate, here's the organization that's *recommended*.
 ```
 
 `my-app/src/bin/my-app.rs`:
+
 ```rust
 {{#rustdoc_include ../code/organizing-binary/src/bin/my-app.rs}}
 ```
 
 Notes:
+
 * **Most of the logic is within `command.rs`.**
   * In general, you *should* keep lib.rs as minimal as possible, unless your entire library fits in it. That's
     because all methods and fields in `lib.rs` are visible to the entire library---code in the top-level module

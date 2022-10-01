@@ -20,7 +20,6 @@ git clone https://github.com/sunshowers-code/rust-cli-recommendations --branch g
 
 then pointing your web browser at `rust-cli-recommendations/index.html`.
 
-
 Pull requests to fix typos or unclear language are welcome! If you have a suggestion for a change to the document, please [search through the issues] to see if it's been discussed already. If not, please [open an issue].
 
 [search through the issues]: https://github.com/sunshowers-code/rust-cli-recommendations/issues?q=is%3Aissue+sort%3Aupdated-desc

@@ -7,6 +7,7 @@ For a program that has subcommands, the following code structure is *recommended
 ```
 
 Notes:
+
 * **Only the top-level `App` is public.**
 * **`App` is a struct, one level above the command enum.**
   * While it is possible to make `App` an enum with all the subcommands, in my experience this design has always come back to bite me. This has always been because I've wanted to introduce global options later.

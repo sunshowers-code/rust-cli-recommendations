@@ -3,6 +3,7 @@
 A library crate, if provided, *should* follow [the usual Rust library versioning rules](https://doc.rust-lang.org/cargo/reference/semver.html).
 
 A binary crate *should* define its public API as consisting of the command-line interface, plus anything else related to the interface that the project's maintainers wish to keep stable.
+
 * This means that major version changes happen when there are breaking changes to the CLI, not to internal or library code.
 * For example, [cargo-hakari's stability policy](https://docs.rs/cargo-hakari/latest/cargo_hakari/#stability-guarantees) is to keep the contents of a generated checked-in file the same, unless a config option is turned on or there's a bugfix.
 
