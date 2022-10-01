@@ -3,10 +3,12 @@
 Applications *may* (and in the case of forced loose coupling, *should*) make their CLI available as an interface not just to humans but to other programs. If you're making your interface available this way, follow these rules:
 
 **For lists of strings, programs *should* provide list output as newline-delimited items.**
+
 * This is most useful for compatibility with existing tools like `xargs`.
 * If list items are filenames or can have newlines or other in them, programs *must* provide a `-0` flag or similar to list output as null-delimited (`\0`-delimited) items. Almost all standard Unix commands understand null-delimited output (e.g. `xargs --null`).
 
 **For more complex structured data, programs *should* accept a flag to provide output (e.g. `--output-format`, or `--message-format` if many lines of structured data are printed out).**
+
 * Programs *should* support at least `json` machine-readable output.
 * Programs *may* also provide their output as XML, [CBOR](https://cbor.io/), [MessagePack](https://msgpack.org/index.html), or other **self-describing** formats.
   * A self-describing format is one where the keys, or some equivalent, are part of the serialized output.

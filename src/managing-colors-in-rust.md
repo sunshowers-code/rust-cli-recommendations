@@ -1,6 +1,7 @@
 # Managing colors in Rust
 
 There are many Rust libraries for managing terminal colors. You *should* use [owo-colors](https://crates.io/crates/owo-colors) because it is the only library I've found that meets all of these criteria:
+
 * actively maintained
 * has a simple, intuitive API
 * minimizes dependencies on global state
@@ -23,6 +24,7 @@ Here's an example of what it looks like:
 ```
 
 Notes:
+
 * **`owo_colors::set_override` is used to control color support globally.** The global configuration only has an effect if `if_supports_color` is called.
 * **`println!` is paired with `Stream::Stdout`.** If this were `eprintln!`, it would need to be paired with `Stream::Stderr`.
 
@@ -51,6 +53,7 @@ And finally, here's the binary code that uses the library.
 ```
 
 Notes:
+
 * **Library code is completely unaware of whether the environment supports colors.** All it cares about is whether the `colorize` method is called.
   * Note that the global `set_override` and `unset_override` methods have no impact on library code in the stylesheet example.
   * The global methods are only active if `if_supports_color` is called, as shown by the example for [the immediate pattern] above. This is by design: most libraries shouldn't reach out to global state.
