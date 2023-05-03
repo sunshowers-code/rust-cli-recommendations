@@ -35,7 +35,7 @@ impl MyValue {
     pub fn display(&self) -> MyValueDisplay<'_> {
         MyValueDisplay {
             value: self,
-            styles: Box::new(Styles::default()),
+            styles: Box::default(),
         }
     }
 }
