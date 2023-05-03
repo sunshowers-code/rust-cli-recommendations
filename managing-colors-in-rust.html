@@ -255,7 +255,7 @@ impl Styles {
 </span><span class="boring">    pub fn display(&amp;self) -&gt; MyValueDisplay&lt;'_&gt; {
 </span><span class="boring">        MyValueDisplay {
 </span><span class="boring">            value: self,
-</span><span class="boring">            styles: Box::new(Styles::default()),
+</span><span class="boring">            styles: Box::default(),
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -318,7 +318,7 @@ impl MyValue {
     pub fn display(&amp;self) -&gt; MyValueDisplay&lt;'_&gt; {
         MyValueDisplay {
             value: self,
-            styles: Box::new(Styles::default()),
+            styles: Box::default(),
         }
     }
 }
