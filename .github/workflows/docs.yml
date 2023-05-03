@@ -28,7 +28,7 @@ jobs:
       - name: Generate sitemap
         run: |
           cd book
-          npx sscli --base https://rust-cli-recommendations.sunshowers.io
+          npx sscli --no-clean --base https://rust-cli-recommendations.sunshowers.io
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
